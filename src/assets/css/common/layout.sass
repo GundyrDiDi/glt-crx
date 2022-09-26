@@ -1,0 +1,45 @@
+#sniff-app,#sniff-search,#sniff-popup,#_sniff_btn
+    .abs
+        position: absolute
+
+    .rel
+        position: relative
+
+    .fix
+        position: fixed
+
+    .cover
+        height: 100%
+        width: 100%
+
+    .top-left
+        top: 0
+        left: 0
+
+    .wrap
+        @extend .cover
+        @extend .top-left
+
+    @each $type in abs,rel,fix
+        .#{$type}-cover
+            @extend .cover
+            @extend .#{$type}
+        .#{$type}-wrap
+            @extend .wrap
+            @extend .#{$type}
+
+    // 浮动
+    .fl-l
+        float: left
+    .fl-r
+        float: right
+    .fl-clear
+        clear: both
+
+    // 溢出
+    .of-hd
+        overflow: hidden
+    .of-at
+        overflow: auto
+    .of-smooth
+        scroll-behavior: smooth

@@ -1,0 +1,43 @@
+// sass不允许动态声明变量
+// 一种是注册css变量
+// $color:(pr: #299eff,
+//     su: #30ce2b,
+//     wa: #ff9d26,
+//     da: #ff5a12,
+//     di: #727272,
+//     ac: #ffffff);
+
+// :root {
+
+//     @each $name,
+//     $val in $color {
+//         --color-#{$name}: #{$val};
+//         --color-#{$name}-dk: #{darken($val, 3%)};
+//         --color-#{$name}-lt: #{lighten($val, 3%)};
+//     }
+// }
+
+// 另一种 手写
+$color-pr:#299eff !default;
+$color-su:#30ce2b !default;
+$color-wa:#ff9d26 !default;
+$color-da:#ff2e12 !default;
+$color-ds:#727272 !default;
+$color-ac:#ffffff !default;
+
+$r1:10%;
+$r2:10%;
+
+$color-pr-dk:darken($color-pr, $r1) !default;
+$color-su-dk:darken($color-su, $r1) !default;
+$color-wa-dk:darken($color-wa, $r1) !default;
+$color-da-dk:darken($color-da, $r1) !default;
+$color-ds-dk:darken($color-ds, $r1) !default;
+$color-ac-dk:darken($color-ac, $r1) !default;
+
+$color-pr-lt:lighten($color-pr, $r1) !default;
+$color-su-lt:lighten($color-su, $r1) !default;
+$color-wa-lt:lighten($color-wa, $r1) !default;
+$color-da-lt:lighten($color-da, $r1) !default;
+$color-ds-lt:lighten($color-ds, $r1) !default;
+$color-ac-lt:lighten($color-ac, $r1) !default;

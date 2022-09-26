@@ -1,0 +1,27 @@
+#sniff-app,#sniff-search,#sniff-popup,#_sniff_btn
+    [class*=flex]
+        display: flex
+        &[class*=wrap]
+            flex-wrap: wrap
+
+        &[class*=cen]
+            justify-content: center
+        &[class*=col]
+            flex-direction: column
+        &[class*=rev]
+            flex-direction: row-reverse
+        &[class*=colrev]
+            flex-direction: column-reverse
+        &[class*=bwn]
+            justify-content: space-between
+        &[class*=-ard]
+            justify-content: space-around
+        &[class*=cntend]
+            justify-content: flex-end
+
+        &[class*=ter]
+            align-items: center
+        &[class*=algend]
+            align-items: flex-end
+        >.fx-1
+            flex: 1
