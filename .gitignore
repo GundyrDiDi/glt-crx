@@ -21,6 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.min.js
 
 # Vue Browser Extension Output
 *.pem
