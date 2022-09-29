@@ -41,11 +41,7 @@ const create = (langs) => {
   const locale = langs.reduce((acc, v) => ({ [v]: {}, ...acc }), {})
   Object.entries(message).forEach(([key, v]) => {
     langs.forEach((lang) => {
-      if (lang !== 'zh') {
-        locale[lang][key] = v[lang]
-      } else {
-        locale[lang][key] = key
-      }
+      locale[lang][key] = v[lang] ?? key
     })
   })
   return locale

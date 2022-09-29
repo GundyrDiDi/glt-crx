@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "KAERUツール(THE直行便)",
-  "homepage_url": "https://b2b.theckb.com/",
-  "description": "KAERUツール(THE直行便)",
+  "name": "谷歌表",
+  "homepage_url": "https://s.theckb.com/",
+  "description": "",
   "default_locale": "ja",
   "permissions": ["storage", "background", "tabs"],
   "icons": {
