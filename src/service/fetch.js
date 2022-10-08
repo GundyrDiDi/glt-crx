@@ -1,6 +1,6 @@
 // service worker 不能使用xhr，改为fetch
 // import md5 from 'md5'
-import { serize } from '@/common/util'
+import { serize } from '@/utils/utils'
 import { read } from './store'
 
 const reqURL = process.env.VUE_APP_URL
@@ -50,6 +50,14 @@ http.default = async config => {
 
 // 接口
 const apis = {
+  // 登录
+  loginByPwd: data => http.post('/customer/passwordLogin', { body: data }),
+  getLoginCode: data => http.post('/customer/emailLogin/send/code', { body: data }),
+  loginByCode: data => http.post('/customer/emailLogin', { body: data }),
+  // 保存谷歌表链接
+  setGoogleTable: data => http.post('/customer/passwordLogin', { body: data }),
+  // 商品加入谷歌表
+  postGoogleTable: data => http.post('/customer/passwordLogin', { body: data }),
   // 翻译
   translate: data =>
     http.post('/goods-validate/translate/common', { body: data }),

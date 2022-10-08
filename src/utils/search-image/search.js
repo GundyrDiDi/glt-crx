@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import md5 from 'md5'
-import { serizeR } from '@/common/util'
-import Cookies from '@/common/plugins/cookie'
 import axios from 'axios'
-import Vue from './vue'
-import Loading from '../plugins/loading'
+import { serizeR } from '@/utils/utils'
+import { sendMessage } from '@/utils/chrome'
+import Cookies from '@/plugins/cookie'
+import Loading from '@/plugins/loading'
 import { beforeJump } from './image'
 
 const _axios = axios.create({
@@ -154,7 +154,7 @@ export const getImgData = async () => {
     const { height, width } = cur.getBoundingClientRect()
     beforeJump({ height, width, plat, cur }, source, true)
   } else if (sniffimg) {
-    Vue.sendMessage('getSearchImg', sniffimg).then(dataurl => {
+    sendMessage('getSearchImg', sniffimg).then(dataurl => {
       const ins = Loading.service({
         text: '類似商品検索中です、しばらくお待ちください'
       })

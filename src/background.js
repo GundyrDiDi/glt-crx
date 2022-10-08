@@ -60,7 +60,10 @@ const dispatch = {
     }, 1000 * 60 * 60 * 24)
     return write('userData', data)
   },
-  //
+  // 通用
+  request ({ data }) {
+    return http[data[0]](data[1])
+  },
   read ({ data }) {
     return read(data)
   },
@@ -79,3 +82,5 @@ const dispatch = {
 }
 
 const timeout = { value: null }
+
+// 启动时确认用户名是否过期

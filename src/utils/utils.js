@@ -423,30 +423,3 @@ export function copyToClip (content) {
   document.execCommand('copy')
   document.body.removeChild(aux)
 }
-
-// export const getAnimation=(function(){
-//   const animations = [
-//     ['left', 'right'], // 0
-//     ['right','left'],  // 1
-//     ['up', 'up'],
-//     ['down', 'down']
-//   ].map((v) =>createClassNames('slide', v))
-//   function createClassNames (effect = 'fade',to, speed = 3) {
-//     const speeds = ['slower', 'slow', '', 'fast', 'faster', 'fastest']
-//     return to
-//       .map((v, i) =>
-//         ['animated', speeds[speed], effect + (i ? 'In' : 'Out') + v].join(' ')
-//       )
-//   }
-//   return n=>animations[n]
-// })()
-export function patchAnim (effect, speed = 3, mode = '') {
-  const sp = ['slower', 'slow', '', 'fast', 'faster', 'fastest'][speed]
-  // 如何加方向
-  const arr = ['', '']
-  return {
-    mode,
-    enterActiveClass: `animated ${effect}In${arr[0]} ${sp}`,
-    leaveActiveClass: `animated ${effect}Out${arr[1]} ${sp}`
-  }
-}

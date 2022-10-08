@@ -1,0 +1,45 @@
+#__sniff_v1_crx__ {
+  [class*='flex'] {
+    display: flex;
+
+    &[class*='cen'] {
+      justify-content: center;
+    }
+
+    &[class*='ter'] {
+      align-items: center;
+    }
+
+    &[class*='-col'] {
+      flex-direction: column;
+    }
+
+    &[class*='-rev'] {
+      flex-direction: row-reverse;
+    }
+
+    &[class*='-colrev'] {
+      flex-direction: column-reverse;
+    }
+
+    &[class*='-bwn'] {
+      justify-content: space-between;
+    }
+
+    &[class*='-ard'] {
+      justify-content: space-around;
+    }
+
+    &[class*='-wrap'] {
+      flex-wrap: wrap;
+    }
+
+    &[class*='-end'] {
+      justify-content: end;
+    }
+
+    > .fx-1 {
+      flex: 1;
+    }
+  }
+}

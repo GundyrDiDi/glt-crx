@@ -1,3 +1,3 @@
-import { getImgData } from '../monster/search'
+import { getImgData } from '@/utils/search-image/search'
 
 getImgData()

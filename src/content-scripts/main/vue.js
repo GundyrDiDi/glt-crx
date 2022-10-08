@@ -1,9 +1,15 @@
 import $ from 'jquery'
 import Vue from 'vue'
 import locale from '@/i18n'
+import { sendMessage } from '@/utils/chrome'
 import store from './store'
+import Crx from '../vue/Crx.vue'
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 
 Vue.config.productionTip = false
+
+Vue.use(Antd)
 
 Vue.prototype.$msg = function (msg, type = 'success') {
 //   message[type](msg)
@@ -13,11 +19,13 @@ Vue.prototype.$t = function (text) {
   return locale[this.$store.state.lang ?? 'ja'][text]
 }
 
-Vue.prototype.sendMessage = (cmd, data) => {
-  return new Promise(resolve => {
-    chrome.runtime.sendMessage({ cmd, data }, resolve)
-  })
+export const t = Vue.prototype.$t.bind(Vue.prototype)
+
+Vue.prototype.$jump = function (url) {
+  return window.open(process.env.VUE_APP_HOST + url)
 }
+
+Vue.prototype.sendMessage = sendMessage
 
 Vue.prototype.getToken = function (init) {
   // 从直行便获取用户信息
@@ -32,41 +40,30 @@ Vue.prototype.getToken = function (init) {
   })
 }
 
-Vue.prototype.initGlobal = function (plat, content) {
+const id = '__sniff_v1_crx__'
+export const createDom = (parent = 'body') => {
+  const el = $(`<div id="${id}"><div>`)
+  $(parent).append(el)
+  return id
+}
+
+export const createCrx = ({ plat, content, product }) => {
   Vue.prototype._platform = plat
-  Vue.prototype._platType = {
+  Vue.prototype._content = content.length ? content : null
+  Vue.prototype.$platType = {
     1688: 'AM',
     '1688-new': 'AM',
     taobao: 'TB',
     tmall: 'TM'
   }[plat]
-  Vue.prototype._content = content
-}
-
-const elemIds = Vue.prototype.$elemIds = {
-  product: '__sniff_v1_crx_product__',
-  bubble: '__sniff_v1_crx_bubble__',
-  attach: '__sniff_v1_crx_attach__'
-}
-
-//
-export default Vue.prototype
-
-export const createVue = (components, elemId, options) => {
-  if (!$('#' + elemId).length) {
-    elemId = createDom(elemId)
-  }
+  Vue.prototype.$product = product
+  Vue.prototype.getToken()
+  //
+  const id = Vue.prototype.$crxId = createDom()
   return new Vue({
     store,
-    ...options,
-    render: h => h(components)
-  }).$mount('#' + elemId)
-}
-
-export const createDom = (id) => {
-  const el = $(`<div id="${elemIds[id]}"><div>`)
-  $('body').append(el)
-  return el.id
+    render: h => h(Crx)
+  }).$mount('#' + id)
 }
 
 console.log('chrome', chrome)

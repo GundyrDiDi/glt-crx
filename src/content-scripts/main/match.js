@@ -6,8 +6,8 @@ function matchUrl (url) {
   return (word || '').slice(0, -1) || process.env.VUE_APP_IN
 }
 
-const url = location.href.replace(/\?.*$/, '')
-export const plat = matchUrl(url)
+export const getPlat = () => matchUrl(location.href.replace(/\?.*$/, ''))
+export const plat = getPlat()
 
 // 统一传入 { detailData , sku } 两类数据
 if (plat) {

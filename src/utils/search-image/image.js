@@ -1,22 +1,5 @@
 import $ from 'jquery'
-import Vue, { createVue } from './vue'
-import AttachImage from '../components/Attach/AttachImage.vue'
-
-/**
- * 1. 创建按钮，绑定点击事件
- * 2. 鼠标移动到图片，找到图片元素，添加按钮到图片上
- * 3. 点击生成base64图片，传输到background
- * 4. 打开新搜图页
- */
-export const createAttach = async () => {
-  const has = await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(!!$('#_sniff_btn')[0])
-    }, 100)
-  })
-  if (has) return
-  createVue(AttachImage, Vue.$elemIds.attach)
-}
+import { sendMessage } from '../chrome'
 
 // 上传图片方式搜图，兼容老插件
 export const execImgData = (imgData) => {
@@ -29,7 +12,7 @@ export const execImgData = (imgData) => {
 export const beforeJump = async (imgData, source = '1688', original = false) => {
   const base64 = await url2base64(imgData, source)
   if (/^data:image/.test(base64)) {
-    Vue.sendMessage('pushSearchImg', base64).then(res => {
+    sendMessage('pushSearchImg', base64).then(res => {
       jumpTo(res, source)
     })
   } else if (base64) {

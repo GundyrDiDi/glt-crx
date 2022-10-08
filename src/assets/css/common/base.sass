@@ -1,4 +1,4 @@
-#sniff-app,#sniff-search,#sniff-popup,#_sniff_btn
+#__sniff_v1_crx__
     .text-ct
         text-align: center
     .text-rt
@@ -20,21 +20,6 @@
     .text-sub
         color: #828d9b
         transform: scale(.85)
-    // 媒体
-
-    // 头像
-    .head-img
-        height: 4rem
-        width: 4rem
-        border-radius: 50%
-        @extend .box-dk-shadow
-
-    // 边
-    @mixin border($d:bottom,$p:1px,$s:solid,$c:#ddd)
-        border-#{$d}: $p $s $c
-
-    .brd-bt
-        @include border()
 
     // 阴影
     @mixin shadow($v:0,$h:0,$b:1px,$r:0,$c:rgba(0,0,0,.15))
@@ -57,42 +42,7 @@
 
     .rt-shadow
         @include shadow($v:1px,$b:2px)
-    // 手势
-    .cr-pt
-        cursor: pointer
 
-    // 链接 点击 选中
-    @import 'color.scss'
-    a
-        color: $color-pr
-    .link
-        cursor: pointer
-        &:hover
-            color: $color-pr-lt
-        &:active
-            color: $color-pr-dk
-        &.active
-            color: $color-pr
-
-    .link--btn
-        cursor: pointer
-        &:hover
-            color: $color-pr-lt
-        &:active
-            color: $color-pr-dk
-        &.active
-            color: $color-pr
-
-    .tag--wa
-        text-align: center
-        border-radius: .3rem
-        color: $color-ac
-        background: $color-wa
-    .tag--pr
-        text-align: center
-        border-radius: .3rem
-        color: $color-ac
-        background: $color-pr
     // 过渡动画
     .list-leave-active
         position: absolute

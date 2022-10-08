@@ -1,58 +1,99 @@
 <template>
-  <div class="top-bar" :class="{ ofhd: !!user }" :style="collapse ? mini : expand"
-    v-drag="{ can: () => collapse && user, onDrag }">
+  <div
+    class="sniff-crx-bubble"
+    :class="{ ofhd: !!user }"
+    :style="collapse ? mini : expand"
+    v-drag="{ can: () => collapse && user, onDrag }"
+  >
     <template v-if="user">
-      <transition enter-active-class="animated fastest fadeIn" leave-active-class="animated fastest fadeOut">
-        <div class="collapse flex-center" v-if="collapse" key="collapse" @click="drag || (collapse = false)">
-          <img style="height: 40px; pointer-events: none; user-select: none" :src="dfhead" alt="" />
+      <transition
+        enter-active-class="animated fastest fadeIn"
+        leave-active-class="animated fastest fadeOut"
+      >
+        <div
+          class="collapse flex-center"
+          v-if="collapse"
+          key="collapse"
+          @click="drag || (collapse = false)"
+        >
+          <img
+            style="height: 40px; pointer-events: none; user-select: none"
+            :src="dfhead"
+            alt=""
+          />
         </div>
         <div class="expand" v-else key="expand">
           <div class="flex-bwn">
-            <img class="bar1" src="../../assets/bar1.png" alt="" />
+            <img class="bar1" src="@/assets/bar1.png" alt="" />
             <div class="flex-center user-icon-yt">
               <!-- <el-tooltip :content="user.loginName" placement="left" :open-delay="500">
                 <img class="head" :src="dfhead" alt="" />
               </el-tooltip> -->
-              <img @click="collapse = true" class="collapse-arrow" src="../../assets/expand.png" alt="" />
+              <img
+                @click="collapse = true"
+                class="collapse-arrow"
+                src="@/assets/expand.png"
+                alt=""
+              />
               <!-- <el-button size="mini" @click="collapse = true">
             </el-button> -->
               <!-- <span>{{ user.loginName }}</span> -->
             </div>
           </div>
           <div class="flex-center search-box">
-            <input v-model="word" @keyup.enter="handleEnter" :placeholder="$t('搜索商品名或店舗名')" />
-            <img @click="link" class="icon" src="../../assets/search.png" />
+            <input
+              v-model="word"
+              @keyup.enter="handleEnter"
+              :placeholder="$t('搜索商品名或店舗名')"
+            />
+            <img @click="link" class="icon" src="@/assets/search.png" />
           </div>
         </div>
       </transition>
     </template>
     <template v-else>
-      <a :href="host" target="sniff" class="collapse flex-center" @mouseenter="tipshow = true"
-        @mouseleave="tipshow = false">
-        <img style="height: 40px; pointer-events: none; user-select: none;filter: sepia(1);" :src="dfhead" alt="" />
+      <a
+        :href="host"
+        target="sniff"
+        class="collapse flex-center"
+        @mouseenter="tipshow = true"
+        @mouseleave="tipshow = false"
+      >
+        <img
+          style="
+            height: 40px;
+            pointer-events: none;
+            user-select: none;
+            filter: sepia(1);
+          "
+          :src="dfhead"
+          alt=""
+        />
       </a>
-      <div v-show="tipshow" class="tip-text" v-html="$t('请先登录系统').split('\n').join('<br/>')">
-      </div>
+      <div
+        v-show="tipshow"
+        class="tip-text"
+        v-html="$t('请先登录系统').split('\n').join('<br/>')"
+      ></div>
     </template>
   </div>
 </template>
 
 <script>
-import gbk from '@/common/plugins/gbk.min.js'
-import dragDrective from '@/common/directives/drag'
+import gbk from '@/plugins/gbk.min.js'
+import dragDrective from '@/directives/drag'
 
 let isEnter = false
 export default {
-  name: 'bar-1688',
-  props: ['user', 'plat'],
   directives: {
     drag: dragDrective
   },
   data () {
     return {
+      platType: this._platType,
       host: process.env.VUE_APP_HOST,
       word: '',
-      dfhead: require('../../assets/logo-m.png'),
+      dfhead: require('@/assets/logo-m.png'),
       collapse: true,
       drag: false,
       expand: {
@@ -69,14 +110,16 @@ export default {
         animation: 'bounce_a_bit 10s ease-in-out 10s infinite alternate'
       },
       searchUrl: {
-        taobao: 'https://s.taobao.com/search?q=',
-        1688: 'https://s.1688.com/selloffer/offer_search.htm?keywords=',
-        '1688-new': 'https://s.1688.com/selloffer/offer_search.htm?keywords=',
-        tmall: 'https://list.tmall.com/search_product.htm?q=',
-        cantonfair:
-          'https://www.cantonfair.org.cn/zh-CN/detailed?category=&type=1&keyword='
+        TB: 'https://s.taobao.com/search?q=',
+        AM: 'https://s.1688.com/selloffer/offer_search.htm?keywords=',
+        TM: 'https://list.tmall.com/search_product.htm?q='
       },
       tipshow: false
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.state.user
     }
   },
   watch: {
@@ -100,24 +143,27 @@ export default {
       }
     },
     link () {
-      // console.log(chrome)
       const w = this.word.replace(/\s/g, '+')
-      // 中文字符 4E00 9FEF
-      chrome.runtime.sendMessage({
-        cmd: 'translate',
-        data: {
-          customerId: this.user?.customerId,
-          keyword: w,
-          platformType: this._platType
+      chrome.runtime.sendMessage(
+        {
+          cmd: 'translate',
+          data: {
+            customerId: this.user?.customerId,
+            keyword: w,
+            platformType: this._platType
+          }
+        },
+        (res) => {
+          console.log(res)
+          if (res.code === '0') {
+            window.open(
+              this.searchUrl[this.plat] + gbk.URI.encodeURI(res.data)
+            )
+          } else {
+            window.open(this.searchUrl[this.plat] + gbk.URI.encodeURI(w))
+          }
         }
-      }, res => {
-        console.log(res)
-        if (res.code === '0') {
-          window.open(this.searchUrl[this.plat] + gbk.URI.encodeURI(res.data))
-        } else {
-          window.open(this.searchUrl[this.plat] + gbk.URI.encodeURI(w))
-        }
-      })
+      )
     }
   }
 }
@@ -142,9 +188,6 @@ export default {
 }
 </style>
 <style scoped lang="scss">
-* {
-  box-sizing: border-box;
-}
 
 .tip-text {
   position: absolute;
@@ -158,7 +201,9 @@ export default {
   top: -1px;
 }
 
-.top-bar {
+.sniff-crx-bubble {
+  position: fixed;
+  z-index: 200000000;
   right: 5%;
   top: 20px;
   background: #ffbb00;
@@ -169,7 +214,7 @@ export default {
     overflow: hidden;
   }
 
-  >div {
+  > div {
     position: absolute;
   }
 
@@ -198,7 +243,7 @@ export default {
     border-radius: 50%;
     margin-right: 15px;
 
-    &+span {
+    & + span {
       position: relative;
       top: 2px;
     }
@@ -243,4 +288,5 @@ export default {
   top: -7px;
   cursor: pointer;
 }
+
 </style>
