@@ -15,11 +15,11 @@ Vue.prototype.$msg = function (msg, type = 'success') {
 //   message[type](msg)
 }
 
-Vue.prototype.$t = function (text) {
-  return locale[this.$store.state.lang ?? 'ja'][text]
+export const t = function (text) {
+  return locale[store.state.lang ?? 'ja'][text]
 }
 
-export const t = Vue.prototype.$t.bind(Vue.prototype)
+Vue.prototype.$t = t
 
 Vue.prototype.$jump = function (url) {
   return window.open(process.env.VUE_APP_HOST + url)

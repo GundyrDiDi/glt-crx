@@ -6,9 +6,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   Promise.resolve()
     .then(() => dispatch[request.cmd](request, sender))
     .then(res => sendResponse(res))
-    .catch(e => {
-      sendResponse(new Error('background error'))
-    })
+    .catch(e => sendResponse({ error: 'background error', res: e }))
     // 异步返回必须先返回true
   return true
 })

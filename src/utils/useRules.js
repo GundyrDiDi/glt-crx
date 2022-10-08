@@ -1,4 +1,5 @@
-import { t } from '@/content-scripts/main/vue'
+import { t as $t } from '@/content-scripts/main/vue'
+const t = (text) => new Error($t(text))
 
 const rules = {
   plainEn (rule, val, callback) {
@@ -50,7 +51,7 @@ const rules = {
   },
   email (rule, val, callback) {
     if (!/[\d\w]+\b@([a-zA-ZA-z0-9-]+\.)+[a-z]+/.test(val)) {
-      callback(t('邮箱格式不正确，请重新输入'))
+      callback(t('无效邮箱'))
     } else {
       callback()
     }
@@ -116,7 +117,7 @@ export const useRule = (key, trigger = 'blur') => {
   ]
 }
 
-export const useMust = (message, trigger = 'blur') => {
+export const useMust = (message = $t('必填内容'), trigger = 'blur') => {
   return [{ required: true, message, trigger }]
 }
 

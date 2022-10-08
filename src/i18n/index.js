@@ -46,6 +46,16 @@ const message = {
   注册会员: {
     ja: '新規会員登録',
     ko: '아이디가 존재하지 않습니다.회원가입하러가기'
+  },
+  仅限输入英文和数字字符: {
+    ja: '英数字のみで入力して下さい',
+    ko: ''
+  },
+  无效邮箱: {
+    ja: 'メールアドレス形式不正'
+  },
+  必填内容: {
+    ja: '※必須項目です'
   }
 }
 
@@ -59,4 +69,4 @@ const create = (langs) => {
   return locale
 }
 
-export default create(['ja', 'ko'])
+export default create(['ja', 'ko', 'zh'])

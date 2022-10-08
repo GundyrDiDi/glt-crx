@@ -2,14 +2,20 @@
   <div v-show="show" class="sniff-crx-login">
     <div class="abs-wrap" @click="show = false"></div>
     <div class="abs sniff-crx-login-content">
-      <a-form-model :model="form" :rules="rules" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }">
+      <a-form-model
+        ref="form"
+        :model="form"
+        :rules="rules"
+        :label-col="{ span: 4 }"
+        :wrapper-col="{ span: 20 }"
+      >
         <a-form-model-item prop="nameOrEmail">
           <template #label> nameOrEmail </template>
           <a-input v-model="form.nameOrEmail"></a-input>
         </a-form-model-item>
         <a-form-model-item prop="password">
           <template #label> password </template>
-          <a-input v-model="form.password"></a-input>
+          <a-input type="password" v-model="form.password"></a-input>
         </a-form-model-item>
         <a-form-model-item prop="customerEmail">
           <template #label> customerEmail </template>
@@ -20,11 +26,17 @@
           <a-input v-model="form.verificationCode"></a-input>
         </a-form-model-item>
       </a-form-model>
-      <a-button type="primary" :loading="loading" shape="round" :block="true" @click="signin">
+      <a-button
+        type="primary"
+        shape="round"
+        :block="true"
+        :loading="loading"
+        @click="signin"
+      >
         {{ $t("登录") }}
       </a-button>
-      <a @click="$jump('login/findpwd')">{{$t('忘记密码')}}</a>
-      <a @click="$jump('signup')">{{$t('注册会员')}}</a>
+      <a @click="$jump('login/findpwd')">{{ $t("忘记密码") }}</a>
+      <a @click="$jump('signup')">{{ $t("注册会员") }}</a>
     </div>
   </div>
 </template>
@@ -37,25 +49,42 @@ export default {
     return {
       show: true,
       form: {
-        nameOrEmail: '',
-        password: '',
-        customerEmail: '',
-        verificationCode: ''
+        nameOrEmail: 'testApi',
+        password: '123456',
+        customerEmail: '1@1.c',
+        verificationCode: '1111'
       },
       rules: {
-        nameOrEmail: useMust(this.$t('必填内容')),
+        nameOrEmail: useMust(),
         password: useRules({ key: 'plain' }),
         customerEmail: useRules({ key: 'email' }),
         verificationCode: useRules({ key: 'plain' })
-      }
+      },
+      loading: false
     }
   },
   methods: {
     signin () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.loading = true
+          const data = {
+            ...this.form,
+            password: md5(this.form.password)
+          }
+          this.sendMessage('request', ['loginByPwd', data]).then(res => {
+            const userData = { token: res.data.token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId }
+            this.sendMessage('setUserData', userData)
+          }).then(() => {
+            setTimeout(e => {
+              this.loading = false
+            }, 3000)
+          })
+        }
+      })
     }
   },
   mounted () {
-    // console.log(2)
   }
 }
 </script>

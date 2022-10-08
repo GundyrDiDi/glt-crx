@@ -82,10 +82,10 @@ const apis = {
 http.response = res => {
   const code = res.code
   if (code === '0') {
-    res.success = true
+    return Promise.resolve(res)
+  } else {
+    return Promise.reject(res)
   }
-  // write('userData', null)
-  return res
 }
 
 export default apis

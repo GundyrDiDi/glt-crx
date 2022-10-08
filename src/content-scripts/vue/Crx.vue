@@ -1,9 +1,11 @@
 <template>
   <div :id="$crxId">
-    <Login ref="login" v-if="!user"/>
-    <Bubble ref="bubble" v-if="platType" :user="user" @toLogin="$refs.login.show=true"/>
     <AttachImage :user="user"/>
-    <Product v-if="!!$product" ref="product" :user="user"/>
+    <template v-if="$platType">
+      <Login ref="login" v-if="!user"/>
+      <Bubble ref="bubble" v-if="platType" :user="user" @toLogin="$refs.login.show=true"/>
+      <Product v-if="!!$product" ref="product" :user="user"/>
+    </template>
   </div>
 </template>
 <script>
