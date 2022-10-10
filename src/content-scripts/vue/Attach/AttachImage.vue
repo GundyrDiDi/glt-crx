@@ -114,7 +114,7 @@ export default {
         const el = customer(v, this.plat)
         if (!el) return
         const { left, top, height, width } = el.getBoundingClientRect()
-        if (height < 60 || width < 60) return
+        if (height < 70 || width < 70) return
         if (height * width > 760 * 760) return
         if (left <= x && left + width >= x && top <= y && top + height >= y) {
           t = [el, { left, top, width, height }]

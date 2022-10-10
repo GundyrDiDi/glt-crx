@@ -95,7 +95,7 @@ export default {
   left: 0;
   height: 100vh;
   width: 100vw;
-  z-index: 1000000;
+  z-index: 200000000;
 
   .abs-wrap {
     background: rgba(0, 0, 0, 0.2);

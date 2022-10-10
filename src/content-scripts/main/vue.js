@@ -4,19 +4,18 @@ import locale from '@/i18n'
 import { sendMessage } from '@/utils/chrome'
 import store from './store'
 import Crx from '../vue/Crx.vue'
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
+import Antd, { message } from 'ant-design-vue'
 
 Vue.config.productionTip = false
 
 Vue.use(Antd)
 
 Vue.prototype.$msg = function (msg, type = 'success') {
-//   message[type](msg)
+  message[type](this.$t(msg) ?? msg)
 }
 
 export const t = function (text) {
-  return locale[store.state.lang ?? 'ja'][text]
+  return locale[store.state.lang ?? 'ja'][text] ?? text
 }
 
 Vue.prototype.$t = t
@@ -33,7 +32,7 @@ Vue.prototype.getToken = function (init) {
     console.log(res)
     store.commit('setUserData', res ?? {})
     // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
-    setTimeout(e => this.getToken(), 3000)
+    setTimeout(e => this.getToken(), 2000)
   })
   this.sendMessage('read', 'lang').then(res => {
     store.commit('setLang', res ?? 'ja')
@@ -47,9 +46,8 @@ export const createDom = (parent = 'body') => {
   return id
 }
 
-export const createCrx = ({ plat, content, product }) => {
+export const createCrx = ({ plat, product }) => {
   Vue.prototype._platform = plat
-  Vue.prototype._content = content.length ? content : null
   Vue.prototype.$platType = {
     1688: 'AM',
     '1688-new': 'AM',
@@ -60,10 +58,12 @@ export const createCrx = ({ plat, content, product }) => {
   Vue.prototype.getToken()
   //
   const id = Vue.prototype.$crxId = createDom()
-  return new Vue({
-    store,
-    render: h => h(Crx)
-  }).$mount('#' + id)
+  setTimeout(() => {
+    new Vue({
+      store,
+      render: h => h(Crx)
+    }).$mount('#' + id)
+  }, 100)
 }
 
 console.log('chrome', chrome)

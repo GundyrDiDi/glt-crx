@@ -1,10 +1,15 @@
 <template>
   <div :id="$crxId">
-    <AttachImage :user="user"/>
-    <template v-if="$platType">
-      <Login ref="login" v-if="!user"/>
-      <Bubble ref="bubble" v-if="platType" :user="user" @toLogin="$refs.login.show=true"/>
-      <Product v-if="!!$product" ref="product" :user="user"/>
+    <AttachImage :user="user" />
+    <template v-if="platType">
+      <Login ref="login" v-if="!user" />
+      <Bubble ref="bubble" v-if="platType" :user="user" @after="afterLogin" />
+      <Product
+        ref="product"
+        v-if="!!$product"
+        :user="user"
+        @after="afterLogin"
+      />
     </template>
   </div>
 </template>
@@ -32,6 +37,11 @@ export default {
       return this.$store.state.user
     }
   },
+  methods: {
+    afterLogin (callback) {
+      return this.user ? callback() : (this.$refs.login.show = true)
+    }
+  },
   mounted () {
     if (this.$product) {
       $(this.$product).append(this.$refs.product.$el)
@@ -39,4 +49,28 @@ export default {
   }
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+body {
+  .ant-message {
+    z-index: 200000000 !important;
+  }
+  .ant-input {
+    width: 170px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid #898989;
+    transition: all .2s linear;
+  }
+  .ant-input:focus,
+  .ant-input:hover {
+    background: #FAFAFA;
+    box-shadow: inset 0px 5px 8px 0px #EFEFEF, inset 0px -3px 0px 0px #FFFFFF;
+  }
+  .ant-input:hover {
+    border: 1px solid #898989;
+  }
+  .ant-input:focus {
+    border-color: transparent;
+  }
+}
+</style>

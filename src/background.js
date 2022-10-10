@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 const dispatch = {
   // 翻译
   async translate ({ data }) {
-    const lang = read('lang')
+    const lang = await read('lang')
     const formData = {
       from: lang,
       to: 'zh',
@@ -69,11 +69,18 @@ const dispatch = {
     return write(data[0], data[1])
   },
   // 临时
-  add ({ data }) {
+  test ({ data }) {
     const headers = {}
     headers['Content-Type'] = 'application/json;charset=UTF-8'
-    const body = JSON.stringify(data.data)
-    return fetch('http://192.168.105.251:35557/tbparse/', { method: 'post', headers, body })
+    const body = JSON.stringify(data)
+    return fetch('http://192.168.102.63:15678//productPlugInInsert', { method: 'post', headers, body }).then(res => res.json()).then(res => {
+      const code = res.code
+      if (code === '0') {
+        return Promise.resolve(res)
+      } else {
+        return Promise.reject(res)
+      }
+    })
   }
   // todo:找相似 需要商品offerId 商品图片链接
   // https://s.1688.com/selloffer/similar_search.html?offerIds=653423014399&imageAddress=https%3A%2F%2Fcbu01.alicdn.com%2Fimg%2Fibank%2FO1CN01rtJrg41YIXBNU9EJB_!!2309863036-0-cib.jpg&scene=similar_search&postCatPaths=201568525%20124014010%2070&sameDesignEnable=false

@@ -6,8 +6,8 @@ export default {
     let deltaY = 0
     let transition = ''
     let animation = ''
-    const { can, onDrag } = value
-    el.addEventListener('mousedown', e => {
+    const { can, onDrag, selector } = value
+    $(selector, el).on('mousedown', e => {
       if (!can()) return
       down = true
       deltaX = e.offsetX
@@ -27,7 +27,7 @@ export default {
         })
       }
     })
-    el.addEventListener('mouseup', e => {
+    $(selector, el).on('mouseup', e => {
       if (!can()) return
       down = false
       el.style.transition = transition

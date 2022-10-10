@@ -2,11 +2,18 @@ import $ from 'jquery'
 import { createCrx } from './vue'
 import { execImgData } from '@/utils/search-image/image'
 import { sendMessage } from '@/utils/chrome'
+import execDetail from './detailData'
 
 window.addEventListener('message', res => {
-  let { plat, content } = res.data
-  if (!plat) return
-  console.log({ plat, content })
+  const { platform, detail } = res.data
+  // console.log(res.data)
+  if (!platform) return
+  //
+  let plat = platform
+  if (detail?.length) {
+    execDetail(plat, detail)
+  }
+  console.log({ plat, detail })
   // 当前是否在商详页
   let product
   // 匹配各个平台元素
@@ -37,6 +44,6 @@ window.addEventListener('message', res => {
   }
   // 初始化vue实例
   if (plat) {
-    createCrx({ plat, content, product })
+    createCrx({ plat, product })
   }
 })
