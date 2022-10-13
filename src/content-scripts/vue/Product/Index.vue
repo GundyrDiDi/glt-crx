@@ -2,7 +2,7 @@
   <div v-if="user" class="sniff-crx-product" :class="'sniff-crx-product-' + _platform">
     <a
       href="#"
-      @click.prevent="() => buy()"
+      @click.prevent="buy"
       class="flex"
       :class="{ loading, requesting }"
     >
@@ -23,6 +23,7 @@ import query1688, { query1688Rule2 } from './hook/1688'
 import queryTb from './hook/taobao'
 import queryTm from './hook/tmall'
 import { forTable } from '@/content-scripts/main/detailData'
+
 export default {
   props: ['user'],
   data () {
@@ -66,7 +67,7 @@ export default {
       }
       return dep[this._platform]
     },
-    async buy () {
+    async buy (e) {
       if (this.loading) return
       this.requesting = true
       await this.trigger()
@@ -82,13 +83,18 @@ export default {
         this.requesting = false
       } else {
         const data = forTable(skuList)
-        const googleUrl = this.user.googleUrl ?? 'https://docs.google.com/spreadsheets/d/1IUgN7BqlmovmhOjKcro1uPN_D83hg2vjEFmRhZB04OY/edit#gid=568775841'
-        console.log({ googleUrl, data })
-        await this.sendMessage('test', { googleUrl, data }).then((res) => {
-          this.$msg('写入成功')
-        }, e => {
-          this.$msg('写入失败', 'error')
+        const googleUrl = this.user.googleUrl
+        const { left, top, height, width } = $('.sniff-crx-bubble-icon')[0].getBoundingClientRect()
+        this.$store.commit('setParabola', {
+          src: (skuList.length > 1 ? window.$detail.productImg : skuList[0].photoUrl) || window.$detail.productImg,
+          p1: [e.x, e.y],
+          p3: [left + width / 2, top + height / 2]
         })
+        // await this.sendMessage('request', ['postGoogleTable', { googleUrl, data }]).then((res) => {
+        //   this.$msg('写入成功')
+        // }, e => {
+        //   this.$msg('写入失败', 'error')
+        // })
         this.requesting = false
       }
     }

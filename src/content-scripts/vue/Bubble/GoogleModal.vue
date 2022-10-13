@@ -1,18 +1,18 @@
 <template>
   <a-modal
-    :visible="visible"
-    title="Basic Modal"
+    :visible="showModal"
     :zIndex="111111111111"
     :footer="null"
     :width="480"
     centered
-    @cancel="$emit('hide', false)"
+    @cancel="$store.commit('showModal',false)"
   >
     <div class="sniff-crx-modal">
       <div class="sniff-crx-modal-title">{{ $t("绑定谷歌表") }}</div>
       <div>
-        <div style="margin: 50px 0;">
-          <a-input v-model="url"></a-input>
+        <div style="position:relative;margin: 50px 0;">
+          <a-input v-model="url" :placeholder="$t('请输入谷歌表链接')"></a-input>
+          <span class="sniff-input-clear" @click="url=''">×</span>
         </div>
         <div>
           <a-button
@@ -20,8 +20,9 @@
             shape="round"
             :block="true"
             :loading="loading"
+            :disabled="url===origin"
             @click="bind"
-            >{{ $t("绑定") }}</a-button
+            >{{ $t((origin&&!url)?"删除":"绑定") }}</a-button
           >
         </div>
       </div>
@@ -30,12 +31,10 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+
+const isUrl = (url) => /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-.,@?^=%&:/~+#]*[\w\-@?^=%&/~+#])?/.test(url)
+
 export default {
-  model: {
-    prop: 'visible',
-    event: 'hide'
-  },
-  props: ['visible'],
   data () {
     return {
       origin: '',
@@ -43,14 +42,31 @@ export default {
       loading: false
     }
   },
-  computed: mapState(['lang', 'user']),
+  computed: mapState(['lang', 'user', 'showModal']),
+  watch: {
+    visible (v) {
+      if (v) {
+        this.url = this.origin = this.lang
+      }
+    }
+  },
   methods: {
-    bind () {
-      this.$emit('hide', false)
+    async bind () {
+      const googleUrl = this.url
+      this.loading = true
+      await this.sendMessage('request', ['setGoogleTable', {
+        googleUrl,
+        customerId: this.user.customerId
+      }]).then(res => {
+        console.log(res)
+        this.$store.commit('showModal', false)
+        this.$msg('绑定成功')
+      })
+      this.loading = false
     }
   },
   created () {
-    this.url = this.origin = this.lang
+    this.url = this.origin = this.user.googleUrl
   }
 }
 </script>
@@ -73,11 +89,23 @@ export default {
     height: 44px;
     width:100%;
     border-radius:22px;
+    padding-right:50px;
   }
   .ant-btn{
     height: 50px;
     border-radius: 30px;
     font-size: 20px;
   }
+}
+.sniff-input-clear{
+    position: absolute;
+    right: 17px;
+    font-size: 35px;
+    top: -4px;
+    color: #aaa;
+    cursor: pointer;
+    &:hover{
+        color:#333;
+    }
 }
 </style>

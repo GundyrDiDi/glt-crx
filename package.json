@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service build --mode test --watch",
+    "serve": "vue-cli-service build --mode development --watch",
     "build:test": "vue-cli-service build --mode test",
     "build:prod": "vue-cli-service build --mode prod",
     "lint": "vue-cli-service lint"
@@ -39,6 +39,7 @@
     "lint-staged": "^9.5.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "svg-sprite-loader": "^6.0.11",
     "vue-cli-plugin-browser-extension": "latest",
     "vue-template-compiler": "^2.6.11"
   },

@@ -3,33 +3,46 @@
     class="sniff-crx-bubble"
     v-drag="{ selector:'.sniff-crx-bubble-icon', can: () => !!user, onDrag: (v) => (drag = v) }"
   >
-    <div class="abs sniff-crx-bubble-icon" @click="$emit('after',()=> drag || (collapse = !collapse))"></div>
+    <div class="abs sniff-crx-bubble-icon" @click="$emit('after',()=> drag || (collapse = !collapse))">
+      <svg-icon name="购物袋" :class="{droping}"></svg-icon>
+    </div>
     <div class="abs sniff-crx-bubble-box" :class="{collapse}">
       <div class="abs sniff-crx-bubble-close" @click="collapse=true">×</div>
       <Search></Search>
-      <Pocket></Pocket>
+      <Pocket :list="list">
+        <div v-if="loading" class="abs-wrap flex-center" style="background: rgba(255,255,255,.2);z-index: 1;">
+          <a-spin/>
+        </div>
+      </Pocket>
     </div>
+    <GoogleModal/>
   </div>
 </template>
 
 <script>
 import Pocket from './Pocket.vue'
 import Search from './Search.vue'
+import GoogleModal from './GoogleModal.vue'
 import dragDrective from '@/directives/drag'
+import { mapState } from 'vuex'
 
 export default {
-  props: ['user'],
   components: {
     Pocket,
-    Search
+    Search,
+    GoogleModal
   },
   directives: {
     drag: dragDrective
   },
+  computed: mapState(['lang', 'user', 'parabola']),
   data () {
     return {
       collapse: false,
-      drag: false
+      drag: false,
+      list: [],
+      loading: false,
+      droping: false
     }
   },
   watch: {
@@ -37,7 +50,37 @@ export default {
       if (!v) {
         this.collapse = true
       }
+    },
+    parabola (v) {
+      if (v) {
+        setTimeout(() => {
+          this.droping = true
+          setTimeout(() => {
+            this.droping = false
+          }, 100)
+        }, 900)
+      }
     }
+  },
+  methods: {
+    getList () {
+      // this.loading = true
+      this.list = []
+      // this.sendMessage('request', [
+      //   'getGoogleTable',
+      //   { googleUrl: this.user.googleUrl, googleHeaderData: 'time,photoUrl,productUrl,productName,productSpecification' }
+      // ]).then((res) => {
+      //   this.list = res.data
+      //   this.loading = false
+      //   console.log(res)
+      // })
+    },
+    deleteItem () {
+      this.sendMessage('request', ['deleteGoogleTable']).then((res) => {})
+    }
+  },
+  created () {
+    this.getList()
   }
 }
 </script>
@@ -53,21 +96,30 @@ export default {
   &-icon{
     width:50px;
     height:50px;
-    border-radius:50%;
-    background:#232323;
+    animation: bounce_a_bit 10s ease-in-out infinite alternate;
+    svg{
+      font-size:50px;
+      border-radius:50%;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
+      transition: all .1s ease-out;
+    }
+    .droping{
+      transform:translateY(4px);
+    }
   }
   &-box{
     top:55px;
     right:-5px;
     width:220px;
-    min-height: 300px;
-    max-height:500px;
+    transform:scaleY(1);
+    transform-origin: top center;
     background:#FDFDFD;
     transition:all .2s ease-in-out;
     overflow: hidden;
+    box-shadow: 0px 2px 4px 0px #DEDEDE;
+    border-radius:8px;
     &.collapse{
-      min-height:0px;
-      height:0;
+      transform:scaleY(0);
     }
   }
   &-close{

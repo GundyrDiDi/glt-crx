@@ -15,7 +15,10 @@ const store = new Vuex.Store({
     token: getLang(),
     systemSource: 1,
     curShop: null,
-    user: null
+    user: null,
+    //
+    showModal: false,
+    parabola: null
   },
   mutations: {
     setUserData (state, val) {
@@ -35,6 +38,12 @@ const store = new Vuex.Store({
     },
     setLang (state, val) {
       state.lang = val
+    },
+    showModal (state, val) {
+      state.showModal = val
+    },
+    setParabola (state, val) {
+      state.parabola = val
     }
   }
 })

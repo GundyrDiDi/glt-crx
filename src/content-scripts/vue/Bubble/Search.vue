@@ -1,5 +1,5 @@
 <template>
-  <div class="abs sniff-crx-bubble-search flex-col-bwn">
+  <div class="sniff-crx-bubble-search flex-col-bwn">
     <div>
       <a-dropdown :getPopupContainer="n=>n.parentNode">
         <a>{{ $t(langs.find(v=>v.value===lang).label) }}</a>
@@ -15,18 +15,15 @@
       @keyup.enter="search"
       ></a-input>
       <div class="sniff-crx-bubble-tablebtn">
-        <a-button @click="showModal=true">T</a-button>
+        <a-button @click="$store.commit('showModal',true)">T</a-button>
       </div>
     </div>
-    <GoogleModal v-model="showModal"/>
   </div>
 </template>
 <script>
 import gbk from '@/plugins/gbk.min.js'
 import { mapState } from 'vuex'
-import GoogleModal from './GoogleModal.vue'
 export default {
-  components: { GoogleModal },
   data () {
     return {
       showModal: false,

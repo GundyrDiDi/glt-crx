@@ -65,21 +65,20 @@ export default {
   },
   methods: {
     signin () {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true
           const data = {
             ...this.form,
             password: md5(this.form.password)
           }
-          this.sendMessage('request', ['loginByPwd', data]).then(res => {
+          await this.sendMessage('request', ['loginByPwd', data]).then(res => {
             const userData = { token: res.data.token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId }
             this.sendMessage('setUserData', userData)
-          }).then(() => {
-            setTimeout(e => {
-              this.loading = false
-            }, 3000)
           })
+          setTimeout(e => {
+            this.loading = false
+          }, 2000)
         }
       })
     }

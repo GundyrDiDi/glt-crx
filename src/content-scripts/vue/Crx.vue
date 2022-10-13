@@ -3,13 +3,14 @@
     <AttachImage :user="user" />
     <template v-if="platType">
       <Login ref="login" v-if="!user" />
-      <Bubble ref="bubble" v-if="platType" :user="user" @after="afterLogin" />
+      <Bubble ref="bubble" v-if="platType" @after="afterLogin" />
       <Product
         ref="product"
         v-if="!!$product"
         :user="user"
         @after="afterLogin"
       />
+      <Parabola/>
     </template>
   </div>
 </template>
@@ -18,6 +19,7 @@ import Login from './Login/Login.vue'
 import Bubble from './Bubble/Index.vue'
 import AttachImage from './Attach/AttachImage.vue'
 import Product from './Product/Index.vue'
+import Parabola from './Product/Parabola.vue'
 import $ from 'jquery'
 export default {
   data () {
@@ -30,7 +32,8 @@ export default {
     Login,
     Bubble,
     AttachImage,
-    Product
+    Product,
+    Parabola
   },
   computed: {
     user () {

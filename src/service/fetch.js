@@ -6,47 +6,64 @@ import { read } from './store'
 const reqURL = process.env.VUE_APP_URL
 
 // 造 axios
-const http = async (url, config = {}) => {
-  const { params, ...rest } = config
-  const whole = reqURL + serize(params, url)
-  return fetch(whole, await http.default(rest))
-    .then(res => res.json())
-    .then(res => http.response(res))
-}
-
-http.post = (url, config) =>
-  http(url, {
-    method: 'post',
-    ...config
-  })
-http.get = (url, config) =>
-  http(url, {
-    method: 'get',
-    ...config
-  })
-http.default = async config => {
-  const { token, curShop } = await read('userData')
-  const headers = {
-    'X-AuthToken': token,
-    'X-AuthShopId': curShop
+const _axios = {}
+_axios.create = (reqURL) => {
+  const http = async (url, config = {}) => {
+    const { params, ...rest } = config
+    const whole = reqURL + serize(params, url)
+    return fetch(whole, await http.default(rest))
+      .then(res => res.json())
+      .then(res => http.response(res))
   }
-  // if (config)
-  console.log(config)
-  if (config.body instanceof FormData) {
 
-  } else if (config.body instanceof URLSearchParams) {
+  http.post = (url, config) =>
+    http(url, {
+      method: 'post',
+      ...config
+    })
+  http.get = (url, config) =>
+    http(url, {
+      method: 'get',
+      ...config
+    })
+  http.default = async config => {
+    const { token, curShop } = await read('userData')
+    const headers = {
+      'X-AuthToken': token,
+      'X-AuthShopId': curShop
+    }
+    // if (config)
+    console.log(config)
+    if (config.body instanceof FormData) {
 
-  } else {
-    headers['Content-Type'] = 'application/json;charset=UTF-8'
-    if (config.body instanceof Object) {
-      config.body = JSON.stringify(config.body)
+    } else if (config.body instanceof URLSearchParams) {
+
+    } else {
+      headers['Content-Type'] = 'application/json;charset=UTF-8'
+      if (config.body instanceof Object) {
+        config.body = JSON.stringify(config.body)
+      }
+    }
+    return {
+      headers,
+      ...config
     }
   }
-  return {
-    headers,
-    ...config
+  // 拦截响应
+  http.response = res => {
+    const code = res.code
+    if (code === '0') {
+      return Promise.resolve(res)
+    } else {
+      return Promise.reject(res)
+    }
   }
+
+  return http
 }
+
+const http = _axios.create(reqURL)
+const http1 = _axios.create('http://47.242.239.79:12359/')
 
 // 接口
 const apis = {
@@ -54,10 +71,13 @@ const apis = {
   loginByPwd: data => http.post('/customer/passwordLogin', { body: data }),
   getLoginCode: data => http.post('/customer/emailLogin/send/code', { body: data }),
   loginByCode: data => http.post('/customer/emailLogin', { body: data }),
+  getUser: data => http.get('/customer/getCustomerDetails', { params: data }),
   // 保存谷歌表链接
-  setGoogleTable: data => http.post('/customer/passwordLogin', { body: data }),
+  setGoogleTable: data => http.post('/customer/updateCustomerGoogle', { body: data }),
   // 商品加入谷歌表
-  postGoogleTable: data => http.post('/customer/passwordLogin', { body: data }),
+  getGoogleTable: data => http1.post('/productPlugInSelect', { body: data }),
+  postGoogleTable: data => http1.post('/productPlugInInsert', { body: data }),
+  deleteGoogleTable: data => http1.post('/productPlugInDelete', { body: data }),
   // 翻译
   translate: data =>
     http.post('/goods-validate/translate/common', { body: data }),
@@ -76,16 +96,6 @@ const apis = {
     http.post('', {
       body: data
     })
-}
-
-// 拦截响应
-http.response = res => {
-  const code = res.code
-  if (code === '0') {
-    return Promise.resolve(res)
-  } else {
-    return Promise.reject(res)
-  }
 }
 
 export default apis

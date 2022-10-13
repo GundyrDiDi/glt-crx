@@ -15,7 +15,7 @@ export default () => {
     )
     const url = $('a', v).css('background')
     if (url.includes('url')) {
-      img = url.match(/url\("(.*)"\)/)[1].replace(/_\d+x\d+.*\..*$/, '')
+      img = url.match(/url\("(.*)"\)/)[1]
     }
     if (v.dataset.value) {
       values.push(v.dataset.value)

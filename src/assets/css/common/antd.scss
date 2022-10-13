@@ -12,6 +12,11 @@
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 /* stylelint-disable at-rule-no-unknown */
 #__sniff_v1_crx__{
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
   input::-ms-clear,
   input::-ms-reveal {
     display: none;

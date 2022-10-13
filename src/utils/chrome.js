@@ -1,5 +1,5 @@
 export const sendMessage = (cmd, data) => {
-  return new Promise((resolve, reject) => {
+  const p = new Promise((resolve, reject) => {
     chrome.runtime.sendMessage({ cmd, data }, (res) => {
       if (res?.error === 'background error') {
         console.error(res)
@@ -9,6 +9,13 @@ export const sendMessage = (cmd, data) => {
       }
     })
   })
+  return {
+    then: (...rest) => {
+      return p.then(...rest).catch(e => {})
+    },
+    catch: p.catch.bind(p),
+    finally: p.finally.bind(p)
+  }
 }
 
 export default {

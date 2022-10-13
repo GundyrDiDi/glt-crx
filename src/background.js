@@ -87,5 +87,7 @@ const dispatch = {
 }
 
 const timeout = { value: null }
-
 // 启动时确认用户名是否过期
+// async function (){
+
+// }

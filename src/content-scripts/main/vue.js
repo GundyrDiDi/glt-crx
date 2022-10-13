@@ -8,6 +8,19 @@ import Antd, { message } from 'ant-design-vue'
 
 Vue.config.productionTip = false
 
+const requireComponent = require.context(
+  '../components',
+  false,
+  /\.vue$/
+  // 找到components文件夹下以.vue命名的文件
+)
+
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName)
+  const componentName = fileName.replace(/^\.\//, '').replace(/\.\w+$/, '')
+  Vue.component(componentName, componentConfig.default || componentConfig)
+})
+
 Vue.use(Antd)
 
 Vue.prototype.$msg = function (msg, type = 'success') {

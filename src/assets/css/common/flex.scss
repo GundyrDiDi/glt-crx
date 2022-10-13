@@ -1,9 +1,4 @@
 #__sniff_v1_crx__ {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
   [class*='flex'] {
     display: flex;
 
