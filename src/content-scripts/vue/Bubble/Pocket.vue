@@ -1,11 +1,11 @@
 <template>
   <div class="sniff-crx-bubble-pocket flex-col-bwn rel">
-    <div class="sniff-crx-bubble-pocket-list">
-      <slot></slot>
+    <slot></slot>
+    <transition-group tag="div" name="list" class="sniff-crx-bubble-pocket-list">
       <div
-        v-for="v in list"
+        v-for="(v,i) in list"
         :key="v.time"
-        class="sniff-crx-bubble-pocket-item flex"
+        class="sniff-crx-bubble-pocket-item flex rel"
       >
         <div>
           <a :href="v.photoUrl" target="_blank">
@@ -20,15 +20,20 @@
             v.productSpecification
           }}</span>
         </div>
+        <div class="abs sniff-crx-bubble-pocket-drawer flex-center">
+          <span @click="$emit('del',i)">
+            <svg-icon name="删除"></svg-icon>
+          </span>
+        </div>
       </div>
-    </div>
+    </transition-group>
     <div class="sniff-crx-bubble-pocket-bottom flex-ter-bwn">
       <div>
         <span>{{ $t("数量") }}: </span>
         <span class="sniff-crx-bubble-pocket-num">{{ list.length }}{{ $t("件") }}</span>
       </div>
       <div>
-        <a-button type="primary" :disabled="!user?.googleUrl">{{$t('查看谷歌表')}}</a-button>
+        <a-button type="black" :disabled="!user?.googleUrl" @click="jump">{{$t('查看谷歌表')}}</a-button>
       </div>
     </div>
   </div>
@@ -42,7 +47,9 @@ export default {
   },
   computed: mapState(['lang', 'user']),
   methods: {
-    deleteItem () {}
+    jump () {
+      window.open(this.user?.googleUrl)
+    }
   }
 }
 </script>
@@ -94,6 +101,38 @@ export default {
       font-weight: 500;
       color: #F96113;
     }
+    &-drawer{
+      height: 100%;
+      color: #fff;
+      top:0;
+      right: 0;
+      background: rgba(0,0,0,.6);
+      width: 20%;
+      transition:all .2s ease-in-out;
+      transform: translateX(100%);
+      span{
+        font-size:16px;
+        cursor:pointer;
+      }
+    }
+  }
+}
+
+.list-leave-active {
+  position: absolute;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.list-move {
+  transition: transform 0.5s;
+}
+
+.sniff-crx-bubble-pocket-item:hover{
+  .sniff-crx-bubble-pocket-drawer{
+    transform: translateX(0);
   }
 }
 </style>

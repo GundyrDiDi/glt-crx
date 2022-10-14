@@ -11,7 +11,7 @@
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 /* stylelint-disable at-rule-no-unknown */
-#__sniff_v1_crx__{
+.sniff-v1-crx{
   *,
   *::before,
   *::after {
@@ -19169,6 +19169,7 @@ body {
   /* stylelint-disable */
   /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
   .ant-modal {
+    font-family: 'PingFangSC-Semibold','Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;

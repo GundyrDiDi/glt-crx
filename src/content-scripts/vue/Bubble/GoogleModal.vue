@@ -7,22 +7,27 @@
     centered
     @cancel="$store.commit('showModal',false)"
   >
+    <div slot="closeIcon">
+      <svg-icon style="font-size:22px;" name="关闭"></svg-icon>
+    </div>
     <div class="sniff-crx-modal">
       <div class="sniff-crx-modal-title">{{ $t("绑定谷歌表") }}</div>
       <div>
-        <div style="position:relative;margin: 50px 0;">
+        <div class="rel flex-ter" style="margin: 50px 0;">
           <a-input v-model="url" :placeholder="$t('请输入谷歌表链接')"></a-input>
-          <span class="sniff-input-clear" @click="url=''">×</span>
+          <span v-show="url" class="sniff-input-clear" @click="url=''">
+            <svg-icon name="关闭"></svg-icon>
+          </span>
         </div>
         <div>
           <a-button
-            type="primary"
+            type="black"
             shape="round"
             :block="true"
             :loading="loading"
             :disabled="url===origin"
             @click="bind"
-            >{{ $t((origin&&!url)?"删除":"绑定") }}</a-button
+            >{{ $t((origin&&!url)?"解绑":"绑定") }}</a-button
           >
         </div>
       </div>
@@ -52,7 +57,7 @@ export default {
     user: {
       handler (v, o) {
         if (o?.googleUrl !== v?.googleUrl) {
-          this.sendMessage('updateSheetData')
+          this.sendMessage('updateSheetData', {})
         }
       },
       immediate: true
@@ -97,7 +102,7 @@ export default {
     height: 44px;
     width:100%;
     border-radius:22px;
-    padding-right:50px;
+    padding-right:40px;
   }
   .ant-btn{
     height: 50px;
@@ -108,10 +113,10 @@ export default {
 .sniff-input-clear{
     position: absolute;
     right: 17px;
-    font-size: 35px;
-    top: -4px;
+    font-size: 16px;
     color: #aaa;
     cursor: pointer;
+    transition:all .2s linear;
     &:hover{
         color:#333;
     }

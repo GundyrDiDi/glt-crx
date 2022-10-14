@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   Promise.resolve()
     .then(() => dispatch[request.cmd](request, sender))
     .then(res => sendResponse(res))
-    .catch(e => sendResponse({ error: 'background error', res: e }))
+    .catch(e => sendResponse({ error: 'background error', res: e, request }))
     // 异步返回必须先返回true
   return true
 })
@@ -75,15 +75,33 @@ const dispatch = {
     return this.onUpdating ? this.onUpdating : read('sheetData')
   },
   onUpdating: null,
-  async updateSheetData ({ loop }) {
+  onDelete: Promise.resolve(),
+  onAdd: Promise.resolve(),
+  async updateSheetData ({ loop, data: { delKey, addItems } }) {
     const { user } = await read('userData')
     const { googleUrl } = user
+    const googleHeaderData = 'time,photoUrl,productName,productUrl,productSpecification'
     this.onUpdating = true
     if (googleUrl) {
-      await http.getGoogleSheet({
-        googleUrl,
-        googleHeaderData: 'time,photoUrl,productUrl,productName,productSpecification'
-      }).then(res => write('sheetData', res.data), () => write('sheetData', []))
+      await this.onDelete.catch(e => {})
+      await this.onAdd.catch(e => {})
+      if (addItems) {
+        this.onAdd = http.postGoogleSheet({
+          googleUrl,
+          data: addItems
+        })
+      } else if (delKey) {
+        this.onDelete = http.deleteGoogleSheet({
+          googleUrl,
+          timeHeader: delKey,
+          googleHeaderData
+        })
+      } else {
+        await http.getGoogleSheet({
+          googleUrl,
+          googleHeaderData
+        }).then(res => write('sheetData', res.data), () => write('sheetData', []))
+      }
     } else {
       await write('sheetData', [])
     }
@@ -91,6 +109,12 @@ const dispatch = {
     loop && setTimeout(() => {
       this.updateSheetData({ loop })
     }, 1000 * 10 * 60)
+    if (delKey) {
+      return this.onDelete
+    }
+    if (addItems) {
+      return this.onAdd
+    }
   },
   // 通用
   request ({ data }) {

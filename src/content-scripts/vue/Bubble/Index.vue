@@ -12,9 +12,9 @@
         <svg-icon name="关闭"></svg-icon>
       </div>
       <Search></Search>
-      <Pocket :list="list">
+      <Pocket :list="list" @del="deleteItem">
         <div v-if="loading" class="abs-wrap flex-center" style="background: rgba(255,255,255,.2);z-index: 1;">
-          <a-spin/>
+          <a-spin style="margin-top:-40px"/>
         </div>
       </Pocket>
     </div>
@@ -76,8 +76,15 @@ export default {
     }
   },
   methods: {
-    deleteItem () {
-      this.sendMessage('request', ['deleteGoogleSheet']).then((res) => {})
+    deleteItem (i) {
+      console.log(this.list[i].time)
+      const delKey = this.list[i].time
+      this.list.splice(i, 1)
+      this.sendMessage('write', ['sheetData', this.list])
+      this.sendMessage('updateSheetData', { delKey }).catch((res) => {
+        this.$msg('删除失败', 'error')
+        this.sendMessage('updateSheetData')
+      })
     }
   }
 }

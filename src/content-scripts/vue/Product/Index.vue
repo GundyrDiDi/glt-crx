@@ -3,7 +3,7 @@
     <a
       href="#"
       @click.prevent="buy"
-      class="flex"
+      class="flex ant-btn-black"
       :class="{ loading, requesting }"
     >
       <template v-if="loading">
@@ -11,7 +11,7 @@
         <span v-else="">{{ $t("不支持采购") }}</span>
       </template>
       <template v-else>
-        <img class="icon" src="@/assets/cart.png" alt="" />
+        <!-- <img class="icon" src="@/assets/cart.png" alt="" /> -->
         {{ $t("添加商品") }}
       </template>
     </a>
@@ -23,6 +23,7 @@ import query1688, { query1688Rule2 } from './hook/1688'
 import queryTb from './hook/taobao'
 import queryTm from './hook/tmall'
 import { forTable } from '@/content-scripts/main/detailData'
+import { wait } from '@/utils/utils'
 
 export default {
   props: ['user'],
@@ -83,7 +84,6 @@ export default {
         this.requesting = false
       } else {
         const data = forTable(skuList)
-        const googleUrl = this.user?.googleUrl
         const { left, top, height, width } = $('.sniff-crx-bubble-icon')[0].getBoundingClientRect()
         this.$store.commit('setParabola', {
           src: (skuList.length > 1 ? window.$detail.productImg : skuList[0].photoUrl) || window.$detail.productImg,
@@ -95,6 +95,13 @@ export default {
         // }, e => {
         //   this.$msg('写入失败', 'error')
         // })
+        const list = this.$store.state.sheetData
+        await wait(1000, this.sendMessage('updateSheetData', { addItems: data }).catch(e => {
+          this.$msg('写入失败', 'error')
+        })).then(() => {
+          this.$msg('写入成功')
+          this.sendMessage('write', ['sheetData', list.concat(data)])
+        })
         this.requesting = false
       }
     }
@@ -124,10 +131,10 @@ export default {
     width: 200px;
     height: 38px;
     line-height: 38px;
-    background: #fff;
     border-radius: 4px;
-    border: 1px solid #fa6400;
-    color: #fa6400 !important;
+    // background: #fff;
+    // border: 1px solid #fa6400;
+    // color: #fa6400 !important;
     font-size: 16px;
     text-align: center;
 

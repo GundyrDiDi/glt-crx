@@ -145,7 +145,7 @@ function customer (el, plat) {
   position: absolute !important;
   height: 40px;
   width: 40px;
-  z-index: 10000 !important;
+  z-index: 200000000 !important;
   background: #ffbb00 !important;
   border-radius: 3px !important;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1) !important;

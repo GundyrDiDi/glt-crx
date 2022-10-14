@@ -73,7 +73,7 @@ export const createCrx = ({ plat, product }) => {
   Vue.prototype.$product = product
   Vue.prototype.getToken()
   //
-  const id = Vue.prototype.$crxId = createDom()
+  const id = createDom()
   setTimeout(() => {
     new Vue({
       store,
