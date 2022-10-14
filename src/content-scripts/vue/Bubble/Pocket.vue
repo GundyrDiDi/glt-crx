@@ -1,5 +1,5 @@
 <template>
-  <div class="sniff-crx-bubble-pocket flex-col-bwn">
+  <div class="sniff-crx-bubble-pocket flex-col-bwn rel">
     <div class="sniff-crx-bubble-pocket-list">
       <slot></slot>
       <div
@@ -24,12 +24,11 @@
     </div>
     <div class="sniff-crx-bubble-pocket-bottom flex-ter-bwn">
       <div>
-
         <span>{{ $t("数量") }}: </span>
         <span class="sniff-crx-bubble-pocket-num">{{ list.length }}{{ $t("件") }}</span>
       </div>
       <div>
-        <a-button type="primary" :disabled="!user.googleUrl">{{$t('查看谷歌表')}}</a-button>
+        <a-button type="primary" :disabled="!user?.googleUrl">{{$t('查看谷歌表')}}</a-button>
       </div>
     </div>
   </div>

@@ -1,21 +1,47 @@
 <template>
   <div class="sniff-crx-bubble-search flex-col-bwn">
     <div>
-      <a-dropdown :getPopupContainer="n=>n.parentNode">
-        <a>{{ $t(langs.find(v=>v.value===lang).label) }}</a>
-        <a-menu slot="overlay">
-          <a-menu-item v-for="v in langs" :key="v.value"
-          @click="setLang(v)"
-          > {{ $t(v.label) }} </a-menu-item>
+      <a-popover
+        v-model="dropdown"
+        trigger="click"
+        placement="bottom"
+        overlayClassName="sniff-crx-lang"
+        :arrowPointAtCenter="true"
+      >
+        <span class="rel" style="cursor: pointer; height: 1px">
+          <svg-icon
+            name="切换语言"
+            style="font-size: 16px; color: #565656"
+          ></svg-icon>
+          <span class="rel" style="color: #565656; top: -2px">
+            {{ $t(langs.find((v) => v.value === lang).label) }}
+          </span>
+          <svg-icon
+            class="rel"
+            name="展开"
+            style="font-size: 9px; color: #565656; top: -2px"
+            :style="{ transform: `scale(${dropdown ? -1 : 1})` }"
+          ></svg-icon>
+        </span>
+        <a-menu slot="content" id="sniff-popover">
+          <a-menu-item
+            v-for="v in langs"
+            :key="v.value"
+            @click="setLang(v)"
+          >
+            {{ $t(v.label) }}
+          </a-menu-item>
         </a-menu>
-      </a-dropdown>
+      </a-popover>
     </div>
     <div class="flex">
-      <a-input v-model="keyword" :placeholder="$t('搜索商品名或店舗名')"
-      @keyup.enter="search"
+      <a-input
+        v-model="keyword"
+        :placeholder="$t('搜索商品名或店舗名')"
+        @keyup.enter="search"
       ></a-input>
       <div class="sniff-crx-bubble-tablebtn">
-        <a-button @click="$store.commit('showModal',true)">T</a-button>
+        <a-button @click="$store.commit('showModal', true)">T</a-button>
       </div>
     </div>
   </div>
@@ -26,13 +52,14 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
+      dropdown: false,
       showModal: false,
       keyword: '',
       langs: [
-        { label: '中文', value: 'zh' },
         { label: '日语', value: 'ja' },
-        { label: '韩语', value: 'ko' },
-        { label: '英语', value: 'en' }
+        // { label: '中文', value: 'zh' },
+        // { label: '英语', value: 'en' }
+        { label: '韩语', value: 'ko' }
       ],
       searchUrl: {
         TB: 'https://s.taobao.com/search?q=',
@@ -52,14 +79,17 @@ export default {
         customerId: this.user?.customerId,
         keyword: w,
         platformType: this.$platType
-      }).then(res => {
-        console.log(res)
-        window.open(
-          this.searchUrl[this.$platType] + gbk.URI.encodeURI(res.data)
-        )
-      }, () => {
-        window.open(this.searchUrl[this.$platType] + gbk.URI.encodeURI(w))
-      })
+      }).then(
+        (res) => {
+          console.log(res)
+          window.open(
+            this.searchUrl[this.$platType] + gbk.URI.encodeURI(res.data)
+          )
+        },
+        () => {
+          window.open(this.searchUrl[this.$platType] + gbk.URI.encodeURI(w))
+        }
+      )
     }
   },
   mounted () {
@@ -73,7 +103,23 @@ export default {
     width: 100%;
     height: 80px;
     background: #f9f9f9;
-    padding:10px;
+    padding: 10px;
+  }
+}
+#sniff-popover{
+  border-radius:4px;
+}
+#sniff-popover .ant-menu-item {
+  width: 100px;
+  padding: 0px 10px;
+  margin: 0;
+  line-height: 30px;
+  height: 30px;
+  font-size:12px;
+  &:hover{
+    background: #FFFDFC;
+    font-weight: 500;
+    color: #F96113;
   }
 }
 </style>

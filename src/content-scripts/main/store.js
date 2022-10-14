@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     systemSource: 1,
     curShop: null,
     user: null,
+    sheetData: [],
     //
     showModal: false,
     parabola: null
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
     },
     setParabola (state, val) {
       state.parabola = val
+    },
+    setSheetData (state, val) {
+      state.sheetData = val
     }
   }
 })

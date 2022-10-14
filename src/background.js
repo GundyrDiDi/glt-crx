@@ -50,6 +50,18 @@ const dispatch = {
   getUserData () {
     return read('userData')
   },
+  async updateUserData () {
+    const userData = await read('userData')
+    const { token } = userData
+    if (token) {
+      return http.getUser({ token }).then(res => {
+        const data = { token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId }
+        return dispatch.setUserData({ data })
+      }, res => write('userData', {}))
+    } else {
+      return userData
+    }
+  },
   setUserData ({ data }) {
     clearTimeout(timeout.value)
     // 一天后过期
@@ -57,6 +69,28 @@ const dispatch = {
       write('userData', {})
     }, 1000 * 60 * 60 * 24)
     return write('userData', data)
+  },
+  // 谷歌表
+  async getSheetData () {
+    return this.onUpdating ? this.onUpdating : read('sheetData')
+  },
+  onUpdating: null,
+  async updateSheetData ({ loop }) {
+    const { user } = await read('userData')
+    const { googleUrl } = user
+    this.onUpdating = true
+    if (googleUrl) {
+      await http.getGoogleSheet({
+        googleUrl,
+        googleHeaderData: 'time,photoUrl,productUrl,productName,productSpecification'
+      }).then(res => write('sheetData', res.data), () => write('sheetData', []))
+    } else {
+      await write('sheetData', [])
+    }
+    this.onUpdating = false
+    loop && setTimeout(() => {
+      this.updateSheetData({ loop })
+    }, 1000 * 10 * 60)
   },
   // 通用
   request ({ data }) {
@@ -67,20 +101,6 @@ const dispatch = {
   },
   write ({ data }) {
     return write(data[0], data[1])
-  },
-  // 临时
-  test ({ data }) {
-    const headers = {}
-    headers['Content-Type'] = 'application/json;charset=UTF-8'
-    const body = JSON.stringify(data)
-    return fetch('http://192.168.102.63:15678//productPlugInInsert', { method: 'post', headers, body }).then(res => res.json()).then(res => {
-      const code = res.code
-      if (code === '0') {
-        return Promise.resolve(res)
-      } else {
-        return Promise.reject(res)
-      }
-    })
   }
   // todo:找相似 需要商品offerId 商品图片链接
   // https://s.1688.com/selloffer/similar_search.html?offerIds=653423014399&imageAddress=https%3A%2F%2Fcbu01.alicdn.com%2Fimg%2Fibank%2FO1CN01rtJrg41YIXBNU9EJB_!!2309863036-0-cib.jpg&scene=similar_search&postCatPaths=201568525%20124014010%2070&sameDesignEnable=false
@@ -88,6 +108,5 @@ const dispatch = {
 
 const timeout = { value: null }
 // 启动时确认用户名是否过期
-// async function (){
-
-// }
+// dispatch.updateUserData()
+// dispatch.updateSheetData({ loop: true })

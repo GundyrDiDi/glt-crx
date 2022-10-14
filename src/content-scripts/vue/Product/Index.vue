@@ -83,14 +83,14 @@ export default {
         this.requesting = false
       } else {
         const data = forTable(skuList)
-        const googleUrl = this.user.googleUrl
+        const googleUrl = this.user?.googleUrl
         const { left, top, height, width } = $('.sniff-crx-bubble-icon')[0].getBoundingClientRect()
         this.$store.commit('setParabola', {
           src: (skuList.length > 1 ? window.$detail.productImg : skuList[0].photoUrl) || window.$detail.productImg,
           p1: [e.x, e.y],
           p3: [left + width / 2, top + height / 2]
         })
-        // await this.sendMessage('request', ['postGoogleTable', { googleUrl, data }]).then((res) => {
+        // await this.sendMessage('request', ['postGoogleSheet', { googleUrl, data }]).then((res) => {
         //   this.$msg('写入成功')
         // }, e => {
         //   this.$msg('写入失败', 'error')

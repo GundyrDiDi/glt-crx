@@ -5,9 +5,12 @@
   >
     <div class="abs sniff-crx-bubble-icon" @click="$emit('after',()=> drag || (collapse = !collapse))">
       <svg-icon name="购物袋" :class="{droping}"></svg-icon>
+      <div class="sniff-crx-bubble-count" v-show="list.length>0">{{list.length}}</div>
     </div>
     <div class="abs sniff-crx-bubble-box" :class="{collapse}">
-      <div class="abs sniff-crx-bubble-close" @click="collapse=true">×</div>
+      <div class="abs sniff-crx-bubble-close" @click="collapse=true">
+        <svg-icon name="关闭"></svg-icon>
+      </div>
       <Search></Search>
       <Pocket :list="list">
         <div v-if="loading" class="abs-wrap flex-center" style="background: rgba(255,255,255,.2);z-index: 1;">
@@ -15,7 +18,7 @@
         </div>
       </Pocket>
     </div>
-    <GoogleModal/>
+    <GoogleModal v-if="user"/>
   </div>
 </template>
 
@@ -35,14 +38,19 @@ export default {
   directives: {
     drag: dragDrective
   },
-  computed: mapState(['lang', 'user', 'parabola']),
+  computed: {
+    ...mapState(['lang', 'user', 'parabola', 'sheetData']),
+    loading () {
+      // 获取sheet中
+      return this.sheetData === true
+    }
+  },
   data () {
     return {
       collapse: false,
       drag: false,
-      list: [],
-      loading: false,
-      droping: false
+      droping: false,
+      list: []
     }
   },
   watch: {
@@ -60,27 +68,17 @@ export default {
           }, 100)
         }, 900)
       }
+    },
+    sheetData (v) {
+      if (Array.isArray(v)) {
+        this.list = v
+      }
     }
   },
   methods: {
-    getList () {
-      // this.loading = true
-      this.list = []
-      // this.sendMessage('request', [
-      //   'getGoogleTable',
-      //   { googleUrl: this.user.googleUrl, googleHeaderData: 'time,photoUrl,productUrl,productName,productSpecification' }
-      // ]).then((res) => {
-      //   this.list = res.data
-      //   this.loading = false
-      //   console.log(res)
-      // })
-    },
     deleteItem () {
-      this.sendMessage('request', ['deleteGoogleTable']).then((res) => {})
+      this.sendMessage('request', ['deleteGoogleSheet']).then((res) => {})
     }
-  },
-  created () {
-    this.getList()
   }
 }
 </script>
@@ -107,6 +105,18 @@ export default {
       transform:translateY(4px);
     }
   }
+  &-count{
+    position: absolute;
+    top: -2px;
+    right: -6px;
+    height: 15px;
+    background: #E83D51;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0 4px;
+    line-height: 15px;
+    pointer-events: none;
+  }
   &-box{
     top:55px;
     right:-5px;
@@ -126,10 +136,13 @@ export default {
     color: #565656;
     z-index:1;
     right: 12px;
-    top: 0px;
-    font-size: 30px;
-    line-height: 30px;
+    top: 10px;
+    font-size: 14px;
+    line-height: 16px;
     cursor: pointer;
+    &:hover{
+      color:#000;
+    }
   }
 }
 </style>

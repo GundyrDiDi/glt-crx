@@ -73,11 +73,11 @@ const apis = {
   loginByCode: data => http.post('/customer/emailLogin', { body: data }),
   getUser: data => http.get('/customer/getCustomerDetails', { params: data }),
   // 保存谷歌表链接
-  setGoogleTable: data => http.post('/customer/updateCustomerGoogle', { body: data }),
+  setGoogleSheet: data => http.post('/customer/updateCustomerGoogle', { body: data }),
   // 商品加入谷歌表
-  getGoogleTable: data => http1.post('/productPlugInSelect', { body: data }),
-  postGoogleTable: data => http1.post('/productPlugInInsert', { body: data }),
-  deleteGoogleTable: data => http1.post('/productPlugInDelete', { body: data }),
+  getGoogleSheet: data => http1.post('/productPlugInSelect', { body: data }),
+  postGoogleSheet: data => http1.post('/productPlugInInsert', { body: data }),
+  deleteGoogleSheet: data => http1.post('/productPlugInDelete', { body: data }),
   // 翻译
   translate: data =>
     http.post('/goods-validate/translate/common', { body: data }),

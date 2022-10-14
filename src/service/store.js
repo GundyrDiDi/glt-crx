@@ -5,7 +5,8 @@ const storage = chrome.storage.local // sync 最大8k local 最大5m
 const store = {
   userData: {},
   source: '1688',
-  lang: 'ja'
+  lang: 'ja',
+  sheetData: []
 }
 
 storage.get(Object.keys(store), res => {

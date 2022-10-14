@@ -44,21 +44,29 @@ export default {
   },
   computed: mapState(['lang', 'user', 'showModal']),
   watch: {
-    visible (v) {
+    showModal (v) {
       if (v) {
-        this.url = this.origin = this.lang
+        this.url = this.origin = this.user.googleUrl
       }
+    },
+    user: {
+      handler (v, o) {
+        if (o?.googleUrl !== v?.googleUrl) {
+          this.sendMessage('updateSheetData')
+        }
+      },
+      immediate: true
     }
   },
   methods: {
     async bind () {
       const googleUrl = this.url
       this.loading = true
-      await this.sendMessage('request', ['setGoogleTable', {
+      await this.sendMessage('request', ['setGoogleSheet', {
         googleUrl,
         customerId: this.user.customerId
       }]).then(res => {
-        console.log(res)
+        this.sendMessage('updateUserData')
         this.$store.commit('showModal', false)
         this.$msg('绑定成功')
       })

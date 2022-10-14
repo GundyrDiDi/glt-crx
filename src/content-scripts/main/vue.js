@@ -50,6 +50,9 @@ Vue.prototype.getToken = function (init) {
   this.sendMessage('read', 'lang').then(res => {
     store.commit('setLang', res ?? 'ja')
   })
+  this.sendMessage('getSheetData').then(res => {
+    store.commit('setSheetData', res ?? [])
+  })
 }
 
 const id = '__sniff_v1_crx__'
