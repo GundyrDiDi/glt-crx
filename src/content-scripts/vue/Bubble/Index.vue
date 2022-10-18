@@ -94,8 +94,8 @@ export default {
   position: fixed;
   // 由于taobao商详的层级很高
   z-index: 200000000;
-  right: 63%;
-  top: 80px;
+  right: 5%;
+  top: 90px;
   padding-right:50px;
   font-size:12px;
   &-icon{

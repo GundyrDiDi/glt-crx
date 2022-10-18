@@ -43,7 +43,7 @@ export default {
       source: null,
       visible: false,
       timer: '',
-      plat: this._platform,
+      plat: this.$platform,
       cur: '',
       height: 0,
       width: 0,
@@ -79,12 +79,6 @@ export default {
     this.sendMessage('read', 'source').then((res) => {
       this.source = res
     })
-    // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
-    // setInterval(e => {
-    //   this.sendMessage('read', 'source').then(res => {
-    //     this.source = res
-    //   })
-    // }, 2000)
   },
   async mounted () {
     //

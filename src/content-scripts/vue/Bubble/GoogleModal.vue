@@ -57,7 +57,7 @@ export default {
     user: {
       handler (v, o) {
         if (o?.googleUrl !== v?.googleUrl) {
-          this.sendMessage('updateSheetData', {})
+          this.sendMessage('updateSheetData')
         }
       },
       immediate: true
@@ -71,10 +71,10 @@ export default {
         googleUrl,
         customerId: this.user.customerId
       }]).then(res => {
-        this.sendMessage('updateUserData')
+        this.sendMessage('updateUserData', {})
         this.$store.commit('showModal', false)
         this.$msg('绑定成功')
-      })
+      }, res => {})
       this.loading = false
     }
   },

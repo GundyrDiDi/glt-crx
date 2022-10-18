@@ -24,7 +24,7 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      plat: this._platform,
+      plat: this.$platform,
       platType: this.$platType
     }
   },

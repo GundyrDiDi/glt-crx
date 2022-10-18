@@ -25,7 +25,7 @@ window.addEventListener('message', res => {
       product && (product.style.display = 'block')
     }
   } else if (plat === 'tmall') {
-    product = document.querySelectorAll('.tb-sku')[0]
+    product = document.querySelectorAll('.tb-sku .tb-action')[0]
   } else if (plat === 'taobao') {
     product = document.querySelectorAll('.tb-skin')[0]
   } else if (plat === 'theckb') {

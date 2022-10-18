@@ -5,6 +5,7 @@ import { sendMessage } from '@/utils/chrome'
 import store from './store'
 import Crx from '../vue/Crx.vue'
 import Antd, { message } from 'ant-design-vue'
+import { debounce } from '@/utils/utils'
 
 Vue.config.productionTip = false
 
@@ -37,23 +38,35 @@ Vue.prototype.$jump = function (url) {
   return window.open(process.env.VUE_APP_HOST + url)
 }
 
-Vue.prototype.sendMessage = sendMessage
-
-Vue.prototype.getToken = function (init) {
-  // 从直行便获取用户信息
-  this.sendMessage('getUserData').then(res => {
-    console.log(res)
-    store.commit('setUserData', res ?? {})
-    // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
-    setTimeout(e => this.getToken(), 2000)
-  })
-  this.sendMessage('read', 'lang').then(res => {
-    store.commit('setLang', res ?? 'ja')
-  })
-  this.sendMessage('getSheetData').then(res => {
-    store.commit('setSheetData', res ?? [])
+Vue.prototype.sendMessage = (...rest) => {
+  return sendMessage(...rest).then(res => {
+    // this.dp(...rest)
+    // console.log(rest[0])
+    if (rest[0] !== 'read') {
+      syncData()
+    }
+    return res
   })
 }
+
+const syncData = debounce((loop) => {
+  // 从直行便获取用户信息
+  Promise.all([
+    sendMessage('read', 'userData').then(res => {
+      console.log(res)
+      store.commit('setUserData', res ?? {})
+    }),
+    sendMessage('read', 'lang').then(res => {
+      store.commit('setLang', res ?? 'ja')
+    }),
+    sendMessage('getSheetData').then(res => {
+      store.commit('setSheetData', res ?? [])
+    })
+  ]).then(() => {
+    // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
+    loop && setTimeout(syncData, 2800, true)
+  })
+}, 200)
 
 const id = '__sniff_v1_crx__'
 export const createDom = (parent = 'body') => {
@@ -63,7 +76,7 @@ export const createDom = (parent = 'body') => {
 }
 
 export const createCrx = ({ plat, product }) => {
-  Vue.prototype._platform = plat
+  Vue.prototype.$platform = plat
   Vue.prototype.$platType = {
     1688: 'AM',
     '1688-new': 'AM',
@@ -71,7 +84,8 @@ export const createCrx = ({ plat, product }) => {
     tmall: 'TM'
   }[plat]
   Vue.prototype.$product = product
-  Vue.prototype.getToken()
+  syncData(true)
+
   //
   const id = createDom()
   setTimeout(() => {
@@ -79,7 +93,7 @@ export const createCrx = ({ plat, product }) => {
       store,
       render: h => h(Crx)
     }).$mount('#' + id)
-  }, 100)
+  }, 300)
 }
 
 console.log('chrome', chrome)

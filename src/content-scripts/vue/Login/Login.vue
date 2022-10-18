@@ -74,7 +74,7 @@ export default {
           }
           await this.sendMessage('request', ['loginByPwd', data]).then(res => {
             const userData = { token: res.data.token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId }
-            this.sendMessage('setUserData', userData)
+            return this.sendMessage('setUserData', userData)
           })
           setTimeout(e => {
             this.loading = false

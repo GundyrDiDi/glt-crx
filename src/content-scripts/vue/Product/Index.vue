@@ -1,18 +1,13 @@
 <template>
-  <div v-if="user" class="sniff-crx-product" :class="'sniff-crx-product-' + _platform">
+  <div id="_sniff_crx_product_" class="sniff-crx-product" :class="'sniff-crx--' + $platform">
     <a
       href="#"
-      @click.prevent="buy"
+      @click.prevent="e=>$emit('after',()=>buy(e))"
       class="flex ant-btn-black"
-      :class="{ loading, requesting }"
+      :class="{ requesting }"
     >
-      <template v-if="loading">
-        <span v-if="canBuy">{{ $t("商品同步中") }}</span>
-        <span v-else="">{{ $t("不支持采购") }}</span>
-      </template>
-      <template v-else>
-        <!-- <img class="icon" src="@/assets/cart.png" alt="" /> -->
-        {{ $t("添加商品") }}
+      <template>
+        {{ $t("我要代购") }}
       </template>
     </a>
   </div>
@@ -30,7 +25,6 @@ export default {
   data () {
     return {
       imgs: [],
-      loading: false,
       requesting: false,
       canBuy: true,
       ckbSkuMap: {}
@@ -66,10 +60,10 @@ export default {
         taobao: queryTb,
         tmall: queryTm
       }
-      return dep[this._platform]
+      return dep[this.$platform]
     },
     async buy (e) {
-      if (this.loading) return
+      if (this.requesting) return
       this.requesting = true
       await this.trigger()
       setTimeout(() => {
@@ -90,17 +84,12 @@ export default {
           p1: [e.x, e.y],
           p3: [left + width / 2, top + height / 2]
         })
-        // await this.sendMessage('request', ['postGoogleSheet', { googleUrl, data }]).then((res) => {
-        //   this.$msg('写入成功')
-        // }, e => {
-        //   this.$msg('写入失败', 'error')
-        // })
         const list = this.$store.state.sheetData
-        await wait(1000, this.sendMessage('updateSheetData', { addItems: data }).catch(e => {
-          this.$msg('写入失败', 'error')
-        })).then(() => {
+        await wait(1000, this.sendMessage('updateSheetData', { addItems: data })).then(() => {
           this.$msg('写入成功')
           this.sendMessage('write', ['sheetData', list.concat(data)])
+        }, e => {
+          this.$msg('写入失败', 'error')
         })
         this.requesting = false
       }
@@ -115,10 +104,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.sniff-crx-product {
-  &-tmall {
-    margin-left: 65px;
-  }
+
+#_sniff_crx_product_.sniff-crx-product {
   margin-top: 15px;
   float: left;
   margin-bottom: 23px;
@@ -132,30 +119,15 @@ export default {
     height: 38px;
     line-height: 38px;
     border-radius: 4px;
-    // background: #fff;
-    // border: 1px solid #fa6400;
-    // color: #fa6400 !important;
+    color:#fff;
     font-size: 16px;
     text-align: center;
+    transition: background .2s;
 
-    &:hover:not(.loading) {
-      background: #fffbf0;
-      box-shadow: 0 1px 3px 0 #e19d299e;
-    }
-
-    &:active:not(.loading) {
-      background: #fffbf0;
-    }
-
-    &.loading {
-      font-size: 12px;
-      color: #ccc;
-      cursor: not-allowed;
-    }
     &.requesting {
       pointer-events: none;
       border-color: #f2f2f2;
-      color: #ddd !important;
+      background: #ddd !important;
     }
   }
 

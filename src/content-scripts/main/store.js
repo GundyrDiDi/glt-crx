@@ -11,11 +11,11 @@ function getLang () {
 
 const store = new Vuex.Store({
   state: {
-    lang: 'ja',
-    token: getLang(),
-    systemSource: 1,
+    lang: getLang(),
+    token: '',
     curShop: null,
     user: null,
+    systemSource: 1,
     sheetData: [],
     //
     showModal: false,
@@ -23,31 +23,30 @@ const store = new Vuex.Store({
   },
   mutations: {
     setUserData (state, val) {
-    //   console.log(val)
       const { token, systemSource, user, curShop } = val
       if (curShop && user && token) {
         state.token = token
-        state.systemSource = systemSource
         state.curShop = curShop
         state.user = user
+        state.systemSource = systemSource
       } else {
         state.token = ''
-        state.systemSource = 1
         state.curShop = null
         state.user = null
+        state.systemSource = 1
       }
     },
     setLang (state, val) {
       state.lang = val
+    },
+    setSheetData (state, val) {
+      state.sheetData = val
     },
     showModal (state, val) {
       state.showModal = val
     },
     setParabola (state, val) {
       state.parabola = val
-    },
-    setSheetData (state, val) {
-      state.sheetData = val
     }
   }
 })

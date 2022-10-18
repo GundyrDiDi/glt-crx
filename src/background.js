@@ -47,9 +47,6 @@ const dispatch = {
     return store.getSearchImg(data)
   },
   // 用户信息 登录状态
-  getUserData () {
-    return read('userData')
-  },
   async updateUserData () {
     const userData = await read('userData')
     const { token } = userData
@@ -72,31 +69,34 @@ const dispatch = {
   },
   // 谷歌表
   async getSheetData () {
+    console.log(this.onUpdating)
     return this.onUpdating ? this.onUpdating : read('sheetData')
   },
   onUpdating: null,
   onDelete: Promise.resolve(),
   onAdd: Promise.resolve(),
-  async updateSheetData ({ loop, data: { delKey, addItems } }) {
+  async updateSheetData ({ loop, data: { delKey, addItems } = {} }) {
     const { user } = await read('userData')
     const { googleUrl } = user
     const googleHeaderData = 'time,photoUrl,productName,productUrl,productSpecification'
     this.onUpdating = true
     if (googleUrl) {
-      await this.onDelete.catch(e => {})
-      await this.onAdd.catch(e => {})
       if (addItems) {
         this.onAdd = http.postGoogleSheet({
           googleUrl,
           data: addItems
         })
+        await this.onAdd.catch(e => {})
       } else if (delKey) {
         this.onDelete = http.deleteGoogleSheet({
           googleUrl,
           timeHeader: delKey,
           googleHeaderData
         })
+        await this.onDelete.catch(e => {})
       } else {
+        await this.onDelete.catch(e => {})
+        await this.onAdd.catch(e => {})
         await http.getGoogleSheet({
           googleUrl,
           googleHeaderData
@@ -105,6 +105,11 @@ const dispatch = {
     } else {
       await write('sheetData', [])
     }
+    // await new Promise(resolve => {
+    //   setTimeout(e => {
+    //     resolve(true)
+    //   }, 20000)
+    // })
     this.onUpdating = false
     loop && setTimeout(() => {
       this.updateSheetData({ loop })
