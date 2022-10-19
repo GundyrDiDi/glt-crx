@@ -122,9 +122,9 @@ export default {
     return {
       show: true,
       form: {
-        nameOrEmail: 'testApi',
-        password: '123456',
-        customerEmail: 'qiaoyi0725@163.com',
+        nameOrEmail: process.env.VUE_APP_IN ? 'testApi' : '',
+        password: process.env.VUE_APP_IN ? '123456' : '',
+        customerEmail: '',
         verificationCode: ''
       },
       rules: {
