@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const languages = ['zh', 'ja', 'ko', 'en', 'en-us']
+const languages = ['ko', 'en', 'zh']
 
 function getLang () {
-  return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : 'ja'
+  return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : process.env.VUE_APP_I18N_LOCALE
 }
 
 const store = new Vuex.Store({

@@ -12,7 +12,7 @@ export const plat = getPlat()
 if (plat) {
   const value = {
     1688: '[window.__GLOBAL_DATA?.skuModel]',
-    tmall: '[{}]',
+    tmall: '[location.href.includes(`detail.tmall.com`)?true:undefined]',
     taobao: '[window.Hub?.config?.config?.sku.valItemInfo]',
     theckb: 'null',
     aliexpress: 'null',

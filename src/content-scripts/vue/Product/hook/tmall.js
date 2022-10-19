@@ -45,6 +45,10 @@ export default () => {
   }]
 }
 
+export const queryTm2 = () => {
+
+}
+
 function serizeR (str, op = ['?', '&', '='], call = v => v) {
   const [t, y, eq] = op
   return str

@@ -29,8 +29,8 @@ _axios.create = (reqURL) => {
   http.default = async config => {
     const { token, curShop } = await read('userData')
     const headers = {
-      'X-AuthToken': token,
-      'X-AuthShopId': curShop
+      'X-AuthToken': token ?? '',
+      'X-AuthShopId': curShop ?? ''
     }
     // if (config)
     console.log(config)

@@ -5,7 +5,7 @@ const storage = chrome.storage.local // sync 最大8k local 最大5m
 const store = {
   userData: {},
   source: '1688',
-  lang: 'ja',
+  lang: process.env.VUE_APP_I18N_LOCALE,
   sheetData: []
 }
 

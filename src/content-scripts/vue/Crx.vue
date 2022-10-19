@@ -76,6 +76,7 @@ body {
     font-size:12px;
     caret-color: #F96113;
   }
+  .ant-input.hollow,
   .ant-input:focus,
   .ant-input:hover {
     background: #FAFAFA;
@@ -84,7 +85,7 @@ body {
   .ant-input:hover {
     border: 1px solid #898989;
   }
-  .ant-input:focus {
+  .ant-input.hollow,.ant-input:focus {
     border-color: transparent;
   }
 }

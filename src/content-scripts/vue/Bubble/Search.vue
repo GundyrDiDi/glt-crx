@@ -63,9 +63,9 @@ export default {
       showModal: false,
       keyword: '',
       langs: [
-        { label: '日语', value: 'ja' },
+        // { label: '日语', value: 'ja' },
         // { label: '中文', value: 'zh' },
-        // { label: '英语', value: 'en' }
+        { label: '英语', value: 'en' },
         { label: '韩语', value: 'ko' }
       ],
       searchUrl: {

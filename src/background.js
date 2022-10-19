@@ -79,8 +79,14 @@ const dispatch = {
     const { user } = await read('userData')
     const { googleUrl } = user
     const googleHeaderData = 'time,photoUrl,productName,productUrl,productSpecification'
-    this.onUpdating = true
-    if (googleUrl) {
+    if (!googleUrl) {
+      if (delKey || addItems) {
+        return Promise.reject(new Error('谷歌表为空'))
+      } else {
+        await write('sheetData', [])
+      }
+    } else {
+      this.onUpdating = true
       if (addItems) {
         this.onAdd = http.postGoogleSheet({
           googleUrl,
@@ -102,15 +108,13 @@ const dispatch = {
           googleHeaderData
         }).then(res => write('sheetData', res.data), () => write('sheetData', []))
       }
-    } else {
-      await write('sheetData', [])
+      // await new Promise(resolve => {
+      //   setTimeout(e => {
+      //     resolve(true)
+      //   }, 20000)
+      // })
+      this.onUpdating = false
     }
-    // await new Promise(resolve => {
-    //   setTimeout(e => {
-    //     resolve(true)
-    //   }, 20000)
-    // })
-    this.onUpdating = false
     loop && setTimeout(() => {
       this.updateSheetData({ loop })
     }, 1000 * 10 * 60)

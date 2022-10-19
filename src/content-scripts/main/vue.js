@@ -29,7 +29,10 @@ Vue.prototype.$msg = function (msg, type = 'success') {
 }
 
 export const t = function (text) {
-  return locale[store.state.lang ?? 'ja'][text] ?? text
+  if (!locale[store.state.lang ?? process.env.VUE_APP_I18N_LOCALE][text]) {
+    console.warn('找不到“' + text + '”')
+  }
+  return locale[store.state.lang ?? process.env.VUE_APP_I18N_LOCALE][text] ?? text
 }
 
 Vue.prototype.$t = t
@@ -57,7 +60,7 @@ const syncData = debounce((loop) => {
       store.commit('setUserData', res ?? {})
     }),
     sendMessage('read', 'lang').then(res => {
-      store.commit('setLang', res ?? 'ja')
+      store.commit('setLang', res ?? process.env.VUE_APP_I18N_LOCALE)
     }),
     sendMessage('getSheetData').then(res => {
       store.commit('setSheetData', res ?? [])
@@ -66,7 +69,7 @@ const syncData = debounce((loop) => {
     // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
     loop && setTimeout(syncData, 2800, true)
   })
-}, 200)
+}, 180)
 
 const id = '__sniff_v1_crx__'
 export const createDom = (parent = 'body') => {

@@ -29,6 +29,10 @@ export default (plat, [sku]) => {
     data.productProps = sku.propertyMemoMap ?? []
   }
   if (plat === 'tmall') {
+    const par = location.href.replace('item.htm', 'item_o.htm')
+    if (par !== location.href) {
+      location.replace(par)
+    }
     data.productName = document.title.replace(/-tmall.*$/, '')
     data.productImg = $('.tb-thumb-content img').attr('src').replace(/_\d+x\d+\..*$/, '')
     data.skuMap = JSON.parse(

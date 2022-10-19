@@ -1,8 +1,12 @@
 <template>
-  <div id="_sniff_crx_product_" class="sniff-crx-product" :class="'sniff-crx--' + $platform">
+  <div
+    id="_sniff_crx_product_"
+    class="sniff-crx-product"
+    :class="'sniff-crx--' + $platform"
+  >
     <a
       href="#"
-      @click.prevent="e=>$emit('after',()=>buy(e))"
+      @click.prevent="(e) => $emit('after', () => buy(e))"
       class="flex ant-btn-black"
       :class="{ requesting }"
     >
@@ -78,19 +82,31 @@ export default {
         this.requesting = false
       } else {
         const data = forTable(skuList)
-        const { left, top, height, width } = $('.sniff-crx-bubble-icon')[0].getBoundingClientRect()
+        const { left, top, height, width } = $(
+          '.sniff-crx-bubble-icon'
+        )[0].getBoundingClientRect()
         this.$store.commit('setParabola', {
-          src: (skuList.length > 1 ? window.$detail.productImg : skuList[0].photoUrl) || window.$detail.productImg,
+          src:
+            (skuList.length > 1
+              ? window.$detail.productImg
+              : skuList[0].photoUrl) || window.$detail.productImg,
           p1: [e.x, e.y],
           p3: [left + width / 2, top + height / 2]
         })
         const list = this.$store.state.sheetData
-        await wait(1000, this.sendMessage('updateSheetData', { addItems: data })).then(() => {
-          this.$msg('写入成功')
-          this.sendMessage('write', ['sheetData', list.concat(data)])
-        }, e => {
-          this.$msg('写入失败', 'error')
-        })
+        await wait(
+          1000,
+          this.sendMessage('updateSheetData', { addItems: data })
+        ).then(
+          () => {
+            this.$msg('写入成功')
+            this.sendMessage('write', ['sheetData', list.concat(data)])
+          },
+          (e) => {
+            this.$msg('写入失败', 'error')
+            this.sendMessage('updateSheetData')
+          }
+        )
         this.requesting = false
       }
     }
@@ -104,7 +120,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 #_sniff_crx_product_.sniff-crx-product {
   margin-top: 15px;
   float: left;
@@ -119,10 +134,10 @@ export default {
     height: 38px;
     line-height: 38px;
     border-radius: 4px;
-    color:#fff;
+    color: #fff;
     font-size: 16px;
     text-align: center;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &.requesting {
       pointer-events: none;
