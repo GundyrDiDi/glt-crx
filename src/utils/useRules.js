@@ -1,5 +1,5 @@
 import { t as $t } from '@/content-scripts/main/vue'
-const t = (text) => new Error($t(text))
+const t = (text) => new Error('※ ' + $t(text))
 
 const rules = {
   plainEn (rule, val, callback) {
@@ -117,7 +117,7 @@ export const useRule = (key, trigger = 'blur') => {
   ]
 }
 
-export const useMust = (message = $t('必填内容'), trigger = 'blur') => {
+export const useMust = (message = '※ ' + $t('必填内容'), trigger = 'blur') => {
   return [{ required: true, message, trigger }]
 }
 

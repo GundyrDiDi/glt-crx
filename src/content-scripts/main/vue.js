@@ -29,10 +29,10 @@ Vue.prototype.$msg = function (msg, type = 'success') {
 }
 
 export const t = function (text) {
-  if (!locale[store.state.lang ?? process.env.VUE_APP_I18N_LOCALE][text]) {
+  if (!locale[store.state.lang][text]) {
     console.warn('找不到“' + text + '”')
   }
-  return locale[store.state.lang ?? process.env.VUE_APP_I18N_LOCALE][text] ?? text
+  return locale[store.state.lang][text] ?? text
 }
 
 Vue.prototype.$t = t

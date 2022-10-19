@@ -54,10 +54,16 @@ export default {
     }
   },
   watch: {
-    user (v) {
-      if (!v) {
-        this.collapse = true
-      }
+    user: {
+      handler (v, o) {
+        if (!v) {
+          this.collapse = true
+        }
+        if (o?.googleUrl !== v?.googleUrl) {
+          this.sendMessage('updateSheetData')
+        }
+      },
+      immediate: true
     },
     parabola (v) {
       if (v) {

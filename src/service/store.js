@@ -6,7 +6,8 @@ const store = {
   userData: {},
   source: '1688',
   lang: process.env.VUE_APP_I18N_LOCALE,
-  sheetData: []
+  sheetData: [],
+  accountData: {}
 }
 
 storage.get(Object.keys(store), res => {

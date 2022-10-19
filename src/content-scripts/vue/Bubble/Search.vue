@@ -38,6 +38,7 @@
         <a-input
           v-model="keyword"
           :placeholder="$t('搜索商品名或店舗名')"
+          name="sniff-search-keyword"
           @keyup.enter="handleEnter"
         ></a-input>
         <div class="abs" @click="search">
@@ -111,7 +112,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.lang)
   }
 }
 </script>

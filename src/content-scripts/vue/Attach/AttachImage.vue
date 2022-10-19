@@ -89,7 +89,7 @@ export default {
     })
     if (has) return
     //
-    $('body').on('mouseover', (e) => {
+    this.bind = (e) => {
       const [tar, x, y] = [e.target, e.clientX, e.clientY]
       if (this.$refs.el.contains(tar)) return
       let t = null
@@ -115,7 +115,11 @@ export default {
         }
       })
       t ? this.show(...t) : this.hide()
-    })
+    }
+    $('body').on('mouseover', this.bind)
+  },
+  beforeDestroy () {
+    $('body').off('mouseover', this.bind)
   }
 }
 

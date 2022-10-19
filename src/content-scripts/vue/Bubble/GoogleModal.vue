@@ -53,14 +53,6 @@ export default {
       if (v) {
         this.url = this.origin = this.user.googleUrl
       }
-    },
-    user: {
-      handler (v, o) {
-        if (o?.googleUrl !== v?.googleUrl) {
-          this.sendMessage('updateSheetData')
-        }
-      },
-      immediate: true
     }
   },
   methods: {

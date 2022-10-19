@@ -38,7 +38,7 @@ window.addEventListener('message', res => {
       } else if (cmd === 'transferUser') {
         sendMessage('setUserData', userData)
       } else if (cmd === 'transferLang') {
-        sendMessage('write', ['lang', lang])
+        // sendMessage('write', ['lang', lang])
       }
     })
   }

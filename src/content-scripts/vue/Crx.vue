@@ -1,6 +1,6 @@
 <template>
   <div class="sniff-v1-crx">
-    <AttachImage :user="user" />
+    <AttachImage v-if="user" />
     <template v-if="platType">
       <Login ref="login" v-if="!user" />
       <Bubble ref="bubble" v-if="platType" @after="afterLogin" />
@@ -54,6 +54,9 @@ export default {
 </script>
 <style lang="scss">
 body {
+  .sniff-v1-crx{
+    font-family: 'PingFangSC-Semibold','Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;
+  }
   .ant-btn-black{
     background:#333;
     border-color:#333;
@@ -65,7 +68,7 @@ body {
     }
   }
   .ant-message {
-    z-index: 200000000 !important;
+    z-index: calc( 200000000 + 1) !important;
   }
   .ant-input {
     width: 170px;

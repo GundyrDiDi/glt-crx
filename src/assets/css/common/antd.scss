@@ -3500,9 +3500,9 @@ body {
   .ant-btn-disabled.active,
   .ant-btn.disabled.active,
   .ant-btn[disabled].active {
-    color: rgba(0, 0, 0, 0.25);
-    background-color: #f5f5f5;
-    border-color: #d9d9d9;
+    color: #fff;
+    background-color: #c5c5c5;
+    border-color: #c5c5c5;
     text-shadow: none;
     box-shadow: none;
   }
@@ -3583,8 +3583,9 @@ body {
   .ant-btn-primary:hover,
   .ant-btn-primary:focus {
     color: #fff;
-    background-color: #4da690;
-    border-color: #4da690;
+    background-color: #009D76;
+    border-color: #009D76;
+    box-shadow: 0px 10px 15px 0px #A3D1C5;
   }
   .ant-btn-primary:hover > a:only-child,
   .ant-btn-primary:focus > a:only-child {
@@ -3603,8 +3604,8 @@ body {
   .ant-btn-primary:active,
   .ant-btn-primary.active {
     color: #fff;
-    background-color: #00664d;
-    border-color: #00664d;
+    background-color: #007A6A;
+    border-color: #007A6A;
   }
   .ant-btn-primary:active > a:only-child,
   .ant-btn-primary.active > a:only-child {
@@ -16351,16 +16352,16 @@ body {
   .has-error .ant-input,
   .has-error .ant-input:hover {
     background-color: #fff;
-    border-color: #f5222d;
+    // border-color: #f5222d;
   }
   .has-error .ant-input:focus {
-    border-color: #ff4d4f;
-    border-right-width: 1px !important;
-    outline: 0;
-    box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+    // border-color: #ff4d4f;
+    // border-right-width: 1px !important;
+    // outline: 0;
+    // box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
   }
   .has-error .ant-input:not([disabled]):hover {
-    border-color: #f5222d;
+    // border-color: #f5222d;
   }
   .has-error .ant-calendar-picker-open .ant-calendar-picker-input {
     border-color: #ff4d4f;
@@ -17172,7 +17173,7 @@ body {
     box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
   }
   .has-error .ant-input:not([disabled]):hover {
-    border-color: #f5222d;
+    // border-color: #f5222d;
   }
   .has-error .ant-calendar-picker-open .ant-calendar-picker-input {
     border-color: #ff4d4f;

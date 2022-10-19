@@ -24,47 +24,79 @@
         </div>
         <template v-if="!enter">
           <a-form-model-item prop="nameOrEmail" key="nameOrEmail">
-            <!-- <template #label> nameOrEmail </template> -->
             <a-input
               class="hollow"
               v-model="form.nameOrEmail"
               :placeholder="$t('请输入账号')"
               name="sniff_login_nameOrEmail"
             ></a-input>
+            <span class="abs sniff-crx-login-icon">
+              <svg-icon name="账号"></svg-icon>
+            </span>
           </a-form-model-item>
           <a-form-model-item prop="password" key="password">
-            <!-- <template #label> password </template> -->
             <a-input
               class="hollow"
-              type="password"
+              :type="ptype ? 'password' : 'text'"
               v-model="form.password"
               :placeholder="$t('请输入密码')"
               name="sniff_login_password"
             ></a-input>
+            <span class="abs sniff-crx-login-icon">
+              <svg-icon name="密码"></svg-icon>
+            </span>
+            <span
+              class="abs"
+              @click="ptype = !ptype"
+              style="right: 20px; font-size: 20px; cursor: pointer"
+            >
+              <svg-icon :name="ptype ? '闭眼' : '睁眼'"></svg-icon>
+            </span>
           </a-form-model-item>
         </template>
         <template v-else>
           <a-form-model-item prop="customerEmail" key="customerEmail">
-            <!-- <template #label> customerEmail </template> -->
             <a-input
               class="hollow"
               v-model="form.customerEmail"
               :placeholder="$t('请输入邮箱')"
               name="sniff_login_customerEmail"
             ></a-input>
+            <span class="abs sniff-crx-login-icon">
+              <svg-icon name="邮箱"></svg-icon>
+            </span>
           </a-form-model-item>
           <a-form-model-item prop="verificationCode" key="verificationCode">
-            <!-- <template #label> verificationCode </template> -->
             <a-input
               class="hollow"
-              style="width:240px;"
               v-model="form.verificationCode"
               :placeholder="$t('请输入验证码')"
               name="sniff_login_verificationCode"
             ></a-input>
-            <a-button type="primary"
-            style="height:40px;margin-left:15px;font-size:12px;width:100px;"
-            >{{$t('获取验证码')}}</a-button>
+            <span class="abs sniff-crx-login-icon">
+              <svg-icon name="密码"></svg-icon>
+            </span>
+            <a-button
+              class="abs"
+              type="black"
+              style="
+                height: 30px;
+                font-size: 12px;
+                width: 120px;
+                top: -5px;
+                right: 7px;
+              "
+              :disabled="count > 0 || !form.customerEmail.trim()"
+              @click="getCode"
+            >
+              <template v-if="count > 0">
+                {{ $t("发送中") }}
+                ({{ count }})
+              </template>
+              <template v-else>
+                {{ $t("获取验证码") }}
+              </template>
+            </a-button>
           </a-form-model-item>
         </template>
       </a-form-model>
@@ -83,7 +115,7 @@
 </template>
 <script>
 import md5 from 'md5'
-import useRules, { useMust } from '@/utils/useRules'
+import useRules from '@/utils/useRules'
 export default {
   props: ['user'],
   data () {
@@ -92,17 +124,19 @@ export default {
       form: {
         nameOrEmail: 'testApi',
         password: '123456',
-        customerEmail: '1@1.c',
-        verificationCode: '1111'
+        customerEmail: 'qiaoyi0725@163.com',
+        verificationCode: ''
       },
       rules: {
-        nameOrEmail: useMust(),
+        nameOrEmail: useRules({ key: 'noblank' }),
         password: useRules({ key: 'plain' }),
         customerEmail: useRules({ key: 'email' }),
         verificationCode: useRules({ key: 'plain' })
       },
       loading: false,
-      enter: 0
+      enter: 0,
+      count: 0,
+      ptype: true
     }
   },
   methods: {
@@ -115,12 +149,46 @@ export default {
             password: md5(this.form.password)
           }
           const token = await this.sendMessage('request', [
-            'loginByPwd',
+            this.enter === 0 ? 'loginByPwd' : 'loginByCode',
             data
-          ]).then((res) => res.data.token)
-          await this.sendMessage('setUserData', { token })
-          await this.sendMessage('updateUserData')
+          ]).then(
+            (res) => res.data.token,
+            () => {
+              this.$msg(
+                this.enter === 0 ? '账号或密码错误' : '邮箱或验证码错误',
+                'error'
+              )
+            }
+          )
+          if (token) {
+            await this.sendMessage('setUserData', { token })
+            await this.sendMessage('updateUserData')
+          }
           this.loading = false
+        }
+      })
+    },
+    async getCode () {
+      await this.$refs.form.validateField('customerEmail', (msg) => {
+        if (!msg) {
+          this.count = 60
+          const fn = () =>
+            setTimeout(() => {
+              if (--this.count) fn()
+            }, 1000)
+          fn()
+          this.sendMessage('request', [
+            'getLoginCode',
+            { customerEmail: this.form.customerEmail }
+          ]).then(
+            (res) => {
+              this.$msg('验证码已发送')
+            },
+            (err) => {
+              this.$msg(err.res.msg, 'error')
+              this.count = 0
+            }
+          )
         }
       })
     }
@@ -143,8 +211,8 @@ export default {
 
   &-content {
     height: 500px;
-    width: 480px;
-    padding: 20px 40px;
+    width: 500px;
+    padding: 20px 50px;
     background: #fdfdfd;
     border-radius: 12px;
     top: 0;
@@ -179,14 +247,38 @@ export default {
     height: 44px;
     border-radius: 22px;
     padding-left: 40px;
+    caret-color: #008060;
+    &:focus {
+      box-shadow: inset 0px 5px 8px 0px #dbf2ec, inset 0px -1px 0px 0px #ffffff,
+        inset 0px 0px 0px 0px #d2f4ed;
+      + span {
+        color: #008060;
+      }
+    }
+  }
+  &-icon {
+    left: 20px;
+    pointer-events: none;
+    top: -9px;
   }
   .ant-form-explain {
     font-size: 12px;
+    position: absolute;
+    left: 20px;
+    padding-top: 3px;
   }
   .ant-btn {
     height: 50px;
     border-radius: 30px;
     // background: #008060;
+  }
+  .has-error .ant-input:hover {
+    border-color: transparent;
+  }
+  .has-error .ant-input:focus {
+    border-color: transparent;
+    box-shadow: inset 0px 5px 8px 0px #dbf2ec, inset 0px -1px 0px 0px #ffffff,
+      inset 0px 0px 0px 0px #d2f4ed;
   }
 }
 </style>
