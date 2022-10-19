@@ -75,12 +75,13 @@ const dispatch = {
   onDelete: Promise.resolve(),
   onAdd: Promise.resolve(),
   async updateSheetData ({ loop, data: { delKey, addItems } = {} }) {
-    const { user } = await read('userData')
+    const { user = {} } = await read('userData')
     const { googleUrl } = user
     const googleHeaderData = 'time,photoUrl,productName,productUrl,productSpecification'
     if (!googleUrl) {
       if (delKey || addItems) {
-        return Promise.reject(new Error('谷歌表为空'))
+        const msg = '谷歌表为空'
+        return Promise.reject(msg)
       } else {
         await write('sheetData', [])
       }

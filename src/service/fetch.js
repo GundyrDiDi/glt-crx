@@ -63,7 +63,7 @@ _axios.create = (reqURL) => {
 }
 
 const http = _axios.create(reqURL)
-const http1 = _axios.create('http://47.242.239.79:12359/')
+const http1 = _axios.create('https://productPlugIn.theckb.com/')
 
 // 接口
 const apis = {
