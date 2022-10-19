@@ -122,8 +122,8 @@ export default {
     return {
       show: true,
       form: {
-        nameOrEmail: process.env.VUE_APP_IN ? 'testApi' : '',
-        password: process.env.VUE_APP_IN ? '123456' : '',
+        nameOrEmail: process.env.NODE_ENV === 'development' ? 'testApi' : '',
+        password: process.env.NODE_ENV === 'development' ? '123456' : '',
         customerEmail: '',
         verificationCode: ''
       },
@@ -246,7 +246,7 @@ export default {
     width: 100%;
     height: 44px;
     border-radius: 22px;
-    padding-left: 40px;
+    padding-left: 44px;
     caret-color: #008060;
     &:focus {
       box-shadow: inset 0px 5px 8px 0px #dbf2ec, inset 0px -1px 0px 0px #ffffff,
@@ -259,7 +259,8 @@ export default {
   &-icon {
     left: 20px;
     pointer-events: none;
-    top: -9px;
+    top: -11px;
+    font-size:18px;
   }
   .ant-form-explain {
     font-size: 12px;

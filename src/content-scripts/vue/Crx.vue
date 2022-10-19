@@ -88,7 +88,7 @@ body {
   .ant-input:focus,
   .ant-input:hover {
     background: #FAFAFA;
-    box-shadow: inset 0px 5px 8px 0px #EFEFEF, inset 0px -3px 0px 0px #FFFFFF;
+    box-shadow: inset 0px 5px 8px 0px #EFEFEF, inset 0px -1px 0px 0px #ffffff, inset 0px -3px 0px 0px #FFFFFF;
   }
   .ant-input:hover {
     border: 1px solid #898989;

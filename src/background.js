@@ -69,7 +69,6 @@ const dispatch = {
   },
   // 谷歌表
   async getSheetData () {
-    console.log(this.onUpdating)
     return this.onUpdating ? this.onUpdating : read('sheetData')
   },
   onUpdating: null,
@@ -140,6 +139,9 @@ const dispatch = {
 }
 
 const timeout = { value: null }
-// 启动时确认用户名是否过期
-dispatch.updateUserData()
-dispatch.updateSheetData({ loop: true })
+
+setTimeout(() => {
+  // 启动时确认用户名是否过期
+  dispatch.updateUserData()
+  dispatch.updateSheetData({ loop: true })
+}, 1000)
