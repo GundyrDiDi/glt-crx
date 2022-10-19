@@ -16,12 +16,10 @@ const message = {
     ko: '로그인'
   },
   账号密码登录: {
-    en: 'By Password',
-    ko: ''
+    en: 'By Password'
   },
   邮箱验证码登录: {
-    en: 'By Email',
-    ko: ''
+    en: 'By Email'
   },
   请输入账号: {
     en: 'Your username'

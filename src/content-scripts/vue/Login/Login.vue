@@ -2,8 +2,8 @@
   <div v-show="show" class="sniff-crx-login">
     <div class="abs-wrap" @click="show = false"></div>
     <div class="abs sniff-crx-login-content">
-      <div class="flex-cen" style="margin-top: 10px">
-        <img src="@/assets/theckb.jpg" alt="" />
+      <div class="flex-cen" style="margin: 30px 0 20px 0;">
+        <img src="@/assets/theckb.png" alt="" style="height:100px;"/>
       </div>
       <div class="abs sniff-crx-login-close" @click="show = false">
         <svg-icon style="font-size: 22px" name="关闭"></svg-icon>
