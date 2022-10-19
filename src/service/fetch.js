@@ -1,7 +1,7 @@
 // service worker 不能使用xhr，改为fetch
 // import md5 from 'md5'
 import { serize } from '@/utils/utils'
-import { read } from './store'
+import { read, write } from './store'
 
 const reqURL = process.env.VUE_APP_URL
 

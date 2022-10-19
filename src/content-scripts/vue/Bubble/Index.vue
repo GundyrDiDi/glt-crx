@@ -9,7 +9,7 @@
     </div>
     <div class="abs sniff-crx-bubble-box" :class="{collapse}">
       <div class="abs sniff-crx-bubble-close" @click="collapse=true"
-      @contextmenu="logout"
+      @contextmenu.prevent="logout"
       >
         <svg-icon name="关闭"></svg-icon>
       </div>

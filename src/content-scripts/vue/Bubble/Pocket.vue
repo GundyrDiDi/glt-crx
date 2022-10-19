@@ -1,6 +1,9 @@
 <template>
   <div class="sniff-crx-bubble-pocket flex-col-bwn rel">
     <slot></slot>
+    <div v-if="!list.length" class="abs-wrap flex-cen" style="padding:100px 10px;color:#aaa;">
+      {{$t('绑定谷歌表后即可选购商品')}}
+    </div>
     <transition-group tag="div" name="list" class="sniff-crx-bubble-pocket-list">
       <div
         v-for="(v,i) in list"

@@ -121,8 +121,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 #_sniff_crx_product_{
-  &.sniff-crx-1688,&.sniff-crx-1688-new{
-    width:162px !important;
+  &.sniff-crx--1688,&.sniff-crx--1688-new{
+    >a{
+      width:162px !important;
+    }
+  }
+  &.sniff-crx--tmall{
+    >a{
+      width:180px !important;
+    }
   }
 }
 
@@ -136,14 +143,14 @@ export default {
     display: block;
     margin-right: 21px;
     overflow: hidden;
-    width: 200px;
+    width: 180px;
     height: 38px;
     line-height: 38px;
     border-radius: 4px;
     color: #fff;
     font-size: 16px;
     text-align: center;
-    transition: background 0.2s;
+    transition: all 0.2s;
 
     &.requesting {
       pointer-events: none;

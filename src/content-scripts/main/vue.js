@@ -49,6 +49,12 @@ Vue.prototype.sendMessage = (...rest) => {
       syncData()
     }
     return res
+  }, err => {
+    if (err?.res?.code === '24010062' || err?.res?.code === '10000000') {
+      this.sendMessage('write', ['userData', {}])
+      this.$msg('登录状态失效', 'error')
+    }
+    return Promise.reject(err)
   })
 }
 
@@ -67,7 +73,7 @@ const syncData = debounce((loop) => {
     })
   ]).then(() => {
     // 先使用轮询替代，订阅模式需要 chrome.tabs 权限
-    loop && setTimeout(syncData, 2800, true)
+    loop && setTimeout(syncData, 2820, true)
   })
 }, 180)
 
@@ -96,7 +102,7 @@ export const createCrx = ({ plat, product }) => {
       store,
       render: h => h(Crx)
     }).$mount('#' + id)
-  }, 300)
+  }, 500)
 }
 
 console.log('chrome', chrome)

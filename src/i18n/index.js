@@ -16,7 +16,7 @@ const message = {
     ko: '로그인'
   },
   账号密码登录: {
-    en: 'By Username',
+    en: 'By Password',
     ko: ''
   },
   邮箱验证码登录: {
@@ -84,6 +84,9 @@ const message = {
   请输入谷歌表链接: {
     en: 'Enter the google sheet url'
   },
+  绑定谷歌表后即可选购商品: {
+
+  },
   绑定: {
     en: 'Bind'
   },
@@ -96,14 +99,13 @@ const message = {
   数量: {
     en: 'Qty'
   },
-  件: {
-    en: ''
-  },
   我要代购: {
     en: 'Want To Buy'
   },
   写入成功: {},
   写入失败: {},
+  删除失败: {},
+  登录状态失效: {},
   $: {}
 }
 
