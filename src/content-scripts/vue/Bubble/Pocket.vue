@@ -30,7 +30,7 @@
     <div class="sniff-crx-bubble-pocket-bottom flex-ter-bwn">
       <div>
         <span>{{ $t("数量") }}: </span>
-        <span class="sniff-crx-bubble-pocket-num">{{ list.length }}{{ $t("件") }}</span>
+        <span class="sniff-crx-bubble-pocket-num">{{ list.length }}</span>
       </div>
       <div>
         <a-button type="black" :disabled="!user?.googleUrl" @click="jump">{{$t('查看谷歌表')}}</a-button>

@@ -48,7 +48,7 @@ export default {
         width:30px !important;
         transform:translate(-50%,-50%);
         border-radius:50%;
-        opacity: .7;
+        opacity: .8;
     }
 }
 </style>

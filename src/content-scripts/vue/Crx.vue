@@ -8,7 +8,7 @@
         ref="product"
         v-if="!!$product"
         :user="user"
-        @after="afterLogin"
+        @after="beforeBuy"
       />
       <Parabola/>
     </template>
@@ -42,7 +42,12 @@ export default {
   },
   methods: {
     afterLogin (callback) {
-      return this.user ? callback() : (this.$refs.login.show = true)
+      this.user ? callback() : (this.$refs.login.show = true)
+    },
+    beforeBuy (callback) {
+      this.afterLogin(() => {
+        this.user?.googleUrl ? callback() : this.$store.commit('showModal', true)
+      })
     }
   },
   mounted () {

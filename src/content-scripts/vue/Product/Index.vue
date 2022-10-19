@@ -120,7 +120,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-#_sniff_crx_product_.sniff-crx-product {
+#_sniff_crx_product_{
+  &.sniff-crx-1688,&.sniff-crx-1688-new{
+    width:162px !important;
+  }
+}
+
+#_sniff_crx_product_ {
   margin-top: 15px;
   float: left;
   margin-bottom: 23px;

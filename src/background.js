@@ -141,5 +141,5 @@ const dispatch = {
 
 const timeout = { value: null }
 // 启动时确认用户名是否过期
-// dispatch.updateUserData()
-// dispatch.updateSheetData({ loop: true })
+dispatch.updateUserData()
+dispatch.updateSheetData({ loop: true })

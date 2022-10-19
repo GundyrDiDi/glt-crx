@@ -36,7 +36,7 @@ window.addEventListener('message', res => {
       if (cmd === 'uploadImg') {
         execImgData(imgData)
       } else if (cmd === 'transferUser') {
-        sendMessage('setUserData', userData)
+        // sendMessage('setUserData', userData)
       } else if (cmd === 'transferLang') {
         // sendMessage('write', ['lang', lang])
       }

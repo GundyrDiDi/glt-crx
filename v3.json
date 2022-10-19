@@ -33,11 +33,11 @@
     }
   ],
   "action": {
-    "default_title": "THE直行便発注プラグイン",
+    "default_title": "",
     "default_icon": {
       "19": "icons/frog.png",
       "38": "icons/frog.png"
     }
   },
-  "version": "4.0.16"
+  "version": "4.0.1"
 }

@@ -1,73 +1,109 @@
 const message = {
-  商品同步中: {
-    ja: '商品データ同期中...',
-    ko: '상품 동기화 중'
-  },
-  不支持采购: {
-    ja: '購買はサポートされていません',
-    ko: '구매가 지원되지 않습니다'
-  },
-  添加商品: {
-    ja: '直行便カートに追加',
-    ko: '상품추가'
-  },
-  添加商品成功: {
-    ja: 'カートに追加しました',
-    ko: '상품 추가 성공'
-  },
-  添加商品失败: {
-    ja: '追加に失敗しました',
-    ko: '상품 추가 실패'
-  },
   未选择商品规格: {
-    ja: 'まだ商品選択していません',
+    en: 'Please check Product SKU has been selected',
     ko: '미선택상품 규격'
   },
-  请先登录系统: {
-    ja: 'KAERUアイコンをクリックして \n THE直行便システムにログインして下さい',
-    ko: '먼저 시스템에 접속해 주세요.'
-  },
   搜索商品名或店舗名: {
-    ja: '商品名/店舗名（日本語と中国語で検索可能）',
+    en: 'Enter product name or shop name',
     ko: '상품명이나 가게 이름 검색.'
   },
   确定: {
-    ja: '確定',
+    en: 'OK',
     ko: '확인'
   },
   登录: {
-    ja: 'ログイン',
+    en: 'Sign in',
     ko: '로그인'
   },
-  账号密码登录: {},
-  邮箱验证码登录: {},
-  请输入账号: {},
-  请输入密码: {},
-  请输入邮箱: {},
-  请输入验证码: {},
-  获取验证码: {},
-  发送中: {},
-  验证码已发送: {},
-  账号或密码错误: {},
-  邮箱或验证码错误: {},
-  '此邮箱未注册,请先注册': {},
-  忘记密码: {},
-  注册会员: {},
-  无效内容: {},
+  账号密码登录: {
+    en: 'By Username',
+    ko: ''
+  },
+  邮箱验证码登录: {
+    en: 'By Email',
+    ko: ''
+  },
+  请输入账号: {
+    en: 'Your username'
+  },
+  请输入密码: {
+    en: 'Your password'
+  },
+  请输入邮箱: {
+    en: 'Your email address'
+  },
+  请输入验证码: {
+    en: 'Verification code'
+  },
+  获取验证码: {
+    en: 'Verify'
+  },
+  发送中: {
+    en: 'Waiting'
+  },
+  验证码已发送: {
+    en: 'The Verification Code has been send to your email'
+  },
+  账号或密码错误: {
+    en: 'Incorrect username or password'
+  },
+  邮箱或验证码错误: {
+    en: 'Incorrect email or code'
+  },
+  '此邮箱未注册,请先注册': {
+    en: 'The email address has\'t been registered yet.Please contact our service staff'
+  },
+  忘记密码: {
+    en: 'Forgot password'
+  },
+  注册会员: {
+    en: 'Sign up'
+  },
+  无效内容: {
+    en: 'Invalid content'
+  },
   仅限输入英文和数字字符: {},
-  无效邮箱: {},
-  必填内容: {},
-  日语: {},
-  英语: {},
-  韩语: {},
-  绑定谷歌表: {},
-  查看谷歌表: {},
-  请输入谷歌表链接: {},
-  绑定: {},
-  绑定成功: {},
-  数量: {},
-  件: {},
-  我要代购: {},
+  无效邮箱: {
+    en: 'Invalid email address'
+  },
+  必填内容: {
+    en: 'Invalid content'
+  },
+  英语: {
+    en: 'English'
+  },
+  韩语: {
+    en: 'Korean'
+  },
+  绑定谷歌表: {
+    en: 'Bind Your Google Sheet'
+  },
+  查看谷歌表: {
+    en: 'My List'
+  },
+  请输入谷歌表链接: {
+    en: 'Enter the google sheet url'
+  },
+  绑定: {
+    en: 'Bind'
+  },
+  解绑: {
+    en: 'Unbind'
+  },
+  绑定成功: {
+    en: ''
+  },
+  数量: {
+    en: 'Qty'
+  },
+  件: {
+    en: ''
+  },
+  我要代购: {
+    en: 'Want To Buy'
+  },
+  写入成功: {},
+  写入失败: {},
   $: {}
 }
 

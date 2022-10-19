@@ -1,20 +1,18 @@
 {
-  "manifest_version": 2,
-  "name": "谷歌表",
+  "manifest_version": 3,
+  "name": "KAERUツール(THE直行便)",
   "homepage_url": "https://s.theckb.com/",
-  "description": "",
+  "description": "THE直行便は、お客様がより便利で中国の1688、タオバオ、Tmall公式サイトで商品を選択できるように、該ブラウザ拡張機能を開発致しました。",
   "default_locale": "en",
-  "permissions": ["storage", "background", "tabs"],
+  "permissions": ["storage", "background"],
   "icons": {
     "16": "icons/frog.png",
     "48": "icons/frog.png",
     "128": "icons/frog.png"
   },
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": true
+    "service_worker": "js/background.js"
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
   "content_scripts": [
     {
       "matches": [
@@ -24,21 +22,22 @@
         "https://*.amazon.co.jp/*",
         "https://*.rakuten.co.jp/*",
         "https://*.aliexpress.com/*",
+        "https://*.theckb.com/*",
         "https://*.png/*",
         "https://*.jpg/*",
-        "https://*.bmp/*",
-        "<all_urls>"
+        "https://*.bmp/*"
       ],
+      "css":["css/content-script.0cafa637.css"],
       "js": ["js/content-script.js"],
       "run_at": "document_end"
     }
   ],
-  "browser_action": {
-    "default_title": "THE直行便発注プラグイン",
+  "action": {
+    "default_title": "",
     "default_icon": {
       "19": "icons/frog.png",
       "38": "icons/frog.png"
     }
   },
-  "version": "0.0.0"
+  "version": "4.0.1"
 }

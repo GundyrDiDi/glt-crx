@@ -8,7 +8,9 @@
       <div class="sniff-crx-bubble-count" v-show="list.length>0">{{list.length}}</div>
     </div>
     <div class="abs sniff-crx-bubble-box" :class="{collapse}">
-      <div class="abs sniff-crx-bubble-close" @click="collapse=true">
+      <div class="abs sniff-crx-bubble-close" @click="collapse=true"
+      @contextmenu="logout"
+      >
         <svg-icon name="关闭"></svg-icon>
       </div>
       <Search></Search>
@@ -91,6 +93,9 @@ export default {
         this.$msg('删除失败', 'error')
         this.sendMessage('updateSheetData')
       })
+    },
+    logout () {
+      this.sendMessage('write', ['userData', {}])
     }
   }
 }
