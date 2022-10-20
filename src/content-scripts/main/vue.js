@@ -66,7 +66,7 @@ const syncData = debounce((loop) => {
       store.commit('setUserData', res ?? {})
     }),
     sendMessage('read', 'lang').then(res => {
-      store.commit('setLang', res ?? process.env.VUE_APP_I18N_LOCALE)
+      store.commit('setLang', res)
     }),
     sendMessage('getSheetData').then(res => {
       store.commit('setSheetData', res ?? [])

@@ -91,9 +91,7 @@ const message = {
   解绑: {
     en: 'Unbind'
   },
-  绑定成功: {
-    en: ''
-  },
+  绑定成功: {},
   数量: {
     en: 'Qty'
   },

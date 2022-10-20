@@ -1,5 +1,5 @@
 <template>
-  <svg class="icon">
+  <svg class="sniff-svg-icon">
     <use :xlink:href="'#' + name" />
   </svg>
 </template>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
+.sniff-svg-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;

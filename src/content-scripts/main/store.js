@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const languages = ['ko', 'en', 'zh']
+const languages = ['en', 'ko', 'zh']
 
 function getLang () {
   return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : process.env.VUE_APP_I18N_LOCALE
@@ -37,7 +37,7 @@ const store = new Vuex.Store({
       }
     },
     setLang (state, val) {
-      state.lang = val
+      state.lang = languages.includes(val) ? val : process.env.VUE_APP_I18N_LOCALE
     },
     setSheetData (state, val) {
       state.sheetData = val

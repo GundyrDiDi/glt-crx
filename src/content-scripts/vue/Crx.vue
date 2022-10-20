@@ -7,7 +7,6 @@
       <Product
         ref="product"
         v-if="!!$product"
-        :user="user"
         @after="beforeBuy"
       />
       <Parabola/>
@@ -76,7 +75,6 @@ body {
     z-index: calc( 200000000 + 1) !important;
   }
   .ant-input {
-    width: 170px;
     height: 30px;
     border-radius: 15px;
     border: 1px solid #898989;

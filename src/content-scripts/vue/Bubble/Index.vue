@@ -159,7 +159,7 @@ export default {
     line-height: 16px;
     cursor: pointer;
     &:hover{
-      color:#000;
+      color:#232323;
     }
   }
 }

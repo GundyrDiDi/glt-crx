@@ -23,9 +23,9 @@ import queryTb from './hook/taobao'
 import queryTm from './hook/tmall'
 import { forTable } from '@/content-scripts/main/detailData'
 import { wait } from '@/utils/utils'
+import { mapState } from 'vuex'
 
 export default {
-  props: ['user'],
   data () {
     return {
       imgs: [],
@@ -34,6 +34,7 @@ export default {
       ckbSkuMap: {}
     }
   },
+  computed: mapState(['sheetData', 'user']),
   methods: {
     record () {
       if (this.user?.customerId) {
@@ -68,6 +69,7 @@ export default {
     },
     async buy (e) {
       if (this.requesting) return
+      if (this.sheetData.length >= 999) return
       this.requesting = true
       await this.trigger()
       setTimeout(() => {

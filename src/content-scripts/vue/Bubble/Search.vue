@@ -12,17 +12,14 @@
           class="rel"
           style="cursor: pointer; height: 10px; display: inline-flex"
         >
-          <svg-icon
-            name="切换语言"
-            style="font-size: 16px; color: #565656"
-          ></svg-icon>
-          <span class="rel" style="color: #565656; top: -2px; margin-left: 3px">
+          <svg-icon name="切换语言" style="font-size: 16px"></svg-icon>
+          <span class="rel" style="line-height: 1; margin-left: 3px">
             {{ $t(langs.find((v) => v.value === lang).label) }}
           </span>
           <svg-icon
             class="rel"
             name="展开"
-            style="font-size: 9px; color: #565656; top: 4px; left: 2px"
+            style="font-size: 9px; top: 4px; left: 2px"
             :style="{ transform: `scale(${dropdown ? -1 : 1})` }"
           ></svg-icon>
         </span>
@@ -45,10 +42,12 @@
           <svg-icon name="搜索"></svg-icon>
         </div>
       </div>
-      <div class="sniff-crx-bubble-tablebtn"
-      :class="{active:user?.googleUrl}"
-      @click="$store.commit('showModal', true)">
-        <svg-icon name="谷歌表" style="font-size:20px;"></svg-icon>
+      <div
+        class="sniff-crx-bubble-tablebtn"
+        :class="{ active: user?.googleUrl }"
+        @click="$store.commit('showModal', true)"
+      >
+        <svg-icon name="谷歌表" style="font-size: 20px"></svg-icon>
       </div>
     </div>
   </div>
@@ -111,8 +110,7 @@ export default {
       )
     }
   },
-  mounted () {
-  }
+  mounted () {}
 }
 </script>
 <style lang="scss" scoped>
@@ -124,19 +122,26 @@ export default {
     padding: 10px;
     color: #232323;
   }
-  &-tablebtn{
-    margin-left:10px;
-    cursor:pointer;
-    &.active{
-      color: #F96113;
+  &-tablebtn {
+    margin-left: 10px;
+    cursor: pointer;
+    &.active .sniff-svg-icon {
+      color: #f96113 !important;
     }
   }
   .ant-input {
+    width: 175px;
     padding-right: 30px;
     ~ .abs {
       right: 5px;
       font-size: 20px;
       cursor: pointer;
+    }
+  }
+  .sniff-svg-icon {
+    color: #565656;
+    &:hover {
+      color: #232323;
     }
   }
 }
