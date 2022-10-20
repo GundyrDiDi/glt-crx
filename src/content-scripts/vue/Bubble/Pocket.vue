@@ -1,12 +1,20 @@
 <template>
   <div class="sniff-crx-bubble-pocket flex-col-bwn rel">
     <slot></slot>
-    <div v-if="!list.length" class="abs-wrap flex-cen" style="padding:100px 10px;color:#aaa;">
-      {{$t('绑定谷歌表后即可选购商品')}}
+    <div
+      v-if="!list.length"
+      class="abs-wrap flex-cen"
+      style="padding: 100px 10px; color: #aaa"
+    >
+      {{ $t("绑定谷歌表后即可选购商品") }}
     </div>
-    <transition-group tag="div" name="list" class="sniff-crx-bubble-pocket-list">
+    <transition-group
+      tag="div"
+      name="list"
+      class="sniff-crx-bubble-pocket-list"
+    >
       <div
-        v-for="(v,i) in list"
+        v-for="(v, i) in list"
         :key="v.time"
         class="sniff-crx-bubble-pocket-item flex rel"
       >
@@ -24,7 +32,7 @@
           }}</span>
         </div>
         <div class="abs sniff-crx-bubble-pocket-drawer flex-center">
-          <span @click="$emit('del',i)">
+          <span @click="$emit('del', i)">
             <svg-icon name="删除"></svg-icon>
           </span>
         </div>
@@ -36,7 +44,9 @@
         <span class="sniff-crx-bubble-pocket-num">{{ list.length }}</span>
       </div>
       <div>
-        <a-button type="black" :disabled="!user?.googleUrl" @click="jump">{{$t('查看谷歌表')}}</a-button>
+        <a-button type="black" :disabled="!user?.googleUrl" @click="jump">{{
+          $t("查看谷歌表")
+        }}</a-button>
       </div>
     </div>
   </div>
@@ -65,16 +75,18 @@ export default {
       min-height: 200px;
       max-height: 360px;
       overflow: auto;
+      overflow-x:hidden;
       color: #565656;
       line-height: 17px;
     }
     &-item {
-      width:215px;
+      width: 215px;
       height: 100px;
       background: #fefefe;
       margin-bottom: 1px;
       padding: 15px 5px 15px 10px;
-      overflow: hidden;
+      transition: all 0.2s ease-in-out;
+      // overflow: hidden;
       img {
         height: 40px;
         width: 40px;
@@ -93,29 +105,30 @@ export default {
     }
     &-bottom {
       height: 60px;
-      padding:0 10px;
+      padding: 0 10px;
       border-top: 1px solid #f4f4f4;
-      font-size:14px;
-      .ant-btn{
+      font-size: 14px;
+      .ant-btn {
         height: 34px;
       }
     }
-    &-num{
+    &-num {
       font-weight: 500;
-      color: #F96113;
+      color: #f96113;
     }
-    &-drawer{
+    &-drawer {
       height: 100%;
       color: #fff;
-      top:0;
-      right: 0;
-      background: rgba(0,0,0,.6);
+      top: 0;
+      right: -5px;
+      background: rgba(0, 0, 0, 0.8);
       width: 20%;
-      transition:all .2s ease-in-out;
+      transition: all 0.2s ease-in-out;
       transform: translateX(100%);
-      span{
-        font-size:16px;
-        cursor:pointer;
+      opacity: 0;
+      span {
+        font-size: 16px;
+        cursor: pointer;
       }
     }
   }
@@ -127,15 +140,16 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(30px) !important;
 }
 .list-move {
   transition: transform 0.5s;
 }
 
-.sniff-crx-bubble-pocket-item:hover{
-  .sniff-crx-bubble-pocket-drawer{
-    transform: translateX(0);
+.sniff-crx-bubble-pocket-item:hover {
+  transform: translateX(-20%);
+  .sniff-crx-bubble-pocket-drawer {
+    opacity: 1;
   }
 }
 </style>
