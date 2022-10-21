@@ -16,11 +16,20 @@ const dispatch = {
   async translate ({ data }) {
     const lang = await read('lang')
     const formData = {
-      from: lang,
-      to: 'zh',
-      text: data.keyword
+      beforeLanguageCode: lang,
+      afterLanguageCode: 'zh',
+      keyword: data.keyword
     }
     http.search(data)
+    return http.translate(formData)
+  },
+  async localize ({ data }) {
+    const lang = await read('lang')
+    const formData = {
+      beforeLanguageCode: 'zh',
+      afterLanguageCode: lang,
+      keyword: data.keyword
+    }
     return http.translate(formData)
   },
   // 获取商品信息

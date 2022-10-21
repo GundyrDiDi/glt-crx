@@ -80,7 +80,7 @@ const apis = {
   deleteGoogleSheet: data => http1.post('/productPlugInDelete', { body: data }),
   // 翻译
   translate: data =>
-    http.post('/goods-validate/translate/common', { body: data }),
+    http.post('/goods/search/keyword/translate', { body: data }),
   // 用户搜索记录
   search: data => http.post('/goods/search/key/plugin/log', { body: data }),
   // 用户浏览记录

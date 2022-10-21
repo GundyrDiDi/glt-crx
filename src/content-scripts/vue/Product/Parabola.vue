@@ -17,7 +17,7 @@ export default {
         const { p1, p3 } = v
         const delta = (p1[0] - p3[0]) / 3
         const x2 = p1[1] < p3[1] ? p1[0] - delta : p3[0] + delta
-        const y2 = Math.min(p1[1], p3[1]) - 170
+        const y2 = Math.min(p1[1], p3[1]) - 200
         const step = 60
         const dots = bezier([v.p1, [x2, y2], v.p3], step)
         //

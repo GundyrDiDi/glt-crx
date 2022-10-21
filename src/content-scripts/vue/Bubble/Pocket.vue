@@ -31,10 +31,12 @@
             v.productSpecification
           }}</span>
         </div>
-        <div class="abs sniff-crx-bubble-pocket-drawer flex-center">
-          <span @click="$emit('del', i)">
-            <svg-icon name="删除"></svg-icon>
-          </span>
+        <div class="abs sniff-crx-bubble-pocket-drawer">
+          <div class="wrap flex-center">
+            <span @click="$emit('del', i)">
+              <svg-icon name="删除"></svg-icon>
+            </span>
+          </div>
         </div>
       </div>
     </transition-group>
@@ -80,12 +82,11 @@ export default {
       line-height: 17px;
     }
     &-item {
-      width: 215px;
+      width: 220px;
       height: 100px;
       background: #fefefe;
       margin-bottom: 1px;
       padding: 15px 5px 15px 10px;
-      transition: all 0.2s ease-in-out;
       // overflow: hidden;
       img {
         height: 40px;
@@ -99,6 +100,7 @@ export default {
     &-desc {
       margin-left: 10px;
       margin-top: 2px;
+      transition: all 0.2s ease-in-out;
     }
     &-prop {
       margin: 16px 0 0 10px;
@@ -118,14 +120,20 @@ export default {
     }
     &-drawer {
       height: 100%;
-      color: #fff;
       top: 0;
-      right: -5px;
-      background: rgba(0, 0, 0, 0.8);
-      width: 20%;
-      transition: all 0.2s ease-in-out;
-      transform: translateX(100%);
-      opacity: 0;
+      right: 0px;
+      width: 50px;
+      >div{
+        color: #fff;
+        background: rgba(0, 0, 0, 0.8);
+        transition: all 0.2s ease-in-out;
+        transform: translateX(100%);
+        opacity:0;
+      }
+      &:hover>div{
+        opacity:1;
+        transform: translateX(0);
+      }
       span {
         font-size: 16px;
         cursor: pointer;
@@ -144,12 +152,5 @@ export default {
 }
 .list-move {
   transition: transform 0.5s;
-}
-
-.sniff-crx-bubble-pocket-item:hover {
-  transform: translateX(-20%);
-  .sniff-crx-bubble-pocket-drawer {
-    opacity: 1;
-  }
 }
 </style>
