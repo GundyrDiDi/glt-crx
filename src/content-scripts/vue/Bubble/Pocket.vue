@@ -4,7 +4,7 @@
     <div
       v-if="!list.length"
       class="abs-wrap flex-cen"
-      style="padding: 100px 10px; color: #aaa"
+      style="padding: 100px 10px; color: #aaa; text-align:center"
     >
       {{ $t("绑定谷歌表后即可选购商品") }}
     </div>
