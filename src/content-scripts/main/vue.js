@@ -62,7 +62,6 @@ const syncData = debounce((loop) => {
   // 从直行便获取用户信息
   Promise.all([
     sendMessage('read', 'userData').then(res => {
-      console.log(res)
       store.commit('setUserData', res ?? {})
     }),
     sendMessage('read', 'lang').then(res => {
