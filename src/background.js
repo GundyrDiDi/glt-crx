@@ -86,7 +86,14 @@ const dispatch = {
   async updateSheetData ({ loop, data: { delKey, addItems } = {} }) {
     const { user = {} } = await read('userData')
     const { googleUrl } = user
-    const googleHeaderData = 'time,photoUrl,productName,productUrl,productSpecification'
+    const thMap = {
+      time: 'Date',
+      photoUrl: 'Photo Url',
+      productName: 'Product Name',
+      productUrl: 'Product Url',
+      productSpecification: 'Product Specification'
+    }
+    const googleHeaderData = Object.values(thMap).join(',')
     if (!googleUrl) {
       if (delKey || addItems) {
         const msg = '谷歌表为空'
@@ -115,7 +122,14 @@ const dispatch = {
         await http.getGoogleSheet({
           googleUrl,
           googleHeaderData
-        }).then(res => write('sheetData', res.data), () => write('sheetData', []))
+        }).then(res => {
+          const list = res.data.map(v => {
+            Object.entries(thMap).forEach(([key1, key2]) => {
+              v[key1] = v[key2]
+            })
+          })
+          write('sheetData', list)
+        }, () => write('sheetData', []))
       }
       // await new Promise(resolve => {
       //   setTimeout(e => {
