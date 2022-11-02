@@ -4,7 +4,7 @@ const message = {
     ko: '상품규격 미선택'
   },
   搜索商品名或店舗名: {
-    en: 'Enter product name or shop name',
+    en: 'Enter a product or shop',
     ko: '상품명이나 가게명 검색.'
   },
   确定: {
@@ -100,8 +100,8 @@ const message = {
     ko: 'Google 시트 연동'
   },
   查看谷歌表: {
-    en: 'My Google Sheets',
-    ko: 'Google 스프레드시트 보기'
+    en: 'My Sheets',
+    ko: '내 구글 시트보기'
   },
   请输入谷歌表链接: {
     en: 'Enter the google sheet URL',

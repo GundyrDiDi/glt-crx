@@ -86,10 +86,16 @@ export default {
   methods: {
     deleteItem (i) {
       console.log(this.list[i].time)
-      const delKey = this.list[i].time
+      const timeHeader = this.list[i].time
+      const skuNameHeader = this.list[i].productSpecification
       this.list.splice(i, 1)
       this.sendMessage('write', ['sheetData', this.list])
-      this.sendMessage('updateSheetData', { delKey }).catch((res) => {
+      this.sendMessage('updateSheetData', {
+        delItem: {
+          timeHeader,
+          skuNameHeader
+        }
+      }).catch((res) => {
         this.$msg('删除失败', 'error')
         this.sendMessage('updateSheetData')
       })
@@ -127,13 +133,17 @@ export default {
     position: absolute;
     top: -2px;
     right: -6px;
-    height: 15px;
+    height: 18px;
+    min-width: 18px;
     background: #E83D51;
     border-radius: 8px;
     color: #fff;
     padding: 0 4px;
-    line-height: 15px;
+    line-height: 18px;
+    font-size:12px;
     pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
   }
   &-box{
     top:55px;

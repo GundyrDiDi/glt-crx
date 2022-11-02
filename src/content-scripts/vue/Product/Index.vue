@@ -95,6 +95,7 @@ export default {
           p1: [e.x, e.y],
           p3: [left + width / 2, top + height / 2]
         })
+        console.log(data)
         const list = this.$store.state.sheetData
         await wait(
           1000,

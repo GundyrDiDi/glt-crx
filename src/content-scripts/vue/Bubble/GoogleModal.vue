@@ -16,7 +16,7 @@
         <div class="rel flex-ter" style="margin: 50px 0;">
           <a-input v-model="url" :placeholder="$t('请输入谷歌表链接')"></a-input>
           <span v-show="url" class="sniff-input-clear" @click="url=''">
-            <svg-icon name="关闭"></svg-icon>
+            <svg-icon name="关闭圆"></svg-icon>
           </span>
         </div>
         <div>
@@ -27,7 +27,7 @@
             :loading="loading"
             :disabled="url===origin"
             @click="bind"
-            >{{ $t((origin&&!url)?"解绑":"绑定") }}</a-button
+            >{{ $t('确定') }}</a-button
           >
         </div>
       </div>
@@ -104,8 +104,8 @@ export default {
 }
 .sniff-input-clear{
     position: absolute;
-    right: 17px;
-    font-size: 16px;
+    right: 12px;
+    font-size: 22px;
     color: #aaa;
     cursor: pointer;
     transition:all .2s linear;

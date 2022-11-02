@@ -6,6 +6,9 @@
       class="abs-wrap flex-cen"
       style="padding: 100px 10px; color: #aaa; text-align:center"
     >
+      <div class="abs arrow-d" v-show="!user?.googleUrl">
+        <svg-icon name="指针"></svg-icon>
+      </div>
       {{ $t("绑定谷歌表后即可选购商品") }}
     </div>
     <transition-group
@@ -122,7 +125,7 @@ export default {
       height: 100%;
       top: 0;
       right: 0px;
-      width: 50px;
+      width: 60px;
       >div{
         color: #fff;
         background: rgba(0, 0, 0, 0.8);
@@ -139,6 +142,29 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+
+.arrow-d{
+  font-size: 30px;
+  transform: rotate(207deg);
+  color: orangered;
+  right: 15px;
+  top: -20px;
+  >svg{
+    animation: zoom 1s  infinite;
+  }
+}
+
+@keyframes zoom{
+  0%{
+    transform: scale(.9) rotate(1deg);
+  }
+  50%{
+    transform: scale(1) rotate(-1deg);
+  }
+  100%{
+    transform: scale(.9) rotate(1deg);
   }
 }
 

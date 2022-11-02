@@ -83,7 +83,7 @@ const dispatch = {
   onUpdating: null,
   onDelete: Promise.resolve(),
   onAdd: Promise.resolve(),
-  async updateSheetData ({ loop, data: { delKey, addItems } = {} }) {
+  async updateSheetData ({ loop, data: { delItem, addItems } = {} }) {
     const { user = {} } = await read('userData')
     const { googleUrl } = user
     const thMap = {
@@ -94,8 +94,21 @@ const dispatch = {
       productSpecification: 'Product Specification'
     }
     const googleHeaderData = Object.values(thMap).join(',')
+    const setProps = (data, forward) => {
+      return data.map(v => {
+        const o = {}
+        Object.entries(thMap).forEach(([key1, key2]) => {
+          if (forward) {
+            o[key1] = v[key2]
+          } else {
+            o[key2] = v[key1]
+          }
+        })
+        return o
+      })
+    }
     if (!googleUrl) {
-      if (delKey || addItems) {
+      if (delItem || addItems) {
         const msg = '谷歌表为空'
         return Promise.reject(msg)
       } else {
@@ -106,13 +119,13 @@ const dispatch = {
       if (addItems) {
         this.onAdd = http.postGoogleSheet({
           googleUrl,
-          data: addItems
+          data: setProps(addItems)
         })
         await this.onAdd.catch(e => {})
-      } else if (delKey) {
+      } else if (delItem) {
         this.onDelete = http.deleteGoogleSheet({
           googleUrl,
-          timeHeader: delKey,
+          ...delItem,
           googleHeaderData
         })
         await this.onDelete.catch(e => {})
@@ -123,11 +136,7 @@ const dispatch = {
           googleUrl,
           googleHeaderData
         }).then(res => {
-          const list = res.data.map(v => {
-            Object.entries(thMap).forEach(([key1, key2]) => {
-              v[key1] = v[key2]
-            })
-          })
+          const list = setProps(res.data, true)
           write('sheetData', list)
         }, () => write('sheetData', []))
       }
@@ -141,7 +150,7 @@ const dispatch = {
     loop && setTimeout(() => {
       this.updateSheetData({ loop })
     }, 1000 * 10 * 60)
-    if (delKey) {
+    if (delItem) {
       return this.onDelete
     }
     if (addItems) {
