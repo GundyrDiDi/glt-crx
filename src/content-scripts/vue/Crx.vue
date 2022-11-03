@@ -62,13 +62,13 @@ body {
     font-family: 'PingFangSC-Semibold','Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;
   }
   .ant-btn-black{
-    background:#333;
+    background: linear-gradient(270deg, #232323 0%, #000000 100%);
     border-color:#333;
     color:#fff;
     &:hover,&:focus,&:active{
       color:#fff;
       border-color:#333;
-      background:#000;
+      background: linear-gradient(270deg, #232323 0%, #000000 100%);
     }
   }
   .ant-message {

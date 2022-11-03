@@ -7,9 +7,11 @@
       style="padding: 100px 10px; color: #aaa; text-align:center"
     >
       <div class="abs arrow-d" v-show="!user?.googleUrl">
-        <svg-icon name="指针"></svg-icon>
+        <!-- <svg-icon name="指针"></svg-icon> -->
+        <img src="@/assets/箭头.png" alt="">
       </div>
-      {{ $t("绑定谷歌表后即可选购商品") }}
+      <img class="abs" style="width:70px;height:50px;top:45px;" src="@/assets/装饰1.png" alt="">
+      <div v-html="str"></div>
     </div>
     <transition-group
       tag="div"
@@ -18,7 +20,7 @@
     >
       <div
         v-for="(v, i) in list"
-        :key="v.time"
+        :key="v.time+v.productSpecification"
         class="sniff-crx-bubble-pocket-item flex rel"
       >
         <div>
@@ -35,8 +37,8 @@
           }}</span>
         </div>
         <div class="abs sniff-crx-bubble-pocket-drawer">
-          <div class="wrap flex-center">
-            <span @click="$emit('del', i)">
+          <div class="wrap flex-center" @click="$emit('del', i)">
+            <span>
               <svg-icon name="删除"></svg-icon>
             </span>
           </div>
@@ -61,9 +63,17 @@ import { mapState } from 'vuex'
 export default {
   props: ['list'],
   data () {
-    return {}
+    return {
+    }
   },
-  computed: mapState(['lang', 'user']),
+  computed: {
+    ...mapState(['lang', 'user']),
+    str () {
+      return this.$t('绑定X后即可选购商品').replace('X', `<span 
+      style="color:#f96113;font-weight: 500;"
+      >${this.$t('谷歌表')}</span>`)
+    }
+  },
   methods: {
     jump () {
       window.open(this.user?.googleUrl)
@@ -90,7 +100,6 @@ export default {
       background: #fefefe;
       margin-bottom: 1px;
       padding: 15px 5px 15px 10px;
-      // overflow: hidden;
       img {
         height: 40px;
         width: 40px;
@@ -99,14 +108,22 @@ export default {
       a {
         color: inherit !important;
       }
+      &:hover .sniff-crx-bubble-pocket-drawer>div{
+        opacity:1;
+        transform: translateX(0);
+      }
     }
     &-desc {
+      width: 150px;
       margin-left: 10px;
       margin-top: 2px;
       transition: all 0.2s ease-in-out;
     }
     &-prop {
       margin: 16px 0 0 10px;
+      background: #FBFBFB;
+      padding-left: 10px;
+      border-radius: 10px;
     }
     &-bottom {
       height: 60px;
@@ -125,21 +142,17 @@ export default {
       height: 100%;
       top: 0;
       right: 0px;
-      width: 60px;
+      width: 50px;
       >div{
         color: #fff;
         background: rgba(0, 0, 0, 0.8);
         transition: all 0.2s ease-in-out;
         transform: translateX(100%);
+        cursor: pointer;
         opacity:0;
-      }
-      &:hover>div{
-        opacity:1;
-        transform: translateX(0);
       }
       span {
         font-size: 16px;
-        cursor: pointer;
       }
     }
   }
@@ -147,24 +160,24 @@ export default {
 
 .arrow-d{
   font-size: 30px;
-  transform: rotate(207deg);
-  color: orangered;
-  right: 15px;
-  top: -20px;
-  >svg{
-    animation: zoom 1s  infinite;
+  right: 9px;
+  top: -23px;
+  img{
+    height:80px;
+    width:60px;
+    animation: sniffzoom 1s  infinite;
   }
 }
 
-@keyframes zoom{
+@keyframes sniffzoom{
   0%{
-    transform: scale(.9) rotate(1deg);
+    transform: scale(.98) rotate(2deg);
   }
   50%{
-    transform: scale(1) rotate(-1deg);
+    transform: scale(1) rotate(-2deg);
   }
   100%{
-    transform: scale(.9) rotate(1deg);
+    transform: scale(.98) rotate(2deg);
   }
 }
 

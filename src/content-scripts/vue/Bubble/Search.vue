@@ -13,13 +13,13 @@
           style="cursor: pointer; height: 10px; display: inline-flex"
         >
           <svg-icon name="切换语言" style="font-size: 16px"></svg-icon>
-          <span class="rel" style="line-height: 1; margin-left: 3px">
+          <span class="rel" style="line-height: 1; margin-left: 3px;position:relative;top:1px">
             {{ $t(langs.find((v) => v.value === lang).label) }}
           </span>
           <svg-icon
             class="rel"
             name="展开"
-            style="font-size: 9px; top: 4px; left: 2px"
+            style="font-size: 9px; top: 2px; left: 2px"
             :style="{ transform: `scale(${dropdown ? -1 : 1})` }"
           ></svg-icon>
         </span>
@@ -47,7 +47,7 @@
         :class="{ active: user?.googleUrl }"
         @click="$store.commit('showModal', true)"
       >
-        <svg-icon name="谷歌表" style="font-size: 20px"></svg-icon>
+        <svg-icon name="谷歌表" style="font-size: 20px;position:relative;top:1px;"></svg-icon>
       </div>
     </div>
   </div>
@@ -132,6 +132,7 @@ export default {
   .ant-input {
     width: 175px;
     padding-right: 30px;
+    background-color: transparent;
     ~ .abs {
       right: 5px;
       font-size: 20px;

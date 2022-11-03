@@ -11,6 +11,7 @@
       :class="{ requesting }"
     >
       <template>
+        <svg-icon class="sniff-crx-product-logo" name="编组16"></svg-icon>
         {{ $t("我要代购") }}
       </template>
     </a>
@@ -87,11 +88,9 @@ export default {
         const { left, top, height, width } = $(
           '.sniff-crx-bubble-icon'
         )[0].getBoundingClientRect()
+        const imgSrc = skuList[0].photoUrl || window.$detail.productImg
         this.$store.commit('setParabola', {
-          src:
-            (skuList.length > 1
-              ? window.$detail.productImg
-              : skuList[0].photoUrl) || window.$detail.productImg,
+          src: imgSrc,
           p1: [e.x, e.y],
           p3: [left + width / 2, top + height / 2]
         })
@@ -124,16 +123,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 #_sniff_crx_product_{
-  &.sniff-crx--1688,&.sniff-crx--1688-new{
-    >a{
-      width:162px !important;
-    }
-  }
-  &.sniff-crx--tmall{
-    >a{
-      width:180px !important;
-    }
-  }
+  // &.sniff-crx--1688,&.sniff-crx--1688-new{
+  //   >a{
+  //     width:180px !important;
+  //   }
+  // }
+  // &.sniff-crx--tmall{
+  //   >a{
+  //     width:180px !important;
+  //   }
+  // }
 }
 
 #_sniff_crx_product_ {
@@ -146,19 +145,29 @@ export default {
     display: block;
     margin-right: 21px;
     overflow: hidden;
-    width: 180px;
-    height: 38px;
-    line-height: 38px;
-    border-radius: 4px;
+    padding:0 20px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 40px;
     color: #fff;
     font-size: 16px;
-    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s;
+    position:relative;
 
     &.requesting {
       pointer-events: none;
       border-color: #f2f2f2;
       background: #ddd !important;
+      .sniff-crx-product-logo{
+        opacity: .2;
+      }
+    }
+    .sniff-crx-product-logo{
+      font-size: 28px;
+      margin-right:10px;
     }
   }
 

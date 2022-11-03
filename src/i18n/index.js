@@ -96,7 +96,7 @@ const message = {
     ko: '한국어'
   },
   绑定谷歌表: {
-    en: 'Bind Your Google Sheets',
+    en: 'Edit Your Google Sheets',
     ko: 'Google 시트 연동'
   },
   查看谷歌表: {
@@ -107,9 +107,13 @@ const message = {
     en: 'Enter the google sheet URL',
     ko: 'Google 시트 URL을 입력해 주세요'
   },
-  绑定谷歌表后即可选购商品: {
-    en: 'You can buy products after binding the Google sheets',
-    ko: 'Google 시트 연동후 상품을 선택할 수 있습니다.'
+  谷歌表: {
+    en: 'the Google sheets',
+    ko: 'Google 시트'
+  },
+  绑定X后即可选购商品: {
+    en: 'You can buy products after binding X',
+    ko: 'X 연동후 상품을 선택할 수 있습니다.'
   },
   绑定: {
     en: 'Bind',
@@ -120,7 +124,7 @@ const message = {
     ko: '연동해제'
   },
   绑定成功: {
-    en: 'Unbind succeeded',
+    en: 'Bind succeeded',
     ko: '연동 성공'
   },
   数量: {

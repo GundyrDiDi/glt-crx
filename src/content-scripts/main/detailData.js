@@ -23,7 +23,7 @@ export default (plat, [sku]) => {
     }, {})
   }
   if (plat === 'taobao') {
-    data.productImg = $('.tb-pic img').attr('src').replace(/_\d+x\d+\..*$/, '')
+    data.productImg = $('.tb-pic img').attr('src').replace(/_\d+x\d+.*?\..*$/, '')
     data.productName = document.title
     data.skuMap = sku.skuMap
     data.productProps = sku.propertyMemoMap ?? []
@@ -34,7 +34,7 @@ export default (plat, [sku]) => {
       location.replace(par)
     }
     data.productName = document.title.replace(/-tmall.*$/, '')
-    data.productImg = $('.tb-thumb-content img').attr('src').replace(/_\d+x\d+\..*$/, '')
+    data.productImg = $('.tb-thumb-content img').attr('src').replace(/_\d+x\d+.*?\..*$/, '')
     data.skuMap = JSON.parse(
       [...$('script:not([src])')]
         .map((v) => $(v).html())
@@ -48,7 +48,7 @@ export const forTable = (skuList) => {
   return skuList.map(v => {
     return {
       time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-      photoUrl: v.photoUrl.replace(/_\d+x\d+\..*$/, '') || _w.$detail.productImg,
+      photoUrl: v.photoUrl.replace(/_\d+x\d+.*?\..*$/, '') || _w.$detail.productImg,
       productName: _w.$detail.productName,
       productUrl: _w.$detail.productUrl,
       productSpecification: v.propName
