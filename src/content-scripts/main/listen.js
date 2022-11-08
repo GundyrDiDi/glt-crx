@@ -11,7 +11,9 @@ window.addEventListener('message', res => {
   //
   let plat = platform
   if (detail?.length) {
-    execDetail(plat, detail)
+    setTimeout(() => {
+      execDetail(plat, detail)
+    }, 2000)
   }
   console.log({ plat, detail })
   // 当前是否在商详页

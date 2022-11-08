@@ -101,7 +101,7 @@ export const createCrx = ({ plat, product }) => {
       store,
       render: h => h(Crx)
     }).$mount('#' + id)
-  }, 500)
+  }, 2000)
 }
 
 console.log('chrome', chrome)
