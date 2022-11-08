@@ -9,13 +9,12 @@ window.addEventListener('message', res => {
   // console.log(res.data)
   if (!platform) return
   //
-  let plat = platform
   if (detail?.length) {
     setTimeout(() => {
-      execDetail(plat, detail)
+      execDetail(platform, detail)
     }, 2000)
   }
-  console.log({ plat, detail })
+  let plat = platform
   // 当前是否在商详页
   let product
   // 匹配各个平台元素
