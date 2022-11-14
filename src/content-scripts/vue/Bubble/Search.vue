@@ -66,7 +66,8 @@ export default {
         // { label: '日语', value: 'ja' },
         // { label: '中文', value: 'zh' },
         { label: '英语', value: 'en' },
-        { label: '韩语', value: 'ko' }
+        { label: '韩语', value: 'ko' },
+        { label: '泰语', value: 'th' }
       ],
       searchUrl: {
         TB: 'https://s.taobao.com/search?q=',

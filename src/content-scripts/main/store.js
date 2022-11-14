@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { langs as languages } from '@/i18n'
 
 Vue.use(Vuex)
-
-const languages = ['en', 'ko', 'zh']
 
 function getLang () {
   return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : process.env.VUE_APP_I18N_LOCALE
