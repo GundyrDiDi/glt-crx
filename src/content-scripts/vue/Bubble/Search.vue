@@ -1,6 +1,7 @@
 <template>
   <div class="sniff-crx-bubble-search flex-col-bwn">
     <div>
+      <div></div>
       <!-- <a-popover
         v-model="dropdown"
         trigger="click"
