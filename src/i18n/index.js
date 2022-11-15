@@ -117,7 +117,7 @@ const message = {
   泰语: {
     en: 'Thai',
     th: 'ภาษาไทย',
-    ko: '태국어'
+    ko: '타이어'
   },
   韩语: {
     en: 'Korean',
