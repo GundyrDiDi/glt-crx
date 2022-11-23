@@ -2,7 +2,7 @@
   <div class="sniff-crx-bubble-search flex-col-bwn">
     <div>
       <div></div>
-      <!-- <a-popover
+      <a-popover
         v-model="dropdown"
         trigger="click"
         placement="bottom"
@@ -29,7 +29,7 @@
             {{ $t(v.label) }}
           </a-menu-item>
         </a-menu>
-      </a-popover> -->
+      </a-popover>
     </div>
     <div class="flex-ter">
       <div class="flex-ter rel">

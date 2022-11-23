@@ -61,7 +61,7 @@ const dispatch = {
     const { token } = userData
     if (token) {
       return http.getUser({ token }).then(res => {
-        const data = { token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId }
+        const data = { token, user: res.data, curShop: res.data.customerShopList[0]?.customerShopId ?? ' ' }
         return dispatch.setUserData({ data })
       }, res => write('userData', {}))
     } else {
@@ -85,7 +85,7 @@ const dispatch = {
   onAdd: Promise.resolve(),
   async updateSheetData ({ loop, data: { delItem, addItems } = {} }) {
     const { user = {} } = await read('userData')
-    const lang = await read('lang')
+    const lang = 'en'
     const { googleUrl } = user
     const thMap = {
       time: 'Date',
