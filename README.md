@@ -1,6 +1,6 @@
 ## 需求拆分
 
-### [支持英韩泰3国语言登录注册](https://devops.aliyun.com/projex/project/221441d8bff64eda1bf499a01d/sprint/2b4d01d82a4475b12df98c0e49#activeTab=Workitem&viewIdentifier=e23185c964cbf9606c3dca943a&openWorkitemIdentifier=1c15c39372c7f9d6bc96daf55c)
+### [22/11/23 支持英韩泰3国语言登录注册](https://devops.aliyun.com/projex/project/221441d8bff64eda1bf499a01d/sprint/2b4d01d82a4475b12df98c0e49#activeTab=Workitem&viewIdentifier=e23185c964cbf9606c3dca943a&openWorkitemIdentifier=1c15c39372c7f9d6bc96daf55c)
 
 1. 登录页
 添加选择语言下拉框  
