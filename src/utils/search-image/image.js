@@ -20,7 +20,7 @@ export const beforeJump = async (imgData, source = '1688', original = false) => 
       alert('類似商品の検索に問題が発生しました。別の商品でもう一度お試しください。')
       window.close()
     } else {
-      window.open(base64 + `?syncImg=true&plat=${imgData.plat}&source=${source}`)
+      window.open(base64 + `?orginImg=true&plat=${imgData.plat}&source=${source}`)
     }
   }
 }

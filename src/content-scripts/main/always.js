@@ -1,3 +1,5 @@
 import { getImgData } from '@/utils/search-image/search'
 
-getImgData()
+setTimeout(e => {
+  getImgData()
+}, 1000)

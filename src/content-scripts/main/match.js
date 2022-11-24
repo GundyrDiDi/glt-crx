@@ -26,5 +26,5 @@ if (plat) {
     setTimeout(e => {
       div.remove()
     }, 200)
-  }, 500)
+  }, 2000)
 }

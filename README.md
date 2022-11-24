@@ -17,3 +17,21 @@
 ### 主页面新增退出登录按钮
    
 ### 主页面语言切换修改文字
+
+# 技术指南
+入门 https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html  
+热更新 https://zhuanlan.zhihu.com/p/103072251  
+迁移MV3 https://developer.chrome.com/docs/extensions/mv3/intro/mv3-migration/  
+preset模板 https://github.com/Kocal/vue-web-extension-vue3  
+
+# 结构设计
+background 内做事件处理
+service/store 作为主进程的状态管理，支持本地储存
+service/fetch 主进程发的请求接口，约束所有请求都通过主进程来发起
+
+content-script 内通过postmessage获取内部window的值
+
+
+图搜功能作为工具函数引入
+
+# 代码流程

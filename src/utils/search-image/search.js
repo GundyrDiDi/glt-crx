@@ -139,17 +139,10 @@ function searchPDD (res) {
 
 // 总是执行搜图
 export const getImgData = async () => {
-  // 兼容之前的插件
-  const has = await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(!!$('#_sniff_btn')[0])
-    }, 100)
-  })
-  if (has) return
   // props: 当前是否为图片链接 平台 搜索来源 已存的图片key
-  const { syncImg, plat, source, sniffimg } = serizeR(location.href)
+  const { orginImg, plat, source, sniffimg } = serizeR(location.href)
   // 先判断是否图片地址，再判断是否平台搜图地址
-  if (syncImg) {
+  if (orginImg) {
     const cur = $('img')[0]
     const { height, width } = cur.getBoundingClientRect()
     beforeJump({ height, width, plat, cur }, source, true)
