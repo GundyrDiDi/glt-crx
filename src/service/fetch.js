@@ -67,6 +67,10 @@ const http1 = _axios.create('https://productPlugIn.theckb.com/')
 
 // 接口
 const apis = {
+  // 注册
+  checkLoginName: data => http.get('/customer/signup/check/loginname', { params: data }),
+  getSignupCode: data => http.post('/customer/signup/send/code', { body: data }),
+  signup: data => http.post('/customer/signup', { body: data }),
   // 登录
   loginByPwd: data => http.post('/customer/passwordLogin', { body: data }),
   getLoginCode: data => http.post('/customer/emailLogin/send/code', { body: data }),

@@ -8,8 +8,16 @@ function getLang () {
   return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : process.env.VUE_APP_I18N_LOCALE
 }
 
+const langs = [
+  { label: 'English', value: 'en' },
+  { label: '한국어', value: 'ko' },
+  { label: 'ภาษาไทย', value: 'th' }
+]
+
 const store = new Vuex.Store({
   state: {
+    langs,
+    //
     lang: getLang(),
     token: '',
     curShop: null,
@@ -18,6 +26,7 @@ const store = new Vuex.Store({
     sheetData: [],
     //
     showModal: false,
+    outModal: false,
     parabola: null
   },
   mutations: {
@@ -43,6 +52,9 @@ const store = new Vuex.Store({
     },
     showModal (state, val) {
       state.showModal = val
+    },
+    outModal (state, val) {
+      state.outModal = val
     },
     setParabola (state, val) {
       state.parabola = val

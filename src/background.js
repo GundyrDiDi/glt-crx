@@ -85,8 +85,7 @@ const dispatch = {
   onAdd: Promise.resolve(),
   async updateSheetData ({ loop, data: { delItem, addItems } = {} }) {
     const { user = {} } = await read('userData')
-    const lang = 'en'
-    const { googleUrl } = user
+    const { googleUrl, langCode = 'en' } = user
     const thMap = {
       time: 'Date',
       photoUrl: 'Photo Url',
@@ -120,14 +119,14 @@ const dispatch = {
       if (addItems) {
         this.onAdd = http.postGoogleSheet({
           googleUrl,
-          langCode: lang,
+          langCode,
           data: setProps(addItems)
         })
         await this.onAdd.catch(e => {})
       } else if (delItem) {
         this.onDelete = http.deleteGoogleSheet({
           googleUrl,
-          langCode: lang,
+          langCode,
           ...delItem,
           googleHeaderData
         })
@@ -137,7 +136,7 @@ const dispatch = {
         await this.onAdd.catch(e => {})
         await http.getGoogleSheet({
           googleUrl,
-          langCode: lang,
+          langCode,
           googleHeaderData
         }).then(res => {
           const list = setProps(res.data, true)

@@ -1,7 +1,8 @@
 <template>
   <a-modal
+    :get-container="()=>$root.$el"
     :visible="showModal"
-    :zIndex="111111111111"
+    :zIndex="200000001"
     :footer="null"
     :width="480"
     centered
@@ -75,7 +76,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .sniff-crx-modal {
   box-sizing: border-box;
   width: 480px;

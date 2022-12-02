@@ -2,21 +2,29 @@
 
 ## [22/11/23 支持英韩泰3国语言登录注册](https://devops.aliyun.com/projex/project/221441d8bff64eda1bf499a01d/sprint/2b4d01d82a4475b12df98c0e49#activeTab=Workitem&viewIdentifier=e23185c964cbf9606c3dca943a&openWorkitemIdentifier=1c15c39372c7f9d6bc96daf55c)
 
+### 全局修改
+1. 提取语言切换组件 ✔
+2. 样式调整  ✔
+3. 主题色修改 ✔
+
 ### 登录页修改
-1. 添加选择语言下拉框  
-2. 添加注册锚点  
-3. 添加忘记密码锚点  
+1. 添加选择语言下拉框  ✔
+2. 添加注册锚点  ✔
+3. 添加忘记密码锚点  ✔
+4. 验证码请求添加langCode参数 ✔
 
 ### 新增注册页  
-1. 功能与client注册页大致相同  
+1. 功能与client注册页大致相同  ✔
 2. 新增用户语言选择，注册接口相应增加参数  
+3. 利用规约  ✔
 
 ### 谷歌表相关接口添加语言参数  
-1. langCode 取用户信息内的语言  
+1. langCode 取用户信息内的语言  ✔
 
-### 主页面新增退出登录按钮
-   
-### 主页面语言切换修改文字
+### 主页面修改
+1. 新增退出按钮 ✔
+2. 新增退出弹框 ✔
+3. 主页面语言切换的选项文字改为固定的 ✔
 
 # 技术指南
 入门 https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html  
@@ -112,11 +120,3 @@ content-script 目录下，结构上尽量设计得与普通业务项目一样�
 
 # 代码流程
 业务代码逻辑
-
-
-# smart管理模式
-1.目标必须是具体的（Specific）
-2.目标必须是可以衡量的（Measurable）
-3.目标必须是可以达到的（Attainable）
-4.目标必须和其他目标具在相关性（Relevant）
-5.目标必须具在明确的截止期限（Time-based）
