@@ -21,14 +21,14 @@
         <template v-if="!enter">
           <a-form-model-item prop="nameOrEmail" key="nameOrEmail">
             <a-input class="hollow" v-model="form.nameOrEmail" :placeholder="$t('请输入账号')"
-              :maxlength="18"
+              :maxLength="18"
               name="sniff_login_nameOrEmail"></a-input>
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="账号"></svg-icon>
             </span>
           </a-form-model-item>
           <a-form-model-item prop="password" key="password">
-            <a-input class="hollow" :type="ptype ? 'password' : 'text'" v-model="form.password"
+            <a-input class="hollow" :type="ptype ? 'password' : 'text'" v-model="form.password" :maxLength="32"
               :placeholder="$t('请输入密码')" name="sniff_login_password" @keyup.enter="signin"></a-input>
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="密码"></svg-icon>
@@ -237,7 +237,7 @@ export default {
 
     &:focus {
       box-shadow: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
-        inset 0px 0px 0px 0px #d2f4ed;
+        inset 0px 0px 0px 0px #F9EBE4;
 
       +span {
         color: var(--cl-primary);
@@ -279,8 +279,8 @@ export default {
 
   .has-error .ant-input:focus {
     border-color: transparent;
-    box-shadow: inset 0px 5px 8px 0px #dbf2ec, inset 0px -1px 0px 0px #ffffff,
-      inset 0px 0px 0px 0px #d2f4ed;
+    box-shadow: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
+      inset 0px 0px 0px 0px #F9EBE4;
   }
 
   .sniff-path--linkgroup{

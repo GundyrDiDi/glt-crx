@@ -1,6 +1,6 @@
 <template>
-  <div v-show="show" class="sniff-crx-login">
-    <agree-modal :show="showAgreement" @close="(showAgreement=false)"></agree-modal>
+  <div v-show="show" class="sniff-crx-login" ref="signup">
+    <agree-modal :show="showAgreement" @close="(showAgreement = false)"></agree-modal>
     <div class="abs-wrap" @click="show = false"></div>
     <div class="abs sniff-crx-login-content">
       <div class="abs sniff-crx-login-close" @click="show = false">
@@ -8,9 +8,31 @@
       </div>
       <a-form-model ref="form" :model="form" :rules="rules" :hideRequiredMark="true">
         <div class="sniff-modal--title">{{ $t('注册会员') }}</div>
+        <a-form-model-item prop="langcode" key="langcode">
+          <a-select class="hollow" v-model="form.langcode" name="sniff_login_langcode"
+            :getPopupContainer="() => this.$refs.signup" :showArrow="false" size="large">
+            <a-select-option v-for="v in langs" :key="v.value" :value="v.value">
+              {{ v.label }}
+            </a-select-option>
+          </a-select>
+          <a-input class="hollow" :value="langs.find(v => v.value === form.langcode).label"></a-input>
+          <span class="abs sniff-crx-login-icon">
+            <svg-icon name="切换语言"></svg-icon>
+          </span>
+          <span class="abs sniff-crx-expand" style="line-height:44px;right: 20px; font-size: 12px; cursor: pointer">
+            <svg-icon name="展开2"></svg-icon>
+          </span>
+          <div class="ant-tooltip ant-tooltip-placement-topLeft abs" style="top: -40px;left: 8px;">
+            <div class="ant-tooltip-content">
+              <div class="ant-tooltip-arrow"></div>
+              <div role="tooltip" class="sniff-tooltip-inner">
+                {{ $t('谷歌表语言') }}
+              </div>
+            </div>
+          </div>
+        </a-form-model-item>
         <a-form-model-item prop="loginName" key="loginName">
-          <a-input class="hollow" v-model="form.loginName" :placeholder="$t('请输入账号')"
-            :maxlength="18"
+          <a-input class="hollow" v-model="form.loginName" :placeholder="$t('请输入账号')" :maxLength="18"
             name="sniff_login_loginName"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="账号"></svg-icon>
@@ -18,7 +40,7 @@
         </a-form-model-item>
         <a-form-model-item prop="password" key="password">
           <a-input class="hollow" :type="ptype ? 'password' : 'text'" v-model="form.password" :placeholder="$t('请输入密码')"
-            name="sniff_login_password"></a-input>
+            :maxLength="32" name="sniff_login_password"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="密码"></svg-icon>
           </span>
@@ -28,7 +50,7 @@
           </span>
         </a-form-model-item>
         <a-form-model-item prop="repassword" key="repassword">
-          <a-input class="hollow" :type="ptype1 ? 'password' : 'text'" v-model="form.repassword"
+          <a-input class="hollow" :type="ptype1 ? 'password' : 'text'" v-model="form.repassword" :maxLength="32"
             :placeholder="$t('请再次输入密码')" name="sniff_login_repassword"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="确认密码"></svg-icon>
@@ -73,7 +95,7 @@
       <div class="flex-ter" style="transform: translateY(-12px);">
         <a-checkbox v-model="agreed" style="transform:translateY(1px)">
         </a-checkbox>
-        <span class="sniff-link--2" style="margin-left:5px;" @click="(showAgreement = true)">
+        <span class="sniff-link--2" :class="{ blink }" style="margin-left:5px;" @click="(showAgreement = true)">
           {{ $t('同意此项条款') }}
         </span>
       </div>
@@ -81,7 +103,7 @@
         {{ $t("注册会员") }}
       </a-button>
       <div class="flex sniff-path--linkgroup">
-        <span class="sniff-link" @click="$emit('toLogin')">{{$t('已有帐户去登录')}}</span>
+        <span class="sniff-link" @click="$emit('toLogin')">{{ $t('已有帐户去登录') }}</span>
       </div>
     </div>
   </div>
@@ -97,15 +119,16 @@ export default {
   },
   data () {
     return {
-      show: true,
+      show: false,
+      agreed: process.env.NODE_ENV === 'development',
       form: {
-        loginName: process.env.NODE_ENV === 'development' ? 'testApi' : '',
+        loginName: process.env.NODE_ENV === 'development' ? 'testApi' + Math.random().toString().slice(3, 7) : '',
         password: process.env.NODE_ENV === 'development' ? '123456' : '',
         repassword: process.env.NODE_ENV === 'development' ? '123456' : '',
-        customerEmail: '',
-        verificationCode: '',
+        customerEmail: process.env.NODE_ENV === 'development' ? '502121489@qq.com' : '',
+        verificationCode: process.env.NODE_ENV === 'development' ? '4285' : '',
         langcode: '',
-        customerName: ''
+        customerName: process.env.NODE_ENV === 'development' ? '9067' : ''
       },
       rules: {
         loginName: useRules({ key: 'noblank' }).concat({
@@ -122,22 +145,51 @@ export default {
           trigger: 'blur'
         }),
         password: useRules({ key: 'plain' }),
-        repassword: useRules({ key: 'plain' }),
+        repassword: useRules({ key: 'plain' }).concat({
+          validator: (rule, val, c) => {
+            if (val) {
+              if (val !== this.form.password) {
+                c('※ ' + this.$t('两次密码不一致'))
+              } else {
+                c()
+              }
+            } else {
+              c()
+            }
+          },
+          trigger: 'blur'
+        }),
         customerEmail: useRules({ key: 'email' }),
         verificationCode: useRules({ key: 'plain' }),
         customerName: useRules({ key: 'noblank' })
       },
       loading: false,
-      agreed: false,
+      blink: false,
       count: 0,
       ptype: true,
       ptype1: true,
       showAgreement: false
     }
   },
-  computed: mapState(['lang']),
+  computed: mapState(['langs', 'lang']),
+  watch: {
+    lang: {
+      handler (v) {
+        this.form.langcode = v
+      },
+      immediate: true
+    }
+  },
   methods: {
     signup () {
+      if (!this.agreed) {
+        this.blink = true
+        console.log(this.blink)
+        setTimeout(() => {
+          this.blink = false
+        }, 1200)
+        return
+      }
       this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true
@@ -146,15 +198,19 @@ export default {
             password: md5(this.form.password)
           }
           const token = await this.sendMessage('request', [
-            this.enter === 0 ? 'loginByPwd' : 'loginByCode',
+            'signup',
             data
           ]).then(
-            (res) => res.data.token,
-            () => {
-              this.$msg(
-                this.enter === 0 ? '账号或密码错误' : '邮箱或验证码错误',
-                'error'
-              )
+            (res) => {
+              if (res.data.uuid) {
+                return this.sendMessage('request', ['setDefault', { uuid: res.data.uuid, systemSource: 1 }]).then(res => {
+                  console.log(res)
+                  return res.data.token
+                })
+              }
+            },
+            (res) => {
+              this.$msg(res.data.msg, 'error')
             }
           )
           if (token) {
@@ -193,6 +249,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+$asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
+  inset 0px 0px 0px 0px #F9EBE4;
+
 .sniff-crx-login {
   position: fixed;
   top: 0;
@@ -206,7 +265,7 @@ export default {
   }
 
   &-content {
-    height: 700px;
+    height: 720px;
     width: 500px;
     padding: 20px 50px;
     background: #fdfdfd;
@@ -216,20 +275,6 @@ export default {
     bottom: 0;
     right: 0;
     margin: auto;
-  }
-
-  &-enter {
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-
-    span {
-      transform: scale(.9);
-    }
-
-    .sniff_color--info {
-      transform: scale(1.15);
-    }
   }
 
   &-close {
@@ -248,8 +293,48 @@ export default {
     margin-bottom: 30px;
   }
 
+  .ant-select {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+    height: 44px;
+
+    &-open {
+      +input {
+        box-shadow: $asd;
+      }
+
+      ~.sniff-crx-login-icon {
+        color: var(--cl-primary);
+      }
+
+      ~.sniff-crx-expand {
+        transform: scaleY(-1)
+      }
+    }
+  }
+
+  .sniff-tooltip-inner {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    font-size: 12px;
+    padding: 0 10px;
+    color: var(--cl-primary);
+    text-align: left;
+    text-decoration: none;
+    word-wrap: break-word;
+    background-color: #fff;
+    box-shadow: 0px 3px 6px 0px #EFEAE7;
+  }
+
+  .ant-tooltip-arrow::before {
+    background: #fff;
+  }
+
   .ant-form-item {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   .ant-input {
@@ -257,11 +342,9 @@ export default {
     height: 44px;
     border-radius: 22px;
     padding-left: 56px;
-    caret-color: var(--cl-primary);
 
     &:focus {
-      box-shadow: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
-        inset 0px 0px 0px 0px #d2f4ed;
+      box-shadow: $asd;
 
       +span {
         color: var(--cl-primary);
@@ -311,14 +394,47 @@ export default {
 
   .has-error .ant-input:focus {
     border-color: transparent;
-    box-shadow: inset 0px 5px 8px 0px #dbf2ec, inset 0px -1px 0px 0px #ffffff,
-      inset 0px 0px 0px 0px #d2f4ed;
+    box-shadow: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
+      inset 0px 0px 0px 0px #F9EBE4;
   }
 
-  .sniff-path--linkgroup{
-    float:right;
-    padding:8px 0;
-    span:nth-child(2){
+  .sniff-link--2.blink {
+    transition: all .2s;
+    animation: blink .8s linear 2;
+  }
+
+  @keyframes blink {
+    0% {
+      color: var(--cl-primary);
+      transform: scale(1);
+    }
+
+    25% {
+      color: #f5222d;
+      transform: scale(1.05);
+    }
+
+    50% {
+      color: var(--cl-primary);
+      transform: scale(1);
+    }
+
+    75% {
+      color: #f5222d;
+      transform: scale(1.05);
+    }
+
+    100% {
+      color: var(--cl-primary);
+      transform: scale(1);
+    }
+  }
+
+  .sniff-path--linkgroup {
+    float: right;
+    padding: 8px 0;
+
+    span:nth-child(2) {
       margin: 0 12px;
     }
   }

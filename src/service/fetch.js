@@ -71,6 +71,7 @@ const apis = {
   checkLoginName: data => http.get('/customer/signup/check/loginname', { params: data }),
   getSignupCode: data => http.post('/customer/signup/send/code', { body: data }),
   signup: data => http.post('/customer/signup', { body: data }),
+  setDefault: data => http.post('/customer/signup/defaultLogin', { body: data }),
   // 登录
   loginByPwd: data => http.post('/customer/passwordLogin', { body: data }),
   getLoginCode: data => http.post('/customer/emailLogin/send/code', { body: data }),

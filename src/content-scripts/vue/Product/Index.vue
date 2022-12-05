@@ -1,15 +1,6 @@
 <template>
-  <div
-    id="_sniff_crx_product_"
-    class="sniff-crx-product"
-    :class="'sniff-crx--' + $platform"
-  >
-    <a
-      href="#"
-      @click.prevent="(e) => $emit('after', () => buy(e))"
-      class="flex ant-btn-black"
-      :class="{ requesting }"
-    >
+  <div id="_sniff_crx_product_" class="sniff-crx-product" :class="'sniff-crx--' + $platform">
+    <a href="#" @click.prevent="(e) => $emit('after', () => buy(e))" class="flex ant-btn-black" :class="{ requesting }">
       <template>
         <svg-icon class="sniff-crx-product-logo" name="编组16"></svg-icon>
         {{ $t("我要代购") }}
@@ -122,7 +113,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-#_sniff_crx_product_{
+#_sniff_crx_product_ {
   // &.sniff-crx--1688,&.sniff-crx--1688-new{
   //   >a{
   //     width:180px !important;
@@ -135,39 +126,55 @@ export default {
   // }
 }
 
+.ant-btn-black {
+  background: #232323;
+  border-color: #232323;
+  color: #fff;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    border-color: #333;
+    background: linear-gradient(270deg, #232323 0%, #000000 100%);
+  }
+}
+
 #_sniff_crx_product_ {
   margin-top: 15px;
   float: left;
   margin-bottom: 23px;
 
-  > a {
+  >a {
     text-decoration: none;
     display: block;
     margin-right: 21px;
     overflow: hidden;
-    padding:0 20px;
+    padding: 0 20px;
     height: 40px;
     line-height: 40px;
     border-radius: 40px;
     color: #fff;
     font-size: 16px;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-    position:relative;
+    position: relative;
 
     &.requesting {
       pointer-events: none;
       border-color: #f2f2f2;
       background: #ddd !important;
-      .sniff-crx-product-logo{
+
+      .sniff-crx-product-logo {
         opacity: .2;
       }
     }
-    .sniff-crx-product-logo{
+
+    .sniff-crx-product-logo {
       font-size: 28px;
-      margin-right:10px;
+      margin-right: 10px;
     }
   }
 

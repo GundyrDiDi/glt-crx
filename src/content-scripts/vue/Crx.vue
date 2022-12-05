@@ -122,6 +122,20 @@ body {
   }
 
   // 输入框
+  input{
+    &:autofill {
+      background: #fff;// 支持火狐
+    }
+    // 支持chrome
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      transition: background-color 50000s ease-in-out 0s;
+      -webkit-text-fill-color: #232323 !important;
+    }
+  }
+
   .ant-input {
     height: 30px;
     border-radius: 15px;
@@ -172,7 +186,17 @@ body {
       border-color: var(--cl-dark);
     }
   }
+  // select
+  .ant-select-dropdown-menu-item-selected{
+    font-weight: 400;
+    color:var(--cl-primary);
+    background-color:#FFFDFC;
+  }
 
+  .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled),
+  .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #FFFDFC;
+  }
   // 按钮
   .ant-btn-black {
     background: #232323;

@@ -59,6 +59,11 @@ export default {
   methods: {
     async bind () {
       const googleUrl = this.url
+      const reg = /docs.google.com\/.+\/d\/.+$/
+      if (!reg.test(this.url)) {
+        this.$msg('无效内容', 'error')
+        return
+      }
       this.loading = true
       await this.sendMessage('request', ['setGoogleSheet', {
         googleUrl,

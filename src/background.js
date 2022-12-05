@@ -85,7 +85,7 @@ const dispatch = {
   onAdd: Promise.resolve(),
   async updateSheetData ({ loop, data: { delItem, addItems } = {} }) {
     const { user = {} } = await read('userData')
-    const { googleUrl, langCode = 'en' } = user
+    const { googleUrl, langcode: langCode = 'en' } = user
     const thMap = {
       time: 'Date',
       photoUrl: 'Photo Url',
