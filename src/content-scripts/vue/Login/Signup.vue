@@ -15,7 +15,7 @@
               {{ v.label }}
             </a-select-option>
           </a-select>
-          <a-input class="hollow" :value="langs.find(v => v.value === form.langcode).label"></a-input>
+          <a-input style="padding-left: 44px;" class="hollow" :value="langs.find(v => v.value === form.langcode).label"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="切换语言2"></svg-icon>
           </span>
@@ -73,7 +73,7 @@
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="验证码"></svg-icon>
           </span>
-          <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0 || !form.customerEmail.trim()"
+          <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0"
             @click="getCode">
             <template v-if="count > 0">
               {{ $t("发送中") }}
@@ -300,7 +300,6 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
     opacity: 0;
     z-index: 1;
     height: 44px;
-
     &-open {
       +input {
         box-shadow: $asd;
@@ -313,6 +312,9 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
       ~.sniff-crx-expand {
         transform: scaleY(-1)
       }
+    }
+    ~.sniff-crx-login-icon::after{
+      content:''
     }
   }
 
@@ -355,7 +357,7 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
 
   &-icon {
     left: 20px;
-    color: #bababa;
+    color: var(--cl-dark);
     pointer-events: none;
     top: -11px;
     font-size: 18px;

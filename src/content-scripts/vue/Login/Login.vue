@@ -2,7 +2,7 @@
   <div v-show="show" class="sniff-crx-login">
     <div class="abs-wrap" @click="show = false"></div>
     <div class="abs sniff-crx-login-content">
-      <lang-btn class="rel" style="left:-28px"></lang-btn>
+      <lang-btn class="rel" style="left:-28px;top:2px;"></lang-btn>
       <div class="flex-center" style="margin-top:-20px;">
         <svg-icon style="font-size: 120px" name="THECKB"></svg-icon>
       </div>
@@ -12,16 +12,15 @@
       <a-form-model ref="form" :model="form" :rules="rules" :hideRequiredMark="true">
         <div class="flex-bwn sniff-crx-login-enter" style="margin-bottom: 20px">
           <span class="sniff-enter--active">{{
-              $t(tunels[enter===0?0:1])
+              $t(tunels[enter === 0 ? 0 : 1])
           }}</span>
-          <span @click="(enter = enter===1?0:1)">{{
-              $t(tunels[enter===0?1:0])
+          <span @click="(enter = enter === 1 ? 0 : 1)">{{
+              $t(tunels[enter === 0 ? 1 : 0])
           }}</span>
         </div>
         <template v-if="!enter">
           <a-form-model-item prop="nameOrEmail" key="nameOrEmail">
-            <a-input class="hollow" v-model="form.nameOrEmail" :placeholder="$t('请输入账号')"
-              :maxLength="18"
+            <a-input class="hollow" v-model="form.nameOrEmail" :placeholder="$t('请输入账号')" :maxLength="18"
               name="sniff_login_nameOrEmail"></a-input>
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="账号"></svg-icon>
@@ -33,7 +32,8 @@
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="密码"></svg-icon>
             </span>
-            <span class="abs" @click="ptype = !ptype" style="line-height:50px;right: 20px; font-size: 20px; cursor: pointer">
+            <span class="abs" @click="ptype = !ptype"
+              style="line-height:50px;right: 20px; font-size: 20px; cursor: pointer">
               <svg-icon :name="ptype ? '闭眼' : '睁眼'"></svg-icon>
             </span>
           </a-form-model-item>
@@ -52,8 +52,7 @@
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="验证码"></svg-icon>
             </span>
-            <a-button class="abs sniff-verify--btn" type="black" :disabled="count > 0 || !form.customerEmail.trim()"
-              @click="getCode">
+            <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0" @click="getCode">
               <template v-if="count > 0">
                 {{ $t("发送中") }}
                 ({{ count }})
@@ -70,9 +69,9 @@
         {{ $t("登录") }}
       </a-button>
       <div class="flex sniff-path--linkgroup">
-        <a class="sniff-link" :href="(forgoturl+lang)" target="_blank">{{$t('忘记密码')}}</a>
+        <a class="sniff-link" :href="(forgoturl + lang)" target="_blank">{{ $t('忘记密码') }}</a>
         <span>|</span>
-        <span class="sniff-link" @click="$emit('toSignup')">{{$t('注册会员')}}</span>
+        <span class="sniff-link" @click="$emit('toSignup')">{{ $t('注册会员') }}</span>
       </div>
     </div>
   </div>
@@ -251,7 +250,7 @@ export default {
   &-icon {
     left: 18px;
     pointer-events: none;
-    // top: -12px;
+    color: var(--cl-dark);
     line-height: 50px;
     font-size: 18px;
   }
@@ -286,10 +285,11 @@ export default {
       inset 0px 0px 0px 0px #F9EBE4;
   }
 
-  .sniff-path--linkgroup{
-    float:right;
-    padding:8px 0;
-    span:nth-child(2){
+  .sniff-path--linkgroup {
+    float: right;
+    padding: 8px 0;
+
+    span:nth-child(2) {
       margin: 0 12px;
     }
   }
