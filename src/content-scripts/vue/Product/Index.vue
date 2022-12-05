@@ -1,6 +1,6 @@
 <template>
   <div id="_sniff_crx_product_" class="sniff-crx-product" :class="'sniff-crx--' + $platform">
-    <a href="#" @click.prevent="(e) => $emit('after', () => buy(e))" class="flex ant-btn-black" :class="{ requesting }">
+    <a href="#" @click.prevent="(e) => $emit('after', () => buy(e))" class="flex" :class="{ requesting }">
       <template>
         <svg-icon class="sniff-crx-product-logo" name="编组16"></svg-icon>
         {{ $t("我要代购") }}
@@ -126,42 +126,28 @@ export default {
   // }
 }
 
-.ant-btn-black {
-  background: #232323;
-  border-color: #232323;
-  color: #fff;
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: #fff;
-    border-color: #333;
-    background: linear-gradient(270deg, #232323 0%, #000000 100%);
-  }
-}
-
 #_sniff_crx_product_ {
   margin-top: 15px;
   float: left;
   margin-bottom: 23px;
 
   >a {
-    text-decoration: none;
-    display: block;
-    margin-right: 21px;
-    overflow: hidden;
-    padding: 0 20px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 40px;
-    color: #fff;
-    font-size: 16px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 21px;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    background: #232323;
+    border-color: #232323;
+    border-radius: 40px;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
     transition: all 0.2s;
-    position: relative;
-
+    overflow: hidden;
     &.requesting {
       pointer-events: none;
       border-color: #f2f2f2;

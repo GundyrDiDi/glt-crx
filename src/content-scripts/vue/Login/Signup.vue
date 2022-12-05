@@ -33,14 +33,14 @@
         </a-form-model-item>
         <a-form-model-item prop="loginName" key="loginName">
           <a-input class="hollow" v-model="form.loginName" :placeholder="$t('请输入账号')" :maxLength="18"
-            name="sniff_login_loginName"></a-input>
+            name="sniff_login_loginName2"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="账号"></svg-icon>
           </span>
         </a-form-model-item>
         <a-form-model-item prop="password" key="password">
           <a-input class="hollow" :type="ptype ? 'password' : 'text'" v-model="form.password" :placeholder="$t('请输入密码')"
-            :maxLength="32" name="sniff_login_password"></a-input>
+            :maxLength="32" name="sniff_login_password2"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="密码"></svg-icon>
           </span>
