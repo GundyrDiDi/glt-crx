@@ -214,6 +214,19 @@ body {
       // background: linear-gradient(270deg, #232323 0%, #000000 100%);
     }
   }
+  .ant-btn-black-const {
+    background: #232323;
+    border-color: #232323;
+    color: #fff;
+    &:hover,
+    &:focus,
+    &:active {
+      color: #fff;
+      background: #232323;
+      border-color: #232323;
+      box-shadow: 0 0 0 0;
+    }
+  }
 
   .ant-btn-plain {
     color: #232323 !important;

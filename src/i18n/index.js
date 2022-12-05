@@ -249,6 +249,11 @@ const message = {
     ko: '구글엑셀 사용언어',
     th: 'การใช้ภาษาของ Google ชีต'
   },
+  注册成功: {
+    en: 'Registration success!',
+    ko: '가입 성공!',
+    th: 'ลงทะเบียนสำเร็จ'
+  },
   $: {}
 }
 

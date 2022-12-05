@@ -2,8 +2,8 @@
   <div class="sniff-crx-bubble-search flex-col-bwn">
     <div class="flex-bwn-ter" style="padding:22px 0 0 0;">
       <lang-btn></lang-btn>
-      <div class="flex-ter sniff_btn sniff_color--info" @click="$store.commit('outModal',true)">
-        <svg-icon name="退出登录" style="font-size:16px;margin-right:5px;"></svg-icon>
+      <div class="flex-ter sniff_btn sniff_color--info" @click="$store.commit('outModal',true)" style="position:relative;top:-2px">
+        <svg-icon name="退出登录" style="font-size:14px;margin-right:5px;"></svg-icon>
         {{ $t('退出登录') }}
       </div>
     </div>

@@ -17,12 +17,12 @@
           </a-select>
           <a-input class="hollow" :value="langs.find(v => v.value === form.langcode).label"></a-input>
           <span class="abs sniff-crx-login-icon">
-            <svg-icon name="切换语言"></svg-icon>
+            <svg-icon name="切换语言2"></svg-icon>
           </span>
           <span class="abs sniff-crx-expand" style="line-height:44px;right: 20px; font-size: 12px; cursor: pointer">
             <svg-icon name="展开2"></svg-icon>
           </span>
-          <div class="ant-tooltip ant-tooltip-placement-topLeft abs" style="top: -40px;left: 8px;">
+          <div class="ant-tooltip ant-tooltip-placement-topLeft abs sniff-swing" style="top: -40px;left: 8px;">
             <div class="ant-tooltip-content">
               <div class="ant-tooltip-arrow"></div>
               <div role="tooltip" class="sniff-tooltip-inner">
@@ -73,7 +73,7 @@
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="验证码"></svg-icon>
           </span>
-          <a-button class="abs sniff-verify--btn" type="black" :disabled="count > 0 || !form.customerEmail.trim()"
+          <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0 || !form.customerEmail.trim()"
             @click="getCode">
             <template v-if="count > 0">
               {{ $t("发送中") }}
@@ -214,6 +214,7 @@ export default {
             }
           )
           if (token) {
+            this.$msg('注册成功')
             await this.sendMessage('setUserData', { token })
             await this.sendMessage('updateUserData')
           }
@@ -361,7 +362,8 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
 
     &::after {
       content: "*";
-      color: #232323;
+      color: #565656;
+      font-weight: 200;
       display: inline-block;
       transform: translate(8px, 4px);
     }
@@ -396,6 +398,37 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
     border-color: transparent;
     box-shadow: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
       inset 0px 0px 0px 0px #F9EBE4;
+  }
+
+  .sniff-swing {
+    transform-origin: center center;
+    animation: swing1 3s infinite;
+  }
+
+  @keyframes swing1 {
+    10% {
+      transform: rotate3d(0, 0, 1, 2deg);
+    }
+
+    20% {
+      transform: rotate3d(0, 0, 1, -2deg);
+    }
+
+    30% {
+      transform: rotate3d(0, 0, 1, 2deg);
+    }
+
+    40% {
+      transform: rotate3d(0, 0, 1, -2deg);
+    }
+
+    50% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
   }
 
   .sniff-link--2.blink {

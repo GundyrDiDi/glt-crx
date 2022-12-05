@@ -10,12 +10,12 @@
         <svg-icon style="font-size: 22px" name="关闭"></svg-icon>
       </div>
       <a-form-model ref="form" :model="form" :rules="rules" :hideRequiredMark="true">
-        <div class="flex-ard sniff-crx-login-enter" style="margin-bottom: 20px">
-          <span :class="{ 'sniff-enter--active': enter === 0 }" @click="enter = 0">{{
-              $t("账号密码登录")
+        <div class="flex-bwn sniff-crx-login-enter" style="margin-bottom: 20px">
+          <span class="sniff-enter--active">{{
+              tunels[enter===0?0:1]
           }}</span>
-          <span :class="{ 'sniff-enter--active': enter === 1 }" @click="enter = 1">{{
-              $t("邮箱验证码登录")
+          <span @click="(enter = enter===1?0:1)">{{
+              tunels[enter===0?1:0]
           }}</span>
         </div>
         <template v-if="!enter">
@@ -101,7 +101,8 @@ export default {
       loading: false,
       enter: 0,
       count: 0,
-      ptype: true
+      ptype: true,
+      tunels: ['账号密码登录', '邮箱验证码登录'].map(v => this.$t(v))
     }
   },
   computed: mapState(['lang']),
@@ -201,11 +202,13 @@ export default {
 
     span {
       cursor: pointer;
+      transform-origin: center right;
       transform: scale(.9);
       color: var(--cl-info);
     }
 
     .sniff-enter--active {
+      transform-origin: center left;
       transform: scale(1.15);
       color: #232323;
       cursor: default;
@@ -231,7 +234,7 @@ export default {
   .ant-input {
     width: 100%;
     height: 55px;
-    border-radius: 22px;
+    border-radius: 55px;
     padding-left: 44px;
     caret-color: var(--cl-primary);
 
