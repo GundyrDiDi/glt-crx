@@ -12,10 +12,10 @@
       <a-form-model ref="form" :model="form" :rules="rules" :hideRequiredMark="true">
         <div class="flex-bwn sniff-crx-login-enter" style="margin-bottom: 20px">
           <span class="sniff-enter--active">{{
-              tunels[enter===0?0:1]
+              $t(tunels[enter===0?0:1])
           }}</span>
           <span @click="(enter = enter===1?0:1)">{{
-              tunels[enter===0?1:0]
+              $t(tunels[enter===0?1:0])
           }}</span>
         </div>
         <template v-if="!enter">
@@ -102,7 +102,7 @@ export default {
       enter: 0,
       count: 0,
       ptype: true,
-      tunels: ['账号密码登录', '邮箱验证码登录'].map(v => this.$t(v))
+      tunels: ['账号密码登录', '邮箱验证码登录']
     }
   },
   computed: mapState(['lang']),
