@@ -1,15 +1,25 @@
 // V3 不能声明变量，只能使用 chrome.storage 声明要用的变量，不能储存函数(函数保存为字符串也不行，因为有 CSP 限制)
 // 使用时 storage.sync，如果用户启用了同步，存储的数据将自动同步到用户登录的任何 Chrome 浏览器。 storage chrome.storage.local
+import { langs } from '@/i18n'
+
+function getLang () {
+  const lang = chrome.app.getDetails().current_locale?.replace(/_\w+$/, '')
+  return langs.includes(lang) ? lang : process.env.VUE_APP_I18N_LOCALE
+}
+
+console.log(chrome)
 const storage = chrome.storage.local // sync 最大8k local 最大5m
+
 // default value
 const store = {
   userData: {},
   source: '1688',
-  lang: process.env.VUE_APP_I18N_LOCALE,
+  lang: 'en',
   sheetData: [],
   accountData: {}
 }
 
+// 设置默认值
 storage.get(Object.keys(store), res => {
   Object.keys(store).forEach(key => {
     if (!res[key]) {
@@ -19,6 +29,9 @@ storage.get(Object.keys(store), res => {
     }
   })
 })
+
+// 设置语言
+storage.set({ lang: getLang() })
 
 const read = key =>
   new Promise(resolve =>

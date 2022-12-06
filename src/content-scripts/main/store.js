@@ -1,12 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { langs as languages } from '@/i18n'
 
 Vue.use(Vuex)
-
-function getLang () {
-  return languages.includes(navigator.language.toLowerCase()) ? navigator.language.toLowerCase() : process.env.VUE_APP_I18N_LOCALE
-}
 
 const langs = [
   { label: 'English', value: 'en' },
@@ -18,7 +13,7 @@ const store = new Vuex.Store({
   state: {
     langs,
     //
-    lang: getLang(),
+    lang: 'en',
     token: '',
     curShop: null,
     user: null,
@@ -45,7 +40,7 @@ const store = new Vuex.Store({
       }
     },
     setLang (state, val) {
-      state.lang = languages.includes(val) ? val : process.env.VUE_APP_I18N_LOCALE
+      state.lang = val
     },
     setSheetData (state, val) {
       state.sheetData = val

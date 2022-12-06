@@ -9,13 +9,13 @@
       <a-form-model ref="form" :model="form" :rules="rules" :hideRequiredMark="true">
         <div class="sniff-modal--title">{{ $t('注册会员') }}</div>
         <a-form-model-item prop="langcode" key="langcode">
-          <a-select class="hollow" v-model="form.langcode" name="sniff_login_langcode"
+          <a-select class="hollow" :value="lang" name="sniff_login_langcode" @change="handlechange"
             :getPopupContainer="() => this.$refs.signup" :showArrow="false" size="large">
             <a-select-option v-for="v in langs" :key="v.value" :value="v.value">
               {{ v.label }}
             </a-select-option>
           </a-select>
-          <a-input style="padding-left: 44px;" class="hollow" :value="langs.find(v => v.value === form.langcode).label"></a-input>
+          <a-input style="padding-left: 44px;" class="hollow" :value="langs.find(v => v.value === lang).label"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="切换语言2"></svg-icon>
           </span>
@@ -32,7 +32,7 @@
           </div>
         </a-form-model-item>
         <a-form-model-item prop="loginName" key="loginName">
-          <a-input class="hollow" v-model="form.loginName" :placeholder="$t('请输入账号')" :maxLength="18"
+          <a-input class="hollow" v-model="form.loginName" :placeholder="$t('请输入账号')"
             name="sniff_login_loginName2"></a-input>
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="账号"></svg-icon>
@@ -127,7 +127,6 @@ export default {
         repassword: process.env.NODE_ENV === 'development' ? '123456' : '',
         customerEmail: process.env.NODE_ENV === 'development' ? '502121489@qq.com' : '',
         verificationCode: process.env.NODE_ENV === 'development' ? '4285' : '',
-        langcode: '',
         customerName: process.env.NODE_ENV === 'development' ? '9067' : ''
       },
       rules: {
@@ -172,15 +171,10 @@ export default {
     }
   },
   computed: mapState(['langs', 'lang']),
-  watch: {
-    lang: {
-      handler (v) {
-        this.form.langcode = v
-      },
-      immediate: true
-    }
-  },
   methods: {
+    handlechange (v) {
+      this.sendMessage('write', ['lang', v])
+    },
     signup () {
       if (!this.agreed) {
         this.blink = true
@@ -195,6 +189,7 @@ export default {
           this.loading = true
           const data = {
             ...this.form,
+            langcode: this.lang,
             password: md5(this.form.password)
           }
           const token = await this.sendMessage('request', [

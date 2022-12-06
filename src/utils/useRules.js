@@ -117,8 +117,17 @@ export const useRule = (key, trigger = 'blur') => {
   ]
 }
 
-export const useMust = (message = '※ ' + $t('必填内容'), trigger = 'blur') => {
-  return [{ required: true, message, trigger }]
+export const useMust = (message = () => '※ ' + $t('必填内容'), trigger = 'blur') => {
+  return [{
+    validator: (rule, val, callback) => {
+      if (val === '' || val === null || val === undefined) {
+        callback(message())
+      } else {
+        callback()
+      }
+    },
+    trigger
+  }]
 }
 
 export default (key, trigger = 'blur') => {

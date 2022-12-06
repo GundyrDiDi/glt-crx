@@ -267,5 +267,5 @@ const create = (langs) => {
   return locale
 }
 
-export const langs = ['en', 'ko', 'th', 'zh']
+export const langs = ['en', 'ko', 'th']
 export default create(langs)

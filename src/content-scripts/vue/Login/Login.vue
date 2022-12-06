@@ -20,7 +20,7 @@
         </div>
         <template v-if="!enter">
           <a-form-model-item prop="nameOrEmail" key="nameOrEmail">
-            <a-input class="hollow" v-model="form.nameOrEmail" :placeholder="$t('请输入账号')" :maxLength="18"
+            <a-input class="hollow" v-model="form.nameOrEmail" :placeholder="$t('请输入账号')"
               name="sniff_login_nameOrEmail"></a-input>
             <span class="abs sniff-crx-login-icon">
               <svg-icon name="账号"></svg-icon>
