@@ -204,8 +204,9 @@ export default {
                 })
               }
             },
-            (res) => {
-              this.$msg(res.data.msg, 'error')
+            (err) => {
+              console.log(err)
+              this.$msg('邮箱验证码不正确', 'error')
             }
           )
           if (token) {
@@ -225,12 +226,12 @@ export default {
             setTimeout(() => {
               if (--this.count) fn()
             }, 1000)
-          fn()
           this.sendMessage('request', [
             'getSignupCode',
             { customerEmail: this.form.customerEmail, langcode: this.lang }
           ]).then(
             () => {
+              fn()
               this.$msg('验证码已发送')
             },
             (err) => {

@@ -3,8 +3,9 @@
 import { langs } from '@/i18n'
 
 function getLang () {
-  const lang = chrome.app.getDetails().current_locale?.replace(/_\w+$/, '')
-  return langs.includes(lang) ? lang : process.env.VUE_APP_I18N_LOCALE
+  // const lang = chrome.app.getDetails().current_locale?.replace(/_\w+$/, '')
+  // return langs.includes(lang) ? lang : process.env.VUE_APP_I18N_LOCALE
+  return process.env.VUE_APP_I18N_LOCALE
 }
 
 console.log(chrome)
@@ -31,7 +32,7 @@ storage.get(Object.keys(store), res => {
 })
 
 // 设置语言
-storage.set({ lang: getLang() })
+// storage.set({ lang: getLang() })
 
 const read = key =>
   new Promise(resolve =>

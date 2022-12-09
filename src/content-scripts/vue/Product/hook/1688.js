@@ -31,8 +31,18 @@ export default () => {
       }
     })
   })
+  if (map.length === 0) {
+    const amount = ($('.total-count').html()?.match(/\d+/) || [])[0]
+    if (amount) {
+      skuList.push({
+        id: 'noskuId',
+        specAttrs: 'null',
+        buyAmount: amount
+      })
+    }
+  }
   skuList.forEach((v) => {
-    v.propName = v.specAttrs.replace(/&gt;/g, ',')
+    v.propName = v.specAttrs?.replace(/&gt;/g, ',')
     v.photoUrl = window.$detail.skuPropImgs[v.firstProp] || ''
   })
   return skuList

@@ -254,6 +254,11 @@ const message = {
     ko: '가입 성공!',
     th: 'ลงทะเบียนสำเร็จ'
   },
+  邮箱验证码不正确: {
+    en: 'The verification code format is incorrect, please re-enter',
+    ko: '인증번호가 정확하지 않습니다. 다시한번 입력해 주세요.',
+    th: 'รูปแบบรหัสยืนยันไม่ถูกต้อง กรุณาป้อนใหม่'
+  },
   $: {}
 }
 
