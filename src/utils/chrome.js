@@ -10,13 +10,6 @@ export const sendMessage = (cmd, data) => {
     })
   })
   return p
-  // return {
-  //   then: (...rest) => {
-  //     return p.then(...rest).catch(e => {})
-  //   },
-  //   catch: p.catch.bind(p),
-  //   finally: p.finally.bind(p)
-  // }
 }
 
 export default {

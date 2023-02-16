@@ -10,7 +10,10 @@ export const execImgData = (imgData) => {
 
 // 判断图片是否跨域
 export const beforeJump = async (imgData, source = '1688', original = false) => {
-  const base64 = await url2base64(imgData, source)
+  console.log(imgData)
+  const { height, width, plat, cur } = imgData
+  const base64 = await sendMessage('url2base64', { imgData: { height, width, plat, src: cur.src }, source })
+  // const base64 = await url2base64(imgData, source)
   if (/^data:image/.test(base64)) {
     sendMessage('pushSearchImg', base64).then(res => {
       jumpTo(res, source, original)

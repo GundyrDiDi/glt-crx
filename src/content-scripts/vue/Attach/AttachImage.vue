@@ -99,7 +99,7 @@ export default {
       if (this.plat === 'rakuten') {
         imgs = [...parent.find('a.image')].concat(imgs)
       }
-      if (this.plat === '1688') {
+      if (this.$platType === 'AM') {
         imgs = [...parent.find('.img')].concat(imgs)
       }
       //

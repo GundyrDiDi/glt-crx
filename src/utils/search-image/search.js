@@ -6,6 +6,7 @@ import { sendMessage } from '@/utils/chrome'
 import Cookies from '@/plugins/cookie'
 import Loading from '@/plugins/loading'
 import { beforeJump } from './image'
+import locale from '@/i18n'
 
 const _axios = axios.create({
   withCredentials: true
@@ -149,7 +150,7 @@ export const getImgData = async () => {
   } else if (sniffimg) {
     sendMessage('getSearchImg', sniffimg).then(dataurl => {
       const ins = Loading.service({
-        text: '類似商品検索中です、しばらくお待ちください'
+        text: ''
       })
       source === '1688' && (search1688(dataurl))
       source === 'taobao' && (searchTB(dataurl))

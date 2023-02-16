@@ -169,6 +169,26 @@ const dispatch = {
   },
   write ({ data }) {
     return write(data[0], data[1])
+  },
+  async url2base64 ({ data }) {
+    const src = data.imgData.src
+    return fetch(src, {
+      responseType: 'blob'
+    }).then(res => res.blob())
+      .then(res => {
+        return new Promise((resolve, reject) => {
+          // console.log(res)
+          const fd = new FileReader()
+          fd.onload = (res) => {
+            console.log(res)
+            resolve(res.target.result)
+          }
+          setTimeout(reject, 30 * 1000)
+          fd.readAsDataURL(res)
+        })
+      }).catch(() => {
+        return ''
+      })
   }
   // todo:找相似 需要商品offerId 商品图片链接
   // https://s.1688.com/selloffer/similar_search.html?offerIds=653423014399&imageAddress=https%3A%2F%2Fcbu01.alicdn.com%2Fimg%2Fibank%2FO1CN01rtJrg41YIXBNU9EJB_!!2309863036-0-cib.jpg&scene=similar_search&postCatPaths=201568525%20124014010%2070&sameDesignEnable=false
