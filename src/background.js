@@ -177,7 +177,7 @@ const dispatch = {
     }).then(res => res.blob())
       .then(res => {
         return new Promise((resolve, reject) => {
-          // console.log(res)
+          console.log(res)
           const fd = new FileReader()
           fd.onload = (res) => {
             console.log(res)
@@ -186,8 +186,9 @@ const dispatch = {
           setTimeout(reject, 30 * 1000)
           fd.readAsDataURL(res)
         })
-      }).catch(() => {
-        return ''
+      })
+      .catch(() => {
+        return src
       })
   }
   // todo:找相似 需要商品offerId 商品图片链接

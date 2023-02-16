@@ -23,6 +23,7 @@
         "https://*.rakuten.co.jp/*",
         "https://*.aliexpress.com/*",
         "https://*.coupang.com/*",
+        "https://*.coupangcdn.com/*",
         "https://*.gmarket.co.kr/*",
         "https://*.11st.co.kr/*",
         "https://*.theckb.com/*",
@@ -42,5 +43,5 @@
       "38": "icons/frog.png"
     }
   },
-  "version": "5.3.2"
+  "version": "5.4.5"
 }

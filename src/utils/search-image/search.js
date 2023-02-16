@@ -149,8 +149,12 @@ export const getImgData = async () => {
     beforeJump({ height, width, plat, cur }, source, true)
   } else if (sniffimg) {
     sendMessage('getSearchImg', sniffimg).then(dataurl => {
-      const ins = Loading.service({
-        text: ''
+      let ins = null
+      sendMessage('read', 'lang').then(res => {
+        console.log(res)
+        ins = Loading.service({
+          text: '유사 상품 검색 중이니 잠시만 기다려주세요.'
+        })
       })
       source === '1688' && (search1688(dataurl))
       source === 'taobao' && (searchTB(dataurl))
