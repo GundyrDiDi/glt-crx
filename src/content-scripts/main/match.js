@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 function matchUrl (url) {
-  const match = /[^?]\.(taobao\.|tmall\.|1688\.|amazon\.|aliexpress\.|theckb\.|rakuten\.|yahoo\.|pinduoduo\.)/
+  const match = /[^?]\.(taobao\.|tmall\.|1688\.|amazon\.|aliexpress\.|theckb\.|rakuten\.|yahoo\.|pinduoduo\.|coupang\.|gmarket\.|11st\.)/
   const word = (url.match(match) || [])[1]
   return (word || '').slice(0, -1) || process.env.VUE_APP_IN
 }
@@ -16,7 +16,10 @@ if (plat) {
     taobao: '[window.Hub?.config?.config?.sku.valItemInfo]',
     theckb: 'null',
     aliexpress: 'null',
-    amazon: 'null'
+    amazon: 'null',
+    coupang: 'null',
+    gmarket: 'null',
+    '11st': 'null'
   }[plat]
   // V3 不允许使用 script 注入
   const div = $(`<div id="trigger-post" onclick="window.postMessage({platform:'${plat}',detail:${value}})"></div>`)

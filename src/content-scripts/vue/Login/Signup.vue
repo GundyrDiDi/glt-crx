@@ -178,7 +178,6 @@ export default {
     signup () {
       if (!this.agreed) {
         this.blink = true
-        console.log(this.blink)
         setTimeout(() => {
           this.blink = false
         }, 1200)

@@ -13,12 +13,12 @@ export const beforeJump = async (imgData, source = '1688', original = false) => 
   const base64 = await url2base64(imgData, source)
   if (/^data:image/.test(base64)) {
     sendMessage('pushSearchImg', base64).then(res => {
-      jumpTo(res, source)
+      jumpTo(res, source, original)
     })
   } else if (base64) {
     if (original) {
-      alert('類似商品の検索に問題が発生しました。別の商品でもう一度お試しください。')
-      window.close()
+      alert('the server has something wrong')
+      // window.close()
     } else {
       window.open(base64 + `?orginImg=true&plat=${imgData.plat}&source=${source}`)
     }

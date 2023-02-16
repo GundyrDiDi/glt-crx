@@ -55,6 +55,9 @@ _axios.create = (reqURL) => {
     if (code === '0') {
       return Promise.resolve(res)
     } else {
+      if (code === '24010062' || code === '10000000') {
+        write('userData', {})
+      }
       return Promise.reject(res)
     }
   }

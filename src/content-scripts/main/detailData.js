@@ -9,7 +9,7 @@ export default (plat, [sku]) => {
     productUrl: location.href
   }
   if (plat === '1688') {
-    data.productImg = $('.preview-img').attr('src')
+    data.productImg = $('.preview-img').attr('src') || $('.detail-gallery-img').attr('src')
     data.productName = document.title
     data.skuMap = sku.skuInfoMap ?? []
     data.productProps = sku.skuProps ?? []
