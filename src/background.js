@@ -197,8 +197,8 @@ const dispatch = {
 
 const timeout = { value: null }
 
-setTimeout(() => {
+setTimeout(async () => {
   // 启动时确认用户名是否过期
-  dispatch.updateUserData()
+  await dispatch.updateUserData()
   dispatch.updateSheetData({ loop: true })
 }, 1000)

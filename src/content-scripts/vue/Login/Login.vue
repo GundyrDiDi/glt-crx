@@ -161,7 +161,7 @@ export default {
   },
   mounted () {
     if (!localStorage.__sniff_firstload__) {
-      this.show = true
+      // this.show = true
       process.env.NODE_ENV === 'production' && (
         localStorage.__sniff_firstload__ = 1
       )

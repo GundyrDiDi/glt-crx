@@ -6,9 +6,9 @@ import execDetail from './detailData'
 
 window.addEventListener('message', res => {
   const { platform, detail } = res.data
-  console.log(platform)
   // console.log(res.data)
   if (!platform) return
+  console.log(`platform:${platform}`)
   //
   if (detail?.length) {
     setTimeout(() => {

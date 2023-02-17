@@ -8,12 +8,33 @@ export const execImgData = (imgData) => {
   beforeJump({ height, width, cur })
 }
 
+const rules = (cur, plat) => {
+  const reg = /.(png|jpg|jpeg|bmp|webp)$/
+  let src = cur.src.replace(/\?.+$/, '')
+  let type = (src.match(reg) || [''])[1]
+  // 1688规则
+  if (type === 'webp' && plat.split('-').includes('1688')) {
+    const i = src.indexOf('jpg') + 3
+    src = src.slice(0, i)
+    type = 'jpg'
+  }
+  // 速卖通、淘宝 图片规则
+  if (type === 'webp' && (plat === 'aliexpress' || plat === 'taobao')) {
+    src = src.replace(/_\.webp/, '')
+    type = src.match(reg)[1]
+  }
+  // 直行便上传图片规则
+  if (cur.upload && cur.type) {
+    type = cur.type
+  }
+  return src
+}
 // 判断图片是否跨域
 export const beforeJump = async (imgData, source = '1688', original = false) => {
-  console.log(imgData)
   const { height, width, plat, cur } = imgData
-  const base64 = await (original ? url2base64(imgData, source) : sendMessage('url2base64', { imgData: { height, width, plat, src: cur.src }, source }))
-  // const base64 = await url2base64(imgData, source)
+  const src = rules(cur, plat)
+  console.log(plat, src)
+  const base64 = await (original ? url2base64(imgData, source) : sendMessage('url2base64', { imgData: { height, width, plat, src: src }, source }))
   if (/^data:image/.test(base64)) {
     sendMessage('pushSearchImg', base64).then(res => {
       jumpTo(res, source, original)
@@ -48,7 +69,7 @@ export const url2base64 = ({ height, width, plat, cur }) => {
   const reg = /.(png|jpg|jpeg|bmp|webp)$/ // 1688搜图仅支持 png jpg jpeg bmp，如果是webp格式... jfif
   let type = (src.match(reg) || [''])[1]
   // 1688规则
-  if (type === 'webp' && plat === '1688') {
+  if (type === 'webp' && plat.includes('1688')) {
     const i = src.indexOf('jpg') + 3
     src = src.slice(0, i)
     type = 'jpg'

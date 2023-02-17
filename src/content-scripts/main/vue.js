@@ -29,10 +29,10 @@ Vue.prototype.$msg = function (msg, type = 'success') {
 }
 
 export const t = function (text) {
-  if (!locale[store.state.lang][text]) {
+  if (!locale[store.state.lang ?? 'en'][text]) {
     console.warn('找不到“' + text + '”')
   }
-  return locale[store.state.lang][text] ?? text
+  return locale[store.state.lang ?? 'en'][text] ?? text
 }
 
 Vue.prototype.$t = t
@@ -101,7 +101,7 @@ export const createCrx = ({ plat, product }) => {
       store,
       render: h => h(Crx)
     }).$mount('#' + id)
-  }, 2000)
+  }, 1000)
 }
 
 console.log('chrome', chrome)

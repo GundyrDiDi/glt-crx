@@ -66,7 +66,9 @@ export default {
       this.visible = v
     },
     search () {
-      beforeJump(this)
+      this.$emit('after', () => {
+        beforeJump(this)
+      })
     },
     toggle (v) {
       this.sendMessage('write', ['source', v]).then(() => {

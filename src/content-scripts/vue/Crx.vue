@@ -1,13 +1,11 @@
 <template>
   <div class="sniff-v1-crx">
-    <AttachImage v-if="user" />
-    <template v-if="platType">
-      <Login ref="login" v-if="!user" @toSignup="changeSignin(false)" />
-      <Signup ref="signup" v-if="!user" @toLogin="changeSignin(true)" />
-      <Bubble ref="bubble" v-if="platType" @after="afterLogin" />
-      <Product ref="product" v-if="!!$product" @after="beforeBuy" />
-      <Parabola />
-    </template>
+    <AttachImage @after="afterLogin"/>
+    <Bubble ref="bubble" @after="afterLogin" />
+    <Login ref="login" v-if="!user" @toSignup="changeSignin(false)" />
+    <Signup ref="signup" v-if="!user" @toLogin="changeSignin(true)" />
+    <Product ref="product" v-if="platType&&$product" @after="beforeBuy" />
+    <Parabola />
   </div>
 </template>
 <script>

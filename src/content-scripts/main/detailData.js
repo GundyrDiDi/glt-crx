@@ -8,7 +8,7 @@ export default (plat, [sku]) => {
   const data = _w.$detail = {
     productUrl: location.href
   }
-  if (plat === '1688') {
+  if (plat.includes('1688')) {
     data.productImg = $('.preview-img').attr('src') || $('.detail-gallery-img').attr('src')
     data.productName = document.title
     data.skuMap = sku.skuInfoMap ?? []
