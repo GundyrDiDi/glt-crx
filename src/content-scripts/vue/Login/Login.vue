@@ -270,7 +270,7 @@ export default {
   .sniff-verify--btn {
     height: 30px;
     font-size: 12px;
-    width: 120px;
+    min-width: 120px;
     top: -7px;
     right: 7px;
   }
