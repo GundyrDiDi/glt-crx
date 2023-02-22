@@ -1,4 +1,6 @@
 import $ from 'jquery'
+import Logger from 'alife-logger'
+import store from './store'
 
 function matchUrl (url) {
   const match = /[^?]\.(taobao\.|tmall\.|1688\.|amazon\.|aliexpress\.|theckb\.|rakuten\.|yahoo\.|pinduoduo\.|coupang\.|gmarket\.|11st\.)/
@@ -30,4 +32,27 @@ if (plat) {
       div.remove()
     }, 200)
   }, 2000)
+  if (process.env.NODE_ENV === 'production') {
+    const __bl = Logger.singleton(
+      {
+        pid: 'exbrfir0yx@a8343bfd0256743',
+        appType: 'web',
+        imgUrl: 'https://arms-retcode.aliyuncs.com/r.png?',
+        behavior: true,
+        enableConsole: true,
+        release: process.env.VUE_APP_ARMS_VERSION, // 版本号
+        environment: process.env.VUE_APP_ARMS_PROD // 环境
+      }
+    )
+    __bl.setConfig({
+      disableHook: true
+    })
+    setTimeout(() => {
+      __bl.setConfig({
+        setUsername: function () {
+          return store.state?.user?.userName ?? null
+        }
+      })
+    }, 5000)
+  }
 }

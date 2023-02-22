@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   lintOnSave: false,
   pages: {},
-  productionSourceMap: false,
+  productionSourceMap: true,
   pluginOptions: {
     browserExtension: {
       componentOptions: {

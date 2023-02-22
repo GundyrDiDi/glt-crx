@@ -51,7 +51,8 @@ export const forTable = (skuList) => {
       photoUrl: v.photoUrl.replace(/_\d+x\d+.*?\..*$/, '') || _w.$detail.productImg,
       productName: _w.$detail.productName,
       productUrl: _w.$detail.productUrl,
-      productSpecification: v.propName
+      productSpecification: v.propName,
+      quantity: v.buyAmount
     }
   })
 }

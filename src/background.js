@@ -91,7 +91,8 @@ const dispatch = {
       photoUrl: 'Photo Url',
       productName: 'Product Name',
       productUrl: 'Product Url',
-      productSpecification: 'Product Specification'
+      productSpecification: 'Product Specification',
+      quantity: 'Quantity'
     }
     const googleHeaderData = Object.values(thMap).join(',')
     const setProps = (data, forward) => {
