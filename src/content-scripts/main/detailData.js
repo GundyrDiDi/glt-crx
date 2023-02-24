@@ -13,7 +13,7 @@ export default (plat, [sku]) => {
     data.productName = document.title
     data.skuMap = sku.skuInfoMap ?? []
     data.productProps = sku.skuProps ?? []
-    data.skuPropImgs = sku.skuProps.reduce((acc, v) => {
+    data.skuPropImgs = data.productProps.reduce((acc, v) => {
       v.value.forEach(item => {
         if (item.imageUrl) {
           acc[item.name] = item.imageUrl
@@ -51,7 +51,7 @@ export const forTable = (skuList) => {
       photoUrl: v.photoUrl.replace(/_\d+x\d+.*?\..*$/, '') || _w.$detail.productImg,
       productName: _w.$detail.productName,
       productUrl: _w.$detail.productUrl,
-      productSpecification: v.propName,
+      productSpecification: v.propName ?? '',
       quantity: v.buyAmount
     }
   })

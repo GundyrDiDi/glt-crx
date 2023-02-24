@@ -36,14 +36,14 @@ export default () => {
     if (amount) {
       skuList.push({
         id: 'noskuId',
-        specAttrs: 'null',
+        specAttrs: '-',
         buyAmount: amount
       })
     }
   }
   skuList.forEach((v) => {
     v.propName = v.specAttrs?.replace(/&gt;/g, ',')
-    v.photoUrl = window.$detail.skuPropImgs[v.firstProp] || ''
+    v.photoUrl = window.$detail?.skuPropImgs[v?.firstProp] || ''
   })
   return skuList
 }
