@@ -143,8 +143,8 @@ export default {
           },
           trigger: 'blur'
         }),
-        password: useRules({ key: 'plain' }),
-        repassword: useRules({ key: 'plain' }).concat({
+        password: useRules({ key: 'rulepw' }),
+        repassword: useRules({ key: 'rulepw' }).concat({
           validator: (rule, val, c) => {
             if (val) {
               if (val !== this.form.password) {
@@ -261,7 +261,7 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
   }
 
   &-content {
-    height: 720px;
+    height: 780px;
     width: 500px;
     padding: 20px 50px;
     background: #fdfdfd;
@@ -332,7 +332,7 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
   }
 
   .ant-form-item {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   .ant-input {

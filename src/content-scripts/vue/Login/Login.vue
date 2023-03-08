@@ -78,7 +78,7 @@
 </template>
 <script>
 import md5 from 'md5'
-import useRules from '@/utils/useRules'
+import useRules, { t as $t } from '@/utils/useRules'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -93,7 +93,7 @@ export default {
       },
       rules: {
         nameOrEmail: useRules({ key: 'noblank' }),
-        password: useRules({ key: 'plain' }),
+        password: useRules({ key: 'noblank' }),
         customerEmail: useRules({ key: 'email' }),
         verificationCode: useRules({ key: 'plain' })
       },

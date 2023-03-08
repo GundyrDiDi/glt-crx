@@ -1,5 +1,5 @@
 import { t as $t } from '@/content-scripts/main/vue'
-const t = (text) => new Error('※ ' + $t(text))
+export const t = (text) => '※ ' + $t(text)
 
 const rules = {
   plainEn (rule, val, callback) {
@@ -14,6 +14,14 @@ const rules = {
       callback()
     } else {
       callback(t('仅限输入英文和数字字符'))
+    }
+  },
+  rulepw (rule, val, callback) {
+    const reg = /^(?=.*\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*[!@#$%^&*.]*)([\da-zA-Z!@#$%^&*.]){6,32}$/
+    if (reg.test(val)) {
+      callback()
+    } else {
+      callback(t('输入的密码格式不正确，请设置X-Y个字符，字母和数字的组合，字母区分大小写').replace(/X-Y/, '6-32'))
     }
   },
   noblank (rule, val, callback) {

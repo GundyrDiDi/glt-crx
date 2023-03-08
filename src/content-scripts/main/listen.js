@@ -26,10 +26,10 @@ window.addEventListener('message', res => {
     if (temp1) {
       product && (product.style.display = 'block')
     }
-  } else if (plat === 'tmall') {
-    product = document.querySelectorAll('.tb-sku .tb-action')[0]
   } else if (plat === 'taobao') {
     product = document.querySelectorAll('.tb-skin')[0]
+  } else if (plat === 'tmall') {
+    product = document.querySelectorAll('.tb-sku .tb-action')[0]
   } else if (plat === 'theckb') {
     window.postMessage({ isInstall: true }, '*')
     // 与直行便系统的通道
