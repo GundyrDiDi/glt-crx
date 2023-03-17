@@ -22,12 +22,12 @@ const message = {
   账号密码登录: {
     en: 'By Password',
     ko: '아이디 비밀번호 로그인',
-    th: 'เข้าสู่ระบบด้วยรหัสผ่านบัญชี'
+    th: 'เข้าสู่ระบบด้วยรหัสผ่าน'
   },
   邮箱验证码登录: {
     en: 'By Email',
     ko: '이메일 로그인',
-    th: 'เข้าสู่ระบบด้วยรหัสยืนยันอีเมล'
+    th: 'เข้าสู่ระบบด้วยอีเมล'
   },
   请输入账号: {
     en: 'Your username',
@@ -107,7 +107,7 @@ const message = {
   必填内容: {
     en: 'Invalid content',
     ko: '반드시 입력',
-    th: 'เนื้อหาที่ต้องกรอก'
+    th: 'ไม่สามารถปล่อยว่างได้'
   },
   英语: {
     en: 'English',
@@ -132,7 +132,7 @@ const message = {
   查看谷歌表: {
     en: 'My Sheets',
     ko: '내 구글 시트보기',
-    th: 'Google ชีตของฉัน'
+    th: 'Google ชีต'
   },
   请输入谷歌表链接: {
     en: 'Enter the google sheet URL',
@@ -232,7 +232,7 @@ const message = {
   同意此项条款: {
     en: 'Agree with following items',
     ko: '아래의 조항에 동의합나다.',
-    th: 'ยอมรับทั้งหมด'
+    th: 'ฉันได้อ่านและยอมรับข้อตกลงการเป็นสมาชิกของ THE CKB Easybuy'
   },
   已有帐户去登录: {
     en: 'Already have an account? Sign in',

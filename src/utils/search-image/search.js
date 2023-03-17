@@ -16,8 +16,8 @@ const _axios = axios.create({
 function tbsign (data) {
   const token = (
     Cookies.get('_m_h5_tk') ||
-      Cookies.get('_m_h5_tk_enc') ||
-      ''
+    Cookies.get('_m_h5_tk_enc') ||
+    ''
   ).split('_')[0]
   const t = Date.now()
   const appKey = 12574478
@@ -50,7 +50,7 @@ function search1688 (res) {
     if (res.data.data.imageId) {
       window.stop()
       location.replace(
-          `https://s.1688.com/youyuan/index.htm?tab=imageSearch&imageAddress=&imageId=${res.data.data.imageId}`
+        `https://s.1688.com/youyuan/index.htm?tab=imageSearch&imageAddress=&imageId=${res.data.data.imageId}`
       )
     } else {
       return { error: true }
@@ -94,7 +94,7 @@ function searchTB (res) {
     if (res.data?.name) {
       window.stop()
       location.replace(
-          `https://s.taobao.com/search?q=&imgfile=&js=1&style=grid&stats_click=search_radio_all%253A1&initiative_id=staobaoz_20220314&ie=utf8&tfsid=${res.data.name}&app=imgsearch`
+        `https://s.taobao.com/search?q=&imgfile=&js=1&style=grid&stats_click=search_radio_all%253A1&initiative_id=staobaoz_20220314&ie=utf8&tfsid=${res.data.name}&app=imgsearch`
       )
     }
   })
@@ -153,8 +153,10 @@ export const getImgData = async () => {
       sendMessage('read', 'lang').then(res => {
         console.log(res)
         ins = Loading.service({
-          text: '유사 상품 검색 중이니 잠시만 기다려주세요.'
-        })
+          en: 'Searching, please wait a second',
+          ko: '유사 상품 검색 중이니 잠시만 기다려주세요.',
+          th: 'กำลังค้นหาสินค้า กรุณารอสักครู่~'
+        }[res])
       })
       source === '1688' && (search1688(dataurl))
       source === 'taobao' && (searchTB(dataurl))

@@ -3,9 +3,12 @@ import Logger from 'alife-logger'
 import store from './store'
 
 function matchUrl (url) {
-  const match = /[^?]\.(taobao\.|tmall\.|1688\.|amazon\.|aliexpress\.|theckb\.|rakuten\.|yahoo\.|pinduoduo\.|coupang\.|gmarket\.|11st\.)/
+  const match = /[^?]\.(taobao\.|tmall\.|1688\.|amazon\.|aliexpress\.|theckb\.|rakuten\.|yahoo\.|pinduoduo\.|coupang\.|gmarket\.|11st\.|ebay\.|alibaba\.|lazada\.)/
   const word = (url.match(match) || [])[1]
-  return (word || '').slice(0, -1) || process.env.VUE_APP_IN
+  if (!word) {
+    if (/shopee\./.test(url)) return 'shopee'
+  }
+  return (word || '').slice(0, -1)
 }
 
 export const getPlat = () => matchUrl(location.href.replace(/\?.*$/, ''))

@@ -27,6 +27,12 @@ const rules = (cur, plat) => {
   if (cur.upload && cur.type) {
     type = cur.type
   }
+  if (src) {
+    src = src.replace(/_\d+x\d+.*.(jpg|png)_.webp/, '')
+  }
+  if (src) {
+    src.replace(/webp$/, 'jpg')
+  }
   return src
 }
 // 判断图片是否跨域

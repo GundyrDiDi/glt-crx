@@ -1,26 +1,15 @@
 <template>
-  <div
-    v-show="cur"
-    ref="el"
-    class="sniff-crx-attach-image"
-    :style="{
-      width: visible ? '40px' : '40px',
-      left: left + 'px',
-      top: top + 'px',
-    }"
-  >
+  <div v-show="cur" ref="el" class="sniff-crx-attach-image" :style="{
+    width: visible ? '40px' : '40px',
+    left: left + 'px',
+    top: top + 'px',
+  }">
     <div class="flex-center img">
       <img :src="icon" @click="search()" />
     </div>
     <div class="abs popup" v-if="visible">
-      <span
-        class="btn"
-        v-for="v in sources"
-        :key="v"
-        :class="{ selected: v === source }"
-        @click="toggle(v)"
-        >{{ v }}</span
-      >
+      <span class="btn" v-for="v in sources" :key="v" :class="{ selected: v === source }" @click="toggle(v)">{{ v
+      }}</span>
     </div>
   </div>
 </template>
@@ -104,18 +93,26 @@ export default {
       if (this.$platType === 'AM') {
         imgs = [...parent.find('.img')].concat(imgs)
       }
+      if (this.plat === 'shopee') {
+        imgs = [...parent.parent().find('[style*="background-image"]')].concat(imgs)
+      }
+      if (this.plat === 'lazada') {
+        imgs = [...parent.find('.image')].concat(imgs)
+      }
       //
-      imgs.forEach((v) => {
-        // 不同平台的图片位置还需在这里做下处理
-        const el = customer(v, this.plat)
-        if (!el) return
-        const { left, top, height, width } = el.getBoundingClientRect()
-        if (height < 70 || width < 70) return
-        if (height * width > 760 * 760) return
-        if (left <= x && left + width >= x && top <= y && top + height >= y) {
-          t = [el, { left, top, width, height }]
-        }
-      })
+      if (imgs.length < 10) {
+        imgs.forEach((v) => {
+          // 不同平台的图片位置还需在这里做下处理
+          const el = customer(v, this.plat)
+          if (!el) return
+          const { left, top, height, width } = el.getBoundingClientRect()
+          if (height < 70 || width < 70) return
+          if (height * width > 760 * 760) return
+          if (left <= x && left + width >= x && top <= y && top + height >= y) {
+            t = [el, { left, top, width, height }]
+          }
+        })
+      }
       t ? this.show(...t) : this.hide()
     }
     $('body').on('mouseover', this.bind)
@@ -158,7 +155,7 @@ function customer (el, plat) {
     height: 40px !important;
     width: 40px !important;
 
-    > img {
+    >img {
       height: 70% !important;
       width: 70% !important;
       background: #ffbb00 !important;

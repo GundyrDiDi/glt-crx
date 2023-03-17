@@ -17,7 +17,7 @@ const rules = {
     }
   },
   rulepw (rule, val, callback) {
-    const reg = /^(?=.*\d)(?=.*?[a-z])(?=.*?[A-Z])(?=.*[!@#$%^&*.]*)([\da-zA-Z!@#$%^&*.]){6,32}$/
+    const reg = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9!@#$%^&*.]{6,32}$/
     if (reg.test(val)) {
       callback()
     } else {

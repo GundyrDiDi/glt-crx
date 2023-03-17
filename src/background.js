@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     .then(() => dispatch[request.cmd](request, sender))
     .then(res => sendResponse(res))
     .catch(e => sendResponse({ error: 'background error', res: e, request }))
-    // 异步返回必须先返回true
+  // 异步返回必须先返回true
   return true
 })
 
@@ -85,7 +85,8 @@ const dispatch = {
   onAdd: Promise.resolve(),
   async updateSheetData ({ loop, data: { delItem, addItems } = {} }) {
     const { user = {} } = await read('userData')
-    const { googleUrl, langcode: langCode = 'en' } = user
+    let { googleUrl, langcode: langCode } = user
+    langCode = langCode ?? 'en'
     const thMap = {
       time: 'Date',
       photoUrl: 'Photo Url',
@@ -120,10 +121,10 @@ const dispatch = {
       if (addItems) {
         this.onAdd = http.postGoogleSheet({
           googleUrl,
-          langCode,
+          langCode: langCode,
           data: setProps(addItems)
         })
-        await this.onAdd.catch(e => {})
+        await this.onAdd.catch(e => { })
       } else if (delItem) {
         this.onDelete = http.deleteGoogleSheet({
           googleUrl,
@@ -131,10 +132,10 @@ const dispatch = {
           ...delItem,
           googleHeaderData
         })
-        await this.onDelete.catch(e => {})
+        await this.onDelete.catch(e => { })
       } else {
-        await this.onDelete.catch(e => {})
-        await this.onAdd.catch(e => {})
+        await this.onDelete.catch(e => { })
+        await this.onAdd.catch(e => { })
         await http.getGoogleSheet({
           googleUrl,
           langCode,
