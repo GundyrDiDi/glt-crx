@@ -151,7 +151,6 @@ export const getImgData = async () => {
     sendMessage('getSearchImg', sniffimg).then(dataurl => {
       let ins = null
       sendMessage('read', 'lang').then(res => {
-        console.log(res)
         ins = Loading.service({
           en: 'Searching, please wait a second',
           ko: '유사 상품 검색 중이니 잠시만 기다려주세요.',

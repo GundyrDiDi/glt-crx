@@ -36,7 +36,7 @@
         "https://*.jpg/*",
         "https://*.bmp/*"
       ],
-      "css":["css/content-script.0cafa637.css"],
+      "css":[],
       "js": ["js/content-script.js"],
       "run_at": "document_end"
     }

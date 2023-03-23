@@ -6,8 +6,7 @@ class Loading {
     this.timeout = 10000
   }
 
-  service (options) {
-    const { text } = options
+  service (text) {
     let div = $('<div></div>')
     div.css({
       position: 'fixed',
