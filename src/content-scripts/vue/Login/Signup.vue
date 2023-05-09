@@ -73,8 +73,7 @@
           <span class="abs sniff-crx-login-icon">
             <svg-icon name="验证码"></svg-icon>
           </span>
-          <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0"
-            @click="getCode">
+          <a-button class="abs sniff-verify--btn" type="black-const" :disabled="count > 0" @click="getCode">
             <template v-if="count > 0">
               {{ $t("发送中") }}
               ({{ count }})
@@ -84,10 +83,20 @@
             </template>
           </a-button>
         </a-form-model-item>
+        <a-form-model-item prop="customerMobile" key="customerMobile">
+          <a-input class="hollow" v-model="form.customerMobile" :placeholder="$t('手机号')" name="sniff_login_customerMobile"
+            style="padding-left:100px"></a-input>
+          <span class="abs" country-code>
+            {{ form.countryCode }}
+          </span>
+          <span class="abs sniff-crx-login-icon">
+            <svg-icon name="手机号"></svg-icon>
+          </span>
+        </a-form-model-item>
         <a-form-model-item prop="customerName" key="customerName">
           <a-input class="hollow" v-model="form.customerName" :placeholder="$t('请输入您的名称')"
             name="sniff_login_customerName"></a-input>
-          <span class="abs sniff-crx-login-icon">
+          <span class="abs sniff-crx-login-icon unneed">
             <svg-icon name="联系人姓名"></svg-icon>
           </span>
         </a-form-model-item>
@@ -127,7 +136,8 @@ export default {
         repassword: process.env.NODE_ENV === 'development' ? '123456' : '',
         customerEmail: process.env.NODE_ENV === 'development' ? '502121489@qq.com' : '',
         verificationCode: process.env.NODE_ENV === 'development' ? '4285' : '',
-        customerName: process.env.NODE_ENV === 'development' ? '9067' : ''
+        customerName: process.env.NODE_ENV === 'development' ? '9067' : '',
+        countryCode: process.env.NODE_ENV === 'development' ? '' : ''
       },
       rules: {
         loginName: useRules({ key: 'noblank' }).concat({
@@ -160,7 +170,8 @@ export default {
         }),
         customerEmail: useRules({ key: 'email' }),
         verificationCode: useRules({ key: 'plain' }),
-        customerName: useRules({ key: 'noblank' })
+        customerMobile: useRules({ key: 'phone' })
+        // customerName: useRules({ key: 'noblank' })
       },
       loading: false,
       blink: false,
@@ -171,6 +182,20 @@ export default {
     }
   },
   computed: mapState(['langs', 'lang']),
+  watch: {
+    lang: {
+      handler (v) {
+        console.log(v)
+        this.form.countryCode = {
+          en: '+1',
+          ko: '+66',
+          th: '+82'
+
+        }[v]
+      },
+      immediate: true
+    }
+  },
   methods: {
     handlechange (v) {
       this.sendMessage('write', ['lang', v])
@@ -261,7 +286,7 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
   }
 
   &-content {
-    height: 780px;
+    height: 860px;
     width: 500px;
     padding: 20px 50px;
     background: #fdfdfd;
@@ -295,6 +320,7 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
     opacity: 0;
     z-index: 1;
     height: 44px;
+
     &-open {
       +input {
         box-shadow: $asd;
@@ -308,8 +334,9 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
         transform: scaleY(-1)
       }
     }
-    ~.sniff-crx-login-icon::after{
-      content:''
+
+    ~.sniff-crx-login-icon::after {
+      content: ''
     }
   }
 
@@ -357,13 +384,26 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
     top: -11px;
     font-size: 18px;
 
-    &::after {
+    &:not(.unneed)::after {
       content: "*";
       color: #565656;
       font-weight: 200;
       display: inline-block;
       transform: translate(8px, 4px);
     }
+  }
+
+  [country-code] {
+    left: 57px;
+    width: 30px;
+    /* line-height: 100%; */
+    line-height: 18px;
+    /* padding-left: 0px; */
+    top: 0px;
+    height: 100%;
+    transform: scaleY(0.95);
+    /* margin: 3px 0; */
+    border-right: 1px solid #eee;
   }
 
   :deep(.ant-form-explain) {

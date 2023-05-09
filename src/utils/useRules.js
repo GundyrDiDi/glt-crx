@@ -32,10 +32,10 @@ const rules = {
     }
   },
   phone (rule, val, callback) {
-    if (/^[\d-]{6,20}$/.test(val)) {
+    if (/^[\d-]{6,20}$/.test(val) || val === '-') {
       callback()
     } else {
-      callback(t('无效的手机号码'))
+      callback(t('格式不正确，请输入6-20位数字或“-”'))
     }
   },
   address (rule, val, callback) {
