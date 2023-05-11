@@ -85,8 +85,8 @@
         </a-form-model-item>
         <a-form-model-item prop="customerMobile" key="customerMobile">
           <a-input class="hollow" v-model="form.customerMobile" :placeholder="$t('手机号')" name="sniff_login_customerMobile"
-            style="padding-left:100px"></a-input>
-          <span class="abs" country-code>
+            :style="{paddingLeft:form.countryCode?'100px':''}"></a-input>
+          <span class="abs" country-code v-if="form.countryCode">
             {{ form.countryCode }}
           </span>
           <span class="abs sniff-crx-login-icon">
@@ -187,10 +187,9 @@ export default {
       handler (v) {
         console.log(v)
         this.form.countryCode = {
-          en: '+1',
-          ko: '+66',
-          th: '+82'
-
+          en: '',
+          ko: '+82',
+          th: '+66'
         }[v]
       },
       immediate: true
@@ -286,11 +285,12 @@ $asd: inset 0px 5px 8px 0px #F9EBE4, inset 0px -1px 0px 0px #ffffff,
   }
 
   &-content {
-    height: 860px;
+    height: 600px;
     width: 500px;
     padding: 20px 50px;
     background: #fdfdfd;
     border-radius: 12px;
+    overflow: auto;
     top: 0;
     left: 0;
     bottom: 0;

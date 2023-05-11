@@ -62,7 +62,7 @@ module.exports = {
             const css = []
             const { version } = v3
             for await (const f of dist) {
-              css.push(f.name)
+              css.push('css/' + f.name)
             }
             v3.content_scripts[0].css = css
             await fs.writeFile('./dist/manifest.json', JSON.stringify(v3))
