@@ -5,8 +5,8 @@ import md5 from 'md5'
 // 尝试使用universal-cookie替换
 import Cookies from '@/plugins/cookie'
 
-import http from '../plugins/axios'
-import { getUrlParams } from './utils'
+import http from 'axios'
+import { getUrlParams } from './useExt'
 
 export const tbSign = (obj) => {
   const data = JSON.stringify(obj)

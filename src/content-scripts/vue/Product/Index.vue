@@ -169,6 +169,7 @@ export default {
 
 #_sniff_crx_product_ {
   margin-top: 15px;
+  display: flex;
   float: left;
   margin-bottom: 23px;
 
