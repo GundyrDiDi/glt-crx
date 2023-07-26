@@ -1,5 +1,8 @@
 <template>
   <div id="_sniff_crx_product_" class="sniff-crx-product" :class="'sniff-crx--' + $platform">
+    <a href="#" @click.prevent="(e) => $emit('after', () => addCart(e))" class="flex" :class="{ requesting }">
+      {{ $t('加购到直行便') }}
+    </a>
     <a href="#" @click.prevent="(e) => $emit('after', () => buy(e))" class="flex" :class="{ requesting }">
       <template>
         <svg-icon class="sniff-crx-product-logo" name="编组16"></svg-icon>
@@ -10,12 +13,13 @@
 </template>
 <script>
 import $ from 'jquery'
-import query1688, { query1688Rule2 } from './hook/1688'
-import queryTb from './hook/taobao'
-import queryTm from './hook/tmall'
+import query1688, { query1688Rule2 } from './utils/1688'
+import queryTb from './utils/taobao'
+import queryTm from './utils/tmall'
 import { forTable } from '@/content-scripts/main/detailData'
 import { wait } from '@/utils/utils'
 import { mapState } from 'vuex'
+import { createPdt } from './utils/parsePdt'
 
 export default {
   data () {
@@ -23,7 +27,9 @@ export default {
       imgs: [],
       requesting: false,
       canBuy: true,
-      ckbSkuMap: {}
+      ckbSkuMap: {},
+      product: {},
+      matchSku: () => {}
     }
   },
   computed: mapState(['sheetData', 'user']),
@@ -102,13 +108,48 @@ export default {
         )
         this.requesting = false
       }
+    },
+    async addCart (e) {
+      if (this.requesting) return
+      if (this.sheetData.length >= 999) return
+      this.requesting = true
+      await this.trigger()
+      setTimeout(() => {
+        this.trigger(true)
+      }, 50)
+      // todo: 验证 orderList
+      const orderList = this.matchSku()
+      console.log(orderList)
+      //
+      if (!orderList.length) {
+        this.$msg('未选择商品规格', 'error')
+        this.requesting = false
+      } else {
+        // 加购动画
+        const { left, top, height, width } = $(
+          '.sniff-crx-bubble-icon'
+        )[0].getBoundingClientRect()
+        const imgSrc = window.$detail.productImg
+        this.$store.commit('setParabola', {
+          src: imgSrc,
+          p1: [e.x, e.y],
+          p3: [left + width / 2, top + height / 2]
+        })
+        // todo:调取加购接口
+        this.requesting = false
+      }
     }
   },
-  mounted () {
+  async mounted () {
     this.record()
     $(
       '#detail .tb-summary .tb-item-info .tb-item-info-r .tb-property .tb-wrap'
     ).css('padding-left', '30px')
+    const pdt = createPdt(this.$platform.replace(/-.*$/, ''), this.product, {})
+    await pdt.parse()
+    await pdt.createSku()
+    this.matchSku = pdt.matchSku
+    console.log(this.product)
   }
 }
 </script>
@@ -148,6 +189,7 @@ export default {
     text-decoration: none;
     transition: all 0.2s;
     overflow: hidden;
+
     &.requesting {
       pointer-events: none;
       border-color: #f2f2f2;
